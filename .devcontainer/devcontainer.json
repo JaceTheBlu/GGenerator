@@ -1,0 +1,36 @@
+{
+    "name": "GGenerator DevContainer",
+    "dockerFile": "Dockerfile",
+    "containerUser": "node",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "alexdima.copy-relative-path",
+                "benjaminadk.emojis4git",
+                "britesnow.vscode-toggle-quotes",
+                "christian-kohler.path-intellisense",
+                "davidanson.vscode-markdownlint",
+                "dbaeumer.vscode-eslint",
+                "editorconfig.editorconfig",
+                "esbenp.prettier-vscode",
+                "formulahendry.auto-rename-tag",
+                "jamesbirtles.svelte-vscode",
+                "jerryhong.autofilename",
+                "naumovs.color-highlight",
+                "robinbentley.sass-indented",
+                "shinnn.stylelint",
+                "streetsidesoftware.code-spell-checker",
+                "waderyan.gitblame",
+                "yzhang.markdown-all-in-one"
+            ],
+            "settings": {
+                "editor.formatOnSave": true,
+                "files.eol": "\n",
+                "prettier.requireConfig": true,
+                "terminal.integrated.shell.linux": "/bin/bash"
+            }
+        }
+    },
+    "postAttachCommand": "npm ci"
+}
