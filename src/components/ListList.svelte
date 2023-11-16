@@ -1,18 +1,29 @@
 <!-- src/components/List.svelte -->
 <script>
-	let items = [];
+	let userLists = [];
 	let newItem = '';
 
 	function addItem() {
 		if (newItem.trim() !== '') {
-			items = [...items, newItem];
+			userLists = [...userLists, newItem];
 			newItem = '';
 		}
 	}
 
 	function removeItem(index) {
-		items = items.filter((_, i) => i !== index);
+		userLists = userLists.filter((_, i) => i !== index);
 	}
+
+	async function readDefaultLists() {
+		try {
+			const response = await fetch('./default_lists.json');
+			userLists = await response.json();
+		} catch (error) {
+			console.error('Error fetching JSON data:', error);
+		}
+	}
+
+	readDefaultLists();
 </script>
 
 <div class="rounded-xl border-2 border-dashed border-zinc-100 relative text-xl">
@@ -27,9 +38,9 @@
 </div>
 
 <ul>
-	{#each items as item, index (item)}
+	{#each userLists as item, index (item)}
 		<li>
-			{item}
+			{item.name}
 			<button on:click={() => removeItem(index)}>Remove</button>
 		</li>
 	{/each}
