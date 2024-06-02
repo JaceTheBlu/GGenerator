@@ -10,7 +10,7 @@
 		aria-label="Follow @JaceTheBlu on GitHub"
 		target="_blank"
 	>
-		<img src="github.png" alt="GitHub Logo" class="w-7 mr-2" />
-		@JaceTheBlu
+		Project On
+		<img src="github.png" alt="GitHub Logo" class="w-7 mr-2 pl-2" />
 	</a>
 </div>

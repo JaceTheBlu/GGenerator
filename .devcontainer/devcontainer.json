@@ -22,7 +22,8 @@
                 "shinnn.stylelint",
                 "streetsidesoftware.code-spell-checker",
                 "waderyan.gitblame",
-                "yzhang.markdown-all-in-one"
+                "yzhang.markdown-all-in-one",
+                "svelte.svelte-vscode"
             ],
             "settings": {
                 "editor.formatOnSave": true,
