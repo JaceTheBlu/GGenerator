@@ -6,11 +6,15 @@
 
 	let isEditing = false;
 
-	function enableEditing() {
+	onMount(() => {
+		disableEditing();
+	});
+
+	export function enableEditing() {
 		isEditing = true;
 		// Wait for the next tick before focusing on the input element
 		requestAnimationFrame(() => {
-			const inputElement = document.getElementById('textInput');
+			const inputElement = document.getElementById(`textInput-${text}`);
 			if (inputElement) {
 				inputElement.focus();
 			}
@@ -18,14 +22,14 @@
 	}
 
 	function disableEditing() {
+		if (text.charAt(0) === '@') {
+			type = 'pouch';
+		}
 		isEditing = false;
 	}
 
 	function handleBlur() {
 		disableEditing();
-		if (text.charAt(0) === '@') {
-			type = 'pouch';
-		}
 	}
 
 	function handleKeyDown(event) {
@@ -37,7 +41,7 @@
 
 {#if isEditing}
 	<input
-		id="textInput"
+		id={`textInput-${text}`}
 		type="text"
 		bind:value={text}
 		on:blur={handleBlur}
@@ -53,6 +57,7 @@
             bg-slate-800/50
             hover:scale-110
             hover:cursor-pointer
+            {type === 'pouch' ? 'text-orange-400' : ''}
             rounded-lg"
 		on:click={enableEditing}
 		on:keydown={(e) => {
