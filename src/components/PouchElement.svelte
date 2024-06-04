@@ -6,24 +6,18 @@
      * @param name : the name of the pouch element
     */
 
-    /* Import  */
-    import Card from "./Card.svelte";
-
+    /* Imports  */
+    
     /* Variables */
     export let id = 0;
     export let name ="";
     
-    /* Function */
+    /* Functions */
 
 
 </script>
 
-
-<div class="flex justify-center">
-    <Card>
-       <span class="truncate ...">{name}</span> 
-        <button class="text-xl text-white mx-2 ">X</button>
-    </Card>
-
-</div>
-
+<li class="flex justify-between items-center odd:bg-slate-800/10 even:bg-slate-800/50 pl-2 ">
+    <span class="truncate ... pl-1 0" >{name}</span>
+    <button class="text-xl text-white pr-2 ml-4">X</button>
+</li>
