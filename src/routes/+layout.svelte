@@ -5,8 +5,8 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
-	<GGHeader />
-	<div class="flex grow">
+	<GGHeader on:openFile />
+	<div class="flex grow" on:openFile>
 		<slot />
 	</div>
 	<GGFooter />

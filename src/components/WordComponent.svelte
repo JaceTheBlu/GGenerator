@@ -1,30 +1,41 @@
 <script>
 	import { onMount } from 'svelte';
 
-	export let text = 'Click to edit';
+	export let text = '';
 	export let type = 'static';
 
 	let isEditing = false;
+	let inputElem;
 
 	onMount(() => {
-		disableEditing();
+		checkType();
 	});
 
 	export function enableEditing() {
 		isEditing = true;
 		// Wait for the next tick before focusing on the input element
 		requestAnimationFrame(() => {
-			const inputElement = document.getElementById(`textInput-${text}`);
-			if (inputElement) {
-				inputElement.focus();
+			if (inputElem) {
+				inputElem.focus();
+				inputElem.select();
 			}
 		});
 	}
 
-	function disableEditing() {
-		if (text.charAt(0) === '@') {
+	function checkType() {
+		if (String(text).charAt(0) === '@' && text.length > 1) {
 			type = 'pouch';
+		} else {
+			type = 'static';
 		}
+	}
+
+	function disableEditing() {
+		if (text.length <= 0) {
+			inputElem.remove();
+			this.$destroy();
+		}
+		checkType();
 		isEditing = false;
 	}
 
@@ -33,36 +44,41 @@
 	}
 
 	function handleKeyDown(event) {
-		if (event.key === 'Tab' || event.key === 'Enter') {
-			disableEditing();
+		switch (event.key) {
+			case 'Enter':
+				disableEditing();
+				break;
+
+			case 'Tab':
+				disableEditing();
+			default:
+				break;
 		}
 	}
 </script>
 
 {#if isEditing}
 	<input
-		id={`textInput-${text}`}
+		bind:this={inputElem}
 		type="text"
 		bind:value={text}
 		on:blur={handleBlur}
 		on:keydown={handleKeyDown}
-		class="bg-transparent rounded w-full pl-1"
+		class="p-2 bg-transparent rounded focus:outline-none focus:ring w-full pl-1 mr-2 mb-2"
 	/>
 {:else}
 	<button
-		class="px-2
+		class="p-2
             transition
             ease-in-out
             duration-300
             bg-slate-800/50
             hover:scale-110
             hover:cursor-pointer
+            rounded-lg mr-2 mb-2
             {type === 'pouch' ? 'text-orange-400' : ''}
-            rounded-lg"
-		on:click={enableEditing}
-		on:keydown={(e) => {
-			if (e.key === 'Enter') enableEditing();
-		}}
+			{type === 'pouch' ? 'underline' : ''}"
+		on:focus={enableEditing}
 	>
 		{text}
 	</button>
