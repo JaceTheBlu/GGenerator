@@ -1,13 +1,20 @@
 <script>
+	import '../app.css';
+	import GGFooter from '../components/GGFooter.svelte';
+	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
 </script>
 
-<div class="flex flex-grow">
-	<div class="bg-slate-800/50 p-2 rounded-xl br-5 m-4 w-3/4">
-		<Rundown />
+<div class="flex flex-col min-h-screen">
+	<GGHeader />
+	<div class="flex grow">
+		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 w-3/4">
+			<Rundown />
+		</div>
+		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mb-4 mr-4 w-1/4 overflow-auto">
+			<PouchOfWords />
+		</div>
 	</div>
-	<div class="bg-slate-800/50 p-2 flex-col rounded-xl mt-4 mb-4 mr-4 w-1/4 max-w- overflow-auto">		
-		<PouchOfWords />
-	</div>
+	<GGFooter />
 </div>
