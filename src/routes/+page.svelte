@@ -9,10 +9,10 @@
 <div class="flex flex-col min-h-screen">
 	<GGHeader />
 	<div class="flex grow">
-		<div class="bg-slate-800/50 p-2 rounded-xl br-5 m-4 w-3/4">
+		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 w-3/4">
 			<Rundown />
 		</div>
-		<div class="bg-slate-800/50 p-2 rounded-xl mt-4 mb-4 mr-4 w-1/4 max-w- overflow-auto">
+		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mb-4 mr-4 w-1/4 overflow-auto">
 			<ListList />
 		</div>
 	</div>

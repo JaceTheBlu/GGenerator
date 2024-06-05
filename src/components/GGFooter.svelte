@@ -1,4 +1,4 @@
-<div class="bg-slate-800 p-2 flex justify-between">
+<div class="bg-primary-color p-2 flex justify-between text-tertiary">
 	GGFooter
 	<div class="flex items-right">
 		<a
@@ -11,7 +11,7 @@
 			@JaceTheBlu🧙‍♂️
 		</a>
 		<a
-			class="flex items-center border-l border-indigo-50 ml-1"
+			class="flex items-center border-l border-primary ml-1"
 			href="https://github.com/aVadeleau"
 			aria-label="Follow @aVadeleau on GitHub"
 			target="_blank"
