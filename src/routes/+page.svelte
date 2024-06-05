@@ -2,7 +2,7 @@
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
-	import ListList from '../components/ListList.svelte';
+	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
 </script>
 
@@ -13,7 +13,7 @@
 			<Rundown />
 		</div>
 		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mb-4 mr-4 w-1/4 overflow-auto">
-			<ListList />
+			<PouchOfWords />
 		</div>
 	</div>
 	<GGFooter />
