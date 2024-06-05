@@ -32,6 +32,5 @@
                 "terminal.integrated.shell.linux": "/bin/bash"
             }
         }
-    },
-    "postAttachCommand": "npm ci"
+    }
 }
