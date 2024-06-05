@@ -23,7 +23,8 @@
                 "streetsidesoftware.code-spell-checker",
                 "waderyan.gitblame",
                 "yzhang.markdown-all-in-one",
-                "svelte.svelte-vscode"
+                "svelte.svelte-vscode",
+                "bradlc.vscode-tailwindcss"
             ],
             "settings": {
                 "editor.formatOnSave": true,
