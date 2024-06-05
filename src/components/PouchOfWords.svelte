@@ -27,6 +27,20 @@
 			}
 		}
 	}
+
+    function deletePouch(e){
+        const pouchName = e.detail;
+        let i =0;
+        let found = false;
+
+        while((i<pouch_list.length) && (!found)){
+            if(pouch_list[i] === pouchName){
+                pouch_list.splice(i,1);
+            }
+            i++;
+        }
+        pouch_list = [...pouch_list];
+    }
 </script>
 
 <div class="flex-col">
@@ -36,7 +50,7 @@
         <button class="bg-blue-500 flex-shrink-0 w-full md:w-auto text-white rounded-md px-4 py-2" on:click={submit}>Submit </button>
     </div>
     {#each pouch_list as pouch}
-        <Pouch name={pouch} />
+        <Pouch name={pouch} on:delete-pouch={deletePouch} />
     {/each}
 </div>
 
