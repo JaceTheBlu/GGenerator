@@ -1,4 +1,11 @@
 <script>
+    /**
+     * A class that wraps the Pouch of Words functionnality
+     * It allows creating pouches and displays them 
+     * @param pouch_list: a list of string that contains the name of every pouch created, used to track the existing pouch and display them
+     * @param max : a number that tells the maximum numbers of characters possible in the input
+    */
+
     /* Imports */
     import Pouch from "./Pouch.svelte";
 
@@ -9,6 +16,11 @@
     $: input_value = String(input_value).toLowerCase();
 
     /*Functions */
+
+    /**
+     * This function handle the add of a new pouch
+     * It is not possible to create a pouch with an empty name or an name which already exist
+     */
     function submit(){
 		input_value= input_value.trim();
 	    if((input_value!== null) && (input_value !== undefined) && (input_value !== "") && (input_value.length>0) && (input_value.length < max) ){
@@ -28,6 +40,10 @@
 		}
 	}
 
+    /**
+     * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
+     * @param e : the name of the pouch to delete
+     */
     function deletePouch(e){
         const pouchName = e.detail;
         let i =0;

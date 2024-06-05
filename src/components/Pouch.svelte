@@ -1,5 +1,12 @@
 <script>
 
+    /**
+     * This page represents a pouch, it is possible to add/delete an element from this pouch
+     * @param name : the name that represents the pouch and the elements in it
+     * @param pouch_elements : a list that contains every elements a pouch contains, an elements have an id and a name, used to keep on track the existing elements and the display
+     * 
+    */
+
     /* Imports*/
     import { createEventDispatcher } from 'svelte';
     import PouchElement from "./PouchElement.svelte";
@@ -17,6 +24,10 @@
 
     /* Functions */
 
+    /**
+     * This function handle the add of a elements in the pouch
+     * @param event : the element to add, with and id and a name property
+     */
     function handleKeyDown(event) {
         if ( event.key === 'Enter') {
             let input_value = document.getElementById(pouch_id).value;
@@ -29,6 +40,10 @@
         }
     }
 
+    /**
+     * This function delete an element from a pouch, it catches the event created from "PouchElement.svelte"
+     * @param e : the id of the pouch to delete
+     */
     function deletePouchElement(e){
         const deletionId = e.detail;
         let found = false;
@@ -46,6 +61,10 @@
 
     }
 
+    /**
+     * This function create an event with the goal of deleting a pouch, it takes the name of the pouch to delete
+     * @param pouchName : the name of the pouch to delete
+     */
     function dispachDeletePouch(pouchName){
         dispach('delete-pouch',pouchName);
     }

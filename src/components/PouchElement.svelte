@@ -16,6 +16,10 @@
     const dispach = createEventDispatcher();
 
     /* Functions */
+    /**
+     * This function create an event with the goal of deleting an element from a pouch, it take the id of the element to delete
+     * @param elementId : the id of the element to delete
+     */
     function dispachDelete(elementId){
         dispach('delete-pouch-element',elementId);
     }
