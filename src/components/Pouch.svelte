@@ -16,6 +16,7 @@
 
     let pouch_elements = [];
     let element_id = 0;
+    let new_pouch="";
     $: pouch_elements_id = name.toLowerCase() + element_id;
     $: pouch_id = "addPouch" + name;
 
@@ -30,13 +31,14 @@
      */
     function handleKeyDown(event) {
         if ( event.key === 'Enter') {
-            let input_value = document.getElementById(pouch_id).value;
-            element_id++;
-            pouch_elements = [ ...pouch_elements, {
-                    id: pouch_elements_id, 
-                    name: input_value
-            },]
-            document.getElementById(pouch_id).value ='';
+            if(new_pouch.trim()!== ""){
+                element_id++;
+                pouch_elements = [ ...pouch_elements, {
+                        id: pouch_elements_id, 
+                        name: new_pouch
+                },]
+                new_pouch ="";
+            }
         }
     }
 
@@ -50,7 +52,6 @@
         let i = 0;
 
         while( (i<pouch_elements.length) && (!found) ){
-
             if(deletionId === pouch_elements[i].id){
                 pouch_elements.splice(i,1);
                 found = true;
@@ -94,12 +95,12 @@
     {/if}
 
     <li>
-        <input 
-        id={pouch_id}
-        class="bg-transparent w-full h-full focus:outline-none placeholder:italic rounded-b-xl pl-4 pb-1" 
-        type="text"
-        placeholder="Enter a value..."
-        on:keydown={handleKeyDown}
+        <input
+            bind:value={new_pouch} 
+            class="bg-transparent w-full h-full focus:outline-none placeholder:italic rounded-b-xl pl-4 pb-1" 
+            type="text"
+            placeholder="Enter a value..."
+            on:keydown={handleKeyDown}
         >
     </li>
 </ul>
