@@ -8,11 +8,16 @@
 
 	/* Imports */
 	import Pouch from './Pouch.svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	/* Variables */
-	let pouch_list = [];
+	export let pouch_list = [];
 	let input_value = '';
 	let max = 20;
+
+	$: dispatch('pouch_list_change', { pouch_list });
 	$: input_value = String(input_value).toLowerCase();
 
 	/*Functions */

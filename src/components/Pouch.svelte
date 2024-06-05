@@ -13,7 +13,7 @@
 	/* Variables*/
 	export let name = '';
 
-	let pouch_elements = [];
+	export let pouch_elements = [];
 	let element_id = 0;
 	let new_pouch = '';
 	$: pouch_elements_id = name.toLowerCase() + element_id;
