@@ -4,60 +4,57 @@
     import PouchElement from "./PouchElement.svelte";
     
     /* Variables*/
-    export let id = 0;
     export let name = "";
+
     let pouch_elements = [];
-    
-    
     let element_id = 0;
     $: pouch_elements_id = name.toLowerCase() + element_id;
+    $: pouch_id = "addPouch" + name;
 
     /* Functions */
     function handleKeyDown(event) {
         if ( event.key === 'Enter') {
-            let input_value = document.getElementById('addPouch').value;
+            let input_value = document.getElementById(pouch_id).value;
             element_id++;
-
             pouch_elements = [ ...pouch_elements, {
                     id: pouch_elements_id, 
                     name: input_value
             },]
-            
-            document.getElementById('addPouch').value ='';
-          
-            console.log(pouch_elements)
+            document.getElementById(pouch_id).value ='';
         }
     }
-    console.log(pouch_elements)
-
-
 </script>
 
-<ul class="bg-slate-800/50 rounded-xl pt-1 mt-4">
-    
-    <li class="flex justify-between font-black text-xl border-b border-white "> 
-        <span class="flex"> -->  </span>
-        <span class="flex justify-center" >
-            {name.slice(0,1).toUpperCase() +name.slice(1).toLowerCase()}
-        </span>
-        <button class="flex justify-end  text-xl text-white pr-2 ml-4">X</button>
 
-        
+<ul class="bg-slate-800/50 rounded-xl divide-y mt-4 mb-4">
+    <li class="flex justify-between font-bold text-xl h-full pl-2"> 
+        <span class="flex items-center"> > </span>
+        <div class="flex hover:cursor-move">
+            <span class="flex justify-center items-center text-white/50 pr-1" >
+                @
+            </span>
+            <span class="flex justify-center hover:text-orange-500 transition-colors duration-300 items-center">
+                {name}
+            </span>
+        </div>
+        <button class="flex justify-end items-center text-white h-full rounded-tr-xl hover:bg-red-500 transition-colors duration-300 px-2">X</button>
     </li>
-    <div class="divide-y divide-dashed">
-        {#each pouch_elements as pouch}
-            <PouchElement id={pouch.id} name={pouch.name} />
-        {/each}
 
-    </div>
+    {#if pouch_elements.length !== 0}
+        <div class="divide-y divide-dashed">
+            {#each pouch_elements as pouch}
+                <PouchElement id={pouch.id} name={pouch.name} />
+            {/each}
+        </div>
+    {/if}
+
     <li>
         <input 
-        id="addPouch"
-        class=" bg-transparent w-full h-full focus:outline-none rounded-b-xl border-t border-white pl-2 pb-1" 
+        id={pouch_id}
+        class="bg-transparent w-full h-full focus:outline-none placeholder:italic rounded-b-xl pl-4 pb-1" 
         type="text"
-        placeholder="..."
+        placeholder="Enter a value..."
         on:keydown={handleKeyDown}
         >
     </li>
-
 </ul>
