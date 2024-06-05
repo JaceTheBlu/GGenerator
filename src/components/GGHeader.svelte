@@ -1,9 +1,49 @@
+<script>
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
+</script>
+
 <div class="bg-primary-color p-2 flex justify-between">
-	<a href="http://ggenerator.ggthe.app" class="flex items-center">
-		<img src="favicon.png" alt="GG Logo" class="w-7" />
-		<h1>enerator v0.1.1</h1>
-	</a>
-	<!-- Place this tag where you want the button to render. -->
+	<div class="flex space-x-4">
+		<a href="http://ggenerator.ggthe.app" class="flex">
+			<img src="favicon.png" alt="GG Logo" class="w-7" />
+			<h1>enerator v0.1.1</h1>
+		</a>
+		<button
+			class="flex px-2
+			bg-gradient-to-r
+			from-indigo-900
+			to-purple-600
+			border-2
+			rounded-lg
+			transition duration-300 ease-out
+			hover:shadow-black
+			hover:shadow-md
+			hover:scale-110
+			"
+			on:click={() => {
+				dispatch('openFile');
+				console.log('test');
+			}}
+		>
+			<u>I</u>mport Save
+		</button>
+		<button
+			class="flex px-2
+			bg-gradient-to-r
+			from-purple-600
+			to-pink-500
+			border-2
+			rounded-lg
+			transition duration-300 ease-out
+			hover:shadow-black
+			hover:shadow-md
+			hover:scale-110
+			"
+		>
+			<u>E</u>xport Save
+		</button>
+	</div>
 	<a
 		class="flex items-center text-tertiary"
 		href="https://github.com/JaceTheBlu/GGenerator"
