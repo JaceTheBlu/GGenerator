@@ -17,7 +17,6 @@
 	let input_value = '';
 	let max = 20;
 
-	$: dispatch('pouch_list_change', { pouch_list });
 	$: input_value = String(input_value).toLowerCase();
 
 	/*Functions */
@@ -44,9 +43,9 @@
 				i++;
 			}
 			if (!found) {
-				let new_pouch  = {
-					name : input_value,
-					elements : []
+				let new_pouch = {
+					name: input_value,
+					elements: []
 				};
 
 				pouch_list = [...pouch_list, new_pouch];
@@ -66,19 +65,16 @@
 		}
 	}
 
-	function refreshPouch(event){
+	function refreshPouch(event) {
 		const pouch = event.detail;
 
 		let found = false;
-		for(let i=0; (i<pouch_list.length) && (!found); i++){
-
-			if(pouch_list[i].name === pouch.name){
-				pouch_list[i]= pouch;
-
+		for (let i = 0; i < pouch_list.length && !found; i++) {
+			if (pouch_list[i].name === pouch.name) {
+				pouch_list[i] = pouch;
 			}
 		}
 	}
-
 
 	/**
 	 * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
@@ -114,6 +110,11 @@
 		</button>
 	</div>
 	{#each pouch_list as pouch}
-		<Pouch name={pouch.name} elements={pouch.elements} on:pouch_elements={refreshPouch}  on:delete-pouch={deletePouch} />
+		<Pouch
+			name={pouch.name}
+			elements={pouch.elements}
+			on:pouch_elements={refreshPouch}
+			on:delete-pouch={deletePouch}
+		/>
 	{/each}
 </div>

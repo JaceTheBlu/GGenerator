@@ -23,7 +23,6 @@
 
 	export function enableEditing() {
 		isEditing = true;
-		// Wait for the next tick before focusing on the input element
 		requestAnimationFrame(() => {
 			if (inputElement) {
 				inputElement.focus();
@@ -38,7 +37,6 @@
 	};
 
 	const handleBlur = () => {
-		console.log(id + ' = ' + text);
 		disableEditing();
 	};
 

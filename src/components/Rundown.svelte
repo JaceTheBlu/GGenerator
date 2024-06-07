@@ -4,26 +4,23 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let rundown = [];
-	export let rundownRootElement;
+	export let rundown_list = [];
+	let rundownRootElement;
 
-	$: newId = rundown.length ? Math.max(...rundown.map((t) => t.id)) + 1 : 1;
-	$: console.log(rundown);
+	$: newId = rundown_list.length ? Math.max(...rundown_list.map((t) => t.id)) + 1 : 1;
 
 	const addWordComponent = () => {
-		rundown = [...rundown, { id: newId, text: '' }];
+		rundown_list = [...rundown_list, { id: newId, text: '' }];
 	};
 
 	const removeWordComponent = (event) => {
-		rundown = rundown.filter((c) => c.id !== event.detail.id);
+		rundown_list = rundown_list.filter((c) => c.id !== event.detail.id);
 	};
 
 	const updateWordComponent = (event) => {
 		let word = event.detail;
 		if (word.text.length > 0) {
-			rundown = rundown.map((component) => {
-				console.log('updating ' + word.id + 'with ' + word.text);
-
+			rundown_list = rundown_list.map((component) => {
 				if (component.id === word.id) {
 					return { ...component, text: word.text };
 				}
@@ -48,7 +45,7 @@
 			bind:this={rundownRootElement}
 		>
 			<div />
-			{#each rundown as component}
+			{#each rundown_list as component}
 				<WordComponent id={component.id} on:update={updateWordComponent} />
 			{/each}
 		</div>
