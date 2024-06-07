@@ -7,8 +7,8 @@
 	 */
 
 	/* Imports */
-	import Pouch from './Pouch.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import Pouch from './Pouch.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -27,6 +27,7 @@
 	 * It is not possible to create a pouch with an empty name or an name which already exist
 	 */
 	function submit() {
+		console.log("PouchOfWords :", pouch_list);
 		input_value = input_value.trim();
 		if (
 			input_value !== null &&
@@ -44,10 +45,16 @@
 				i++;
 			}
 			if (!found) {
-				pouch_list = [...pouch_list, input_value];
+				let new_pouch  = {
+					name : input_value,
+					elements : []
+				};
+
+				pouch_list = [...pouch_list, new_pouch];
 				input_value = '';
 			}
 		}
+
 	}
 
 	function handleKeyboard(event) {
@@ -60,6 +67,21 @@
 				break;
 		}
 	}
+
+	function refreshPouch(event){
+		console.log("A");
+		const pouch = event.detail;
+
+		let found = false;
+		for(let i=0; (i<pouch_list.length) && (!found); i++){
+
+			if(pouch_list[i].name === pouch.name){
+				pouch_list[i]= pouch;
+
+			}
+		}
+	}
+
 
 	/**
 	 * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
@@ -96,6 +118,6 @@
 		</button>
 	</div>
 	{#each pouch_list as pouch}
-		<Pouch name={pouch} on:delete-pouch={deletePouch} />
+		<Pouch name={pouch.name} elements={pouch.elements} on:pouch_elements={refreshPouch}  on:delete-pouch={deletePouch} />
 	{/each}
 </div>
