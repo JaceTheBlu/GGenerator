@@ -4,7 +4,7 @@
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
-
+	import { Analytics } from '@vercel/analytics/react';
 	let rundown_list;
 	let pouch_list;
 	let result_div;
@@ -89,4 +89,5 @@
 		<p bind:this={result_div} class="text-secondary-color" />
 	</div>
 	<GGFooter />
+	<Analytics />
 </div>
