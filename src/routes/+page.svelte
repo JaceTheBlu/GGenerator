@@ -5,20 +5,15 @@
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
 
-	let pouch_list = [];
-	let rundown = [];
-
-	const handlePouchList = (event) => {
-		pouch_list = event.detail.pouch_list;
-	};
-
-	const handleRundown = (event) => {
-		rundown = event.detail.rundown;
-	};
+	let rundown;
+	let pouchOfWords;
 
 	const generateWords = () => {
+		rundown_list = rundown.rundown;
+		pouch_list = pouchOfWords.getList();
+
 		console.log(pouch_list);
-		const words = rundown.map((component) => {
+		const words = rundown_list.map((component) => {
 			const text = component.getText();
 			let exists = false;
 			let type = 'static';
@@ -120,10 +115,10 @@
 	<GGHeader on:import={importJSON} on:export={exportJSON} />
 	<div class="flex grow">
 		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 w-3/4">
-			<Rundown on:generate={generateWords} on:rundown_change={handleRundown} />
+			<Rundown bind:this={rundown} on:generate={generateWords} />
 		</div>
 		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mb-4 mr-4 w-1/4 overflow-auto">
-			<PouchOfWords on:pouch_list_change={handlePouchList} />
+			<PouchOfWords bind:this={pouchOfWords} />
 		</div>
 	</div>
 	<GGFooter />
