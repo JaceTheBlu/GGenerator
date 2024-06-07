@@ -4,7 +4,8 @@
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
-	import { Analytics } from '@vercel/analytics/react';
+	import { inject } from '@vercel/analytics';
+	inject();
 	let rundown_list;
 	let pouch_list;
 	let result_div;
@@ -21,7 +22,7 @@
 					console.log(pouch);
 					word = getPouchElement(pouch);
 				} else {
-					word = 'ERROR';
+					word = `<${pouchName}> is empty`;
 				}
 			} else {
 				word = text;
@@ -89,5 +90,4 @@
 		<p bind:this={result_div} class="text-secondary-color" />
 	</div>
 	<GGFooter />
-	<Analytics />
 </div>
