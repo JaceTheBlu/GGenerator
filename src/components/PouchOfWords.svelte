@@ -7,8 +7,8 @@
 	 */
 
 	/* Imports */
-	import Pouch from './Pouch.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import Pouch from './Pouch.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -44,7 +44,12 @@
 				i++;
 			}
 			if (!found) {
-				pouch_list = [...pouch_list, input_value];
+				let new_pouch  = {
+					name : input_value,
+					elements : []
+				};
+
+				pouch_list = [...pouch_list, new_pouch];
 				input_value = '';
 			}
 		}
@@ -61,6 +66,20 @@
 		}
 	}
 
+	function refreshPouch(event){
+		const pouch = event.detail;
+
+		let found = false;
+		for(let i=0; (i<pouch_list.length) && (!found); i++){
+
+			if(pouch_list[i].name === pouch.name){
+				pouch_list[i]= pouch;
+
+			}
+		}
+	}
+
+
 	/**
 	 * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
 	 * @param e : the name of the pouch to delete
@@ -69,9 +88,8 @@
 		const pouchName = e.detail;
 		let i = 0;
 		let found = false;
-
 		while (i < pouch_list.length && !found) {
-			if (pouch_list[i] === pouchName) {
+			if (pouch_list[i].name === pouchName) {
 				pouch_list.splice(i, 1);
 			}
 			i++;
@@ -96,6 +114,6 @@
 		</button>
 	</div>
 	{#each pouch_list as pouch}
-		<Pouch name={pouch} on:delete-pouch={deletePouch} />
+		<Pouch name={pouch.name} elements={pouch.elements} on:pouch_elements={refreshPouch}  on:delete-pouch={deletePouch} />
 	{/each}
 </div>

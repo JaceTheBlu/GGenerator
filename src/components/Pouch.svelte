@@ -13,16 +13,17 @@
 	/* Variables*/
 	export let name = '';
 
-	export let pouch_elements = [];
+	export let elements = [];
 	let element_id = 0;
 	let new_pouch = '';
-	$: pouch_elements_id = name.toLowerCase() + element_id;
+	$: elements_id = name.toLowerCase() + element_id;
 	$: pouch_id = 'addPouch' + name;
 
-	const dispach = createEventDispatcher();
-
+	
+	const dispatch = createEventDispatcher();
+	
 	/* Functions */
-
+	
 	/**
 	 * This function handle the add of a elements in the pouch
 	 * @param event : the element to add, with and id and a name property
@@ -31,15 +32,16 @@
 		if (event.key === 'Enter') {
 			if (new_pouch.trim() !== '') {
 				element_id++;
-				pouch_elements = [
-					...pouch_elements,
+				elements = [
+					...elements,
 					{
-						id: pouch_elements_id,
+						id: elements_id,
 						name: new_pouch
 					}
 				];
 				new_pouch = '';
 			}
+			dispatch('pouch_elements', { name :name, elements : elements });
 		}
 	}
 
@@ -52,22 +54,26 @@
 		let found = false;
 		let i = 0;
 
-		while (i < pouch_elements.length && !found) {
-			if (deletionId === pouch_elements[i].id) {
-				pouch_elements.splice(i, 1);
+		while (i < elements.length && !found) {
+			if (deletionId === elements[i].id) {
+				elements.splice(i, 1);
 				found = true;
 			}
 			i++;
 		}
-		pouch_elements = [...pouch_elements];
+		elements = [...elements];
+
+		dispatch('pouch_elements', { name :name, elements : elements });
+		console.log("elements :",elements)
 	}
+
 
 	/**
 	 * This function create an event with the goal of deleting a pouch, it takes the name of the pouch to delete
 	 * @param pouchName : the name of the pouch to delete
 	 */
-	function dispachDeletePouch(pouchName) {
-		dispach('delete-pouch', pouchName);
+	function dispatchDeletePouch(pouchName) {
+		dispatch('delete-pouch', pouchName);
 	}
 </script>
 
@@ -88,13 +94,13 @@
 		</div>
 		<button
 			class="flex justify-end items-center text-white h-full rounded-tr-xl hover:bg-red-500 transition-colors duration-300 px-2"
-			on:click={dispachDeletePouch(name)}>X</button
+			on:click={dispatchDeletePouch(name)}>X</button
 		>
 	</li>
 
-	{#if pouch_elements.length !== 0}
+	{#if elements.length !== 0}
 		<div class="divide-y divide-dashed">
-			{#each pouch_elements as pouch}
+			{#each elements as pouch}
 				<PouchElement
 					id={pouch.id}
 					name={pouch.name}
