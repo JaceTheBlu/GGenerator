@@ -42,7 +42,6 @@
 				new_pouch = '';
 			}
 			dispatch('pouch_elements', { name :name, elements : elements });
-			console.log("elements :",elements)
 		}
 	}
 
@@ -63,7 +62,11 @@
 			i++;
 		}
 		elements = [...elements];
+
+		dispatch('pouch_elements', { name :name, elements : elements });
+		console.log("elements :",elements)
 	}
+
 
 	/**
 	 * This function create an event with the goal of deleting a pouch, it takes the name of the pouch to delete

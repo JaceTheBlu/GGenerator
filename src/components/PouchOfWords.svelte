@@ -53,7 +53,6 @@
 				input_value = '';
 			}
 		}
-
 	}
 
 	function handleKeyboard(event) {
@@ -89,9 +88,8 @@
 		const pouchName = e.detail;
 		let i = 0;
 		let found = false;
-
 		while (i < pouch_list.length && !found) {
-			if (pouch_list[i] === pouchName) {
+			if (pouch_list[i].name === pouchName) {
 				pouch_list.splice(i, 1);
 			}
 			i++;
