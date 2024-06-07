@@ -12,36 +12,40 @@
 		<button
 			class="flex px-2
 			bg-gradient-to-r
-			from-indigo-900
-			to-purple-600
+			from-secondary-color
+			to-tertiary-color
 			border-2
-			rounded-lg
+			rounded-primary
 			transition duration-300 ease-out
 			hover:shadow-black
 			hover:shadow-md
 			hover:scale-110
 			"
 			on:click={() => {
-				dispatch('openFile');
-				console.log('test');
+				dispatch('import', 'detail value');
 			}}
 		>
-			<u>I</u>mport Save
+			<p class="underline">I</p>
+			mport Save
 		</button>
 		<button
 			class="flex px-2
 			bg-gradient-to-r
-			from-purple-600
-			to-pink-500
+			from-tertiary-color
+			to-secondary-color
 			border-2
-			rounded-lg
+			rounded-primary
 			transition duration-300 ease-out
 			hover:shadow-black
 			hover:shadow-md
 			hover:scale-110
 			"
+			on:click={() => {
+				dispatch('export', 'detail value');
+			}}
 		>
-			<u>E</u>xport Save
+			<p class="underline">E</p>
+			xport Save
 		</button>
 	</div>
 	<a
