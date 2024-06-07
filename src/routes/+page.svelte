@@ -10,6 +10,7 @@
 
 	const handlePouchList = (event) => {
 		pouch_list = event.detail.pouch_list;
+		console.log("list :",pouch_list);
 	};
 
 	const handleRundown = (event) => {
@@ -52,6 +53,7 @@
 	};
 
 	const importJSON = () => {
+		console.log('received');
 		var input = document.createElement('input');
 		input.type = 'file';
 
@@ -67,57 +69,15 @@
 			reader.onload = (readerEvent) => {
 				var content = readerEvent.target.result; // this is the content!
 				console.log(content);
-				try {
-					const jsonData = JSON.parse(content);
-					if (jsonData.pouches && jsonData.rundown) {
-						pouch_list = jsonData.pouches;
-						rundown = jsonData.rundown;
-					} else {
-						console.error('Invalid JSON format');
-					}
-				} catch (error) {
-					console.error('Error parsing JSON:', error);
-				}
 			};
 		};
 
 		input.click();
 	};
-
-	const exportJSON = () => {
-		// Extract necessary data from pouch_list and rundown
-		const plainPouchList = pouch_list.map((pouch) => ({
-			name: pouch.name,
-			elements: pouch.elements
-		}));
-
-		const plainRundown = rundown.map((item) => {
-			if (typeof item === 'object' && 'getText' in item) {
-				return item.getText();
-			}
-			return item;
-		});
-
-		const data = {
-			pouches: plainPouchList,
-			rundown: plainRundown
-		};
-
-		const jsonString = JSON.stringify(data, null, 2);
-		const blob = new Blob([jsonString], { type: 'application/json' });
-		const url = URL.createObjectURL(blob);
-		const link = document.createElement('a');
-		link.href = url;
-		link.download = 'data.json';
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-		URL.revokeObjectURL(url);
-	};
 </script>
 
 <div class="flex flex-col min-h-screen">
-	<GGHeader on:import={importJSON} on:export={exportJSON} />
+	<GGHeader />
 	<div class="flex grow">
 		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 w-3/4">
 			<Rundown on:generate={generateWords} on:rundown_change={handleRundown} />

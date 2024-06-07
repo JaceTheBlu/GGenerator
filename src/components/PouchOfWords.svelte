@@ -27,7 +27,6 @@
 	 * It is not possible to create a pouch with an empty name or an name which already exist
 	 */
 	function submit() {
-		console.log("PouchOfWords :", pouch_list);
 		input_value = input_value.trim();
 		if (
 			input_value !== null &&
@@ -69,7 +68,6 @@
 	}
 
 	function refreshPouch(event){
-		console.log("A");
 		const pouch = event.detail;
 
 		let found = false;
