@@ -24,6 +24,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Ensure clean working directory
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config --global user.name 'github-actions[bot]'
+            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+            git add .
+            git commit -m "ci: pre-bump commit [skip ci]"
+            git push
+          fi
+
       - name: Determine version bump type
         id: determine_version
         run: |
