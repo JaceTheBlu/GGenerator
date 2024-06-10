@@ -77,6 +77,8 @@
 
 			}
 		}
+
+		console.log("List :", pouch_list);
 	}
 
 

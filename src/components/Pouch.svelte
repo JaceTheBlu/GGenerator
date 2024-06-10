@@ -12,13 +12,11 @@
 
 	/* Variables*/
 	export let name = '';
-
 	export let elements = [];
 	let element_id = 0;
 	let new_pouch = '';
-	$: elements_id = name.toLowerCase() + element_id;
-	$: pouch_id = 'addPouch' + name;
 
+	$: elements_id = name.toLowerCase() + element_id;
 	
 	const dispatch = createEventDispatcher();
 	
@@ -28,21 +26,53 @@
 	 * This function handle the add of a elements in the pouch
 	 * @param event : the element to add, with and id and a name property
 	 */
-	function handleKeyDown(event) {
-		if (event.key === 'Enter') {
-			if (new_pouch.trim() !== '') {
-				element_id++;
-				elements = [
-					...elements,
-					{
-						id: elements_id,
-						name: new_pouch
-					}
-				];
-				new_pouch = '';
-			}
-			dispatch('pouch_elements', { name :name, elements : elements });
+	function submit() {
+		if (new_pouch.trim() !== '') {
+			element_id++;
+			elements = [
+				...elements,
+				{
+					id: elements_id,
+					name: new_pouch
+				}
+			];
+			new_pouch = '';
 		}
+		dispatch('pouch_elements', { name :name, elements : elements });
+	}
+		
+
+	function handleKeyboard(event) {
+		switch (event.key) {
+			case 'Enter':
+				submit();
+				break;
+
+			default:
+				break;
+		}
+	}
+
+
+	function refreshElements(event){
+		const pouch_elem = event.detail;
+		let found = false;
+		if(pouch_elem.name.trim()!== ''){
+
+			console.log("In Pouch :", pouch_elem);
+
+			for (let i = 0; (i < elements.length) && (!found); i++) {
+
+				if(elements[i].id === pouch_elem.id){
+					elements[i].name = pouch_elem.name;
+					found = true;
+				}
+			}
+			if(found){
+				dispatch('pouch_elements', { name :name, elements : elements });
+			}
+		}
+		elements = [...elements];
 	}
 
 	/**
@@ -77,6 +107,7 @@
 	}
 </script>
 
+
 <ul class="bg-slate-800/50 rounded-xl divide-y mt-4 mb-4">
 	<li class="flex justify-between text-xl h-full">
 		<span
@@ -84,13 +115,13 @@
 		>
 			>
 		</span>
+		
 		<div
 			class="flex hover:cursor-move grow hover:text-orange-500 transition-colors duration-300 justify-center"
 		>
 			<span class="flex items-center text-white/50"> @ </span>
-			<span class="flex font-bold items-center">
-				{name}
-			</span>
+			<span class="flex font-bold items-center">{name}</span>
+
 		</div>
 		<button
 			class="flex justify-end items-center text-white h-full rounded-tr-xl hover:bg-red-500 transition-colors duration-300 px-2"
@@ -104,19 +135,28 @@
 				<PouchElement
 					id={pouch.id}
 					name={pouch.name}
+					on:update-pouch-element={refreshElements}
 					on:delete-pouch-element={deletePouchElement}
 				/>
 			{/each}
 		</div>
 	{/if}
 
-	<li>
+	<li class="flex">
 		<input
 			bind:value={new_pouch}
-			class="bg-transparent w-full h-full focus:outline-none placeholder:italic rounded-b-xl pl-4 pb-1"
+			class="bg-transparent w-full h-full focus:outline-none placeholder:italic rounded-b-xl pl-4 pb-1  "
 			type="text"
 			placeholder="Enter a value..."
-			on:keydown={handleKeyDown}
+			on:keypress={handleKeyboard}
 		/>
+
+		<button
+			class="bg-blue-500 flex-shrink-0 w-full md:w-auto text-white text-secondary font-bold rounded-md px-4 "	
+			on:click={submit}		
+			>
+				 ↵
+		</button>
+
 	</li>
 </ul>
