@@ -1,0 +1,53 @@
+name: Update Version
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Determine version bump type
+        id: determine_version
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "minor" > bump_type
+          else
+            echo "patch" > bump_type
+          fi
+
+      - name: Bump version and update .env
+        id: bump_version
+        run: |
+          BUMP_TYPE=$(cat bump_type)
+          echo "Bumping version with: $BUMP_TYPE"
+
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+          VERSION=$(npm version $BUMP_TYPE -m "ci: bump version to %s [skip ci]" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+
+          echo "VERSION=$VERSION" > .env
+          git add .env
+          git commit -m "ci: update version to $VERSION [skip ci]"
+          git push --follow-tags
+
+      - name: Push changes
+        run: git push

@@ -1,13 +1,15 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
+
+	const version = import.meta.env.VITE_VERSION;
 </script>
 
 <div class="bg-primary-color p-2 flex justify-between">
 	<div class="flex space-x-4">
 		<a href="http://ggenerator.ggthe.app" class="flex">
 			<img src="favicon.png" alt="GG Logo" class="w-7" />
-			<h1>enerator v0.1.1</h1>
+			<h1>enerator v{version}</h1>
 		</a>
 		<button
 			class="flex px-2

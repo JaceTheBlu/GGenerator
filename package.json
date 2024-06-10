@@ -1,6 +1,6 @@
 {
 	"name": "ggenerator",
-	"version": "0.0.1",
+	"version": "0.3.44",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
