@@ -4,44 +4,43 @@
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
-
-	let pouch_list = [];
-	let rundown = [];
-
-	const handlePouchList = (event) => {
-		pouch_list = event.detail.pouch_list;
-		console.log("list :",pouch_list);
-	};
-
-	const handleRundown = (event) => {
-		rundown = event.detail.rundown;
-	};
+	import { inject } from '@vercel/analytics';
+	inject();
+	let rundown_list;
+	let pouch_list;
+	let result_div;
 
 	const generateWords = () => {
-		console.log(pouch_list);
-		const words = rundown.map((component) => {
-			const text = component.getText();
-			let exists = false;
-			let type = 'static';
-			let word = text;
+		const words = rundown_list.map((word) => {
+			const text = word.text;
 
 			if (text.charAt(0) === '@' && text.length > 1) {
 				const pouchName = text.substring(1);
-				exists = pouch_list.includes(pouchName);
-				if (exists) {
-					const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
-					if (pouch && pouch.elements.length > 0) {
-						console.log(pouch);
-						word = getRandomElement(pouch.pouch_elements); // Get a random word from the pouch elements
-						type = 'pouch'; // Update type to indicate it's from a pouch
-					}
+				const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
+
+				if (pouch && pouch.elements.length > 0) {
+					console.log(pouch);
+					word = getPouchElement(pouch);
+				} else {
+					word = `<${pouchName}> is empty`;
 				}
+			} else {
+				word = text;
 			}
 
 			return word;
 		});
-		console.log(words);
-		// Additional processing can be done here based on `words` array
+		result_div.innerText = words.join(' ');
+	};
+
+	const getPouchElement = (pouch) => {
+		return pouch.elements[getRandomInt(0, pouch.elements.length - 1)].name;
+	};
+
+	const getRandomInt = (min, max) => {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.ceil(Math.random() * (max - min + 1)) + min - 1;
 	};
 
 	let exampleJSON = {
@@ -79,12 +78,16 @@
 <div class="flex flex-col min-h-screen">
 	<GGHeader />
 	<div class="flex grow">
-		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 w-3/4">
-			<Rundown on:generate={generateWords} on:rundown_change={handleRundown} />
+		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4">
+			<Rundown bind:rundown_list on:generate={generateWords} />
 		</div>
-		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mb-4 mr-4 w-1/4 overflow-auto">
-			<PouchOfWords on:pouch_list_change={handlePouchList} />
+		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 overflow-auto">
+			<PouchOfWords bind:pouch_list />
 		</div>
+	</div>
+	<div class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
+		<p class="pl-2 text-secondary mr-2">Output:</p>
+		<p bind:this={result_div} class="text-secondary-color" />
 	</div>
 	<GGFooter />
 </div>
