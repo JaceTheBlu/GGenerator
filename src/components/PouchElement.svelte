@@ -14,7 +14,7 @@
 	export let name = '';
 
 	let isEditable = false;
-	let inputName = "";
+	let inputElement = "";
 
 	const dispatch = createEventDispatcher();
 
@@ -27,24 +27,24 @@
 		dispatch('delete-pouch-element', elementId);
 	}
 
+	/**
+	 * This method is used for the update of a pouch element
+	 * Double clicking on a pouch element make it editable
+	 * When focus is lost new informations are sent to the parent component
+	 */
+	function changeEditableState(){
+		isEditable = !isEditable;
 
-	function enableEditing(){
-		console.log("Double clicked, enable editing ...");
-		isEditable = true;
-
-	}
-
-	function disableEditing(){
-		console.log("Focus lost, disable editing ...");
-		isEditable = false;
-	}
-
-	function updatePouchElementName(){
-		console.log("Updating name ...");
-		console.log("In Pouch Element : ",id,' ',name);
-
-		dispatch('update-pouch-element',{id, name});
-
+		if(isEditable){
+			requestAnimationFrame(() => {
+				if (inputElement) {
+					inputElement.focus();
+					inputElement.select();
+				}
+			});
+		}else{
+			dispatch('update-pouch-element',{id, name});
+		}
 	}
 
 </script>
@@ -53,13 +53,13 @@
 	
 	{#if isEditable}
 
+	<!-- on:change={updatePouchElementName} -->
 		<input 
 			type="text"
 			contenteditable={isEditable}
-			bind:this={inputName}
+			bind:this={inputElement}
 			bind:value={name}
-			on:blur={disableEditing}
-			on:change={updatePouchElementName}
+			on:blur={changeEditableState}
 			class="p-2 flex font-bold text-center bg-transparent rounded focus:outline-none focus:ring w-full pl-1 mr-2 mb-2"
 
 		>
@@ -68,7 +68,7 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<span 
 			class=" flex-grow truncate ..."
-			on:dblclick={enableEditing}
+			on:dblclick={changeEditableState}
 		>
 			{name}
 		</span>
