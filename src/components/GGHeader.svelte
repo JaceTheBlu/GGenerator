@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
-	const version = import.meta.env.VITE_VERSION;
+	const version = import.meta.env.VITE_VERSION || 'DEV';
 </script>
 
 <div class="bg-primary-color p-2 flex justify-between">
