@@ -197,7 +197,7 @@
 					bind:value={name}
 					on:blur={changeEditableState}
 					on:keydown={(event) => handleKeyboard(event, 'update')}
-					class="bg-transparent flex w-full font-bold rounded focus:outline-none focus:ring pl-1 mr-2 mb-2"
+					class="bg-transparent text-center flex w-full font-bold rounded focus:outline-none focus:ring pl-1 mr-2 mb-2"
 					>
 			{:else}
 			
