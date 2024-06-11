@@ -17,6 +17,7 @@
 
 	let isEditable = false;
 	let inputElement = "";
+	let hidden = false;
 
 	let element_id = 0;
 	let new_pouch = '';
@@ -164,6 +165,10 @@
 		}
 	}
 
+	function changeHiddenState(){
+		hidden = !hidden
+	}
+
 
 
 </script>
@@ -171,11 +176,13 @@
 
 <ul class="bg-slate-800/50 rounded-xl divide-y mt-4 mb-4">
 	<li class="flex justify-between text-xl h-full">
-		<span
-			class="flex items-center px-2 hover:rotate-90 transition duration-300 hover:cursor-pointer rounded-tl-xl"
+
+		<button
+			class="flex items-center px-2 hover:rotate-90 transition duration-300 hover:cursor-pointer hover:bg-indigo-500 rounded-tl-xl rounded-bl-xl"
+			on:click={changeHiddenState}
 		>
-			>
-		</span>
+		 >
+		</button>
 		
 		<div
 			class="flex hover:cursor-move grow hover:text-orange-500 transition-colors duration-300 justify-center"
@@ -206,12 +213,17 @@
 		</div>
 		<button
 			class="flex justify-end items-center text-white h-full rounded-tr-xl hover:bg-red-500 transition-colors duration-300 px-2"
-			on:click={dispatchDeletePouch}>X</button
+			on:click={dispatchDeletePouch}
 		>
+			X
+	</button>
 	</li>
 
 	{#if elements.length !== 0}
-		<div class="divide-y divide-dashed">
+		<div 
+			class="divide-y divide-dashed"
+			hidden={hidden}
+		>
 			{#each elements as pouch}
 				<PouchElement
 					id={pouch.id}
@@ -223,21 +235,25 @@
 		</div>
 	{/if}
 
-	<li class="flex">
-		<input
-			bind:value={new_pouch}
-			class="bg-transparent w-full h-full focus:outline-none placeholder:italic rounded-b-xl pl-4 pb-1  "
-			type="text"
-			placeholder="Enter a value..."
-			on:keydown={(event) => handleKeyboard(event, 'submit')}
-		/>
-
-		<button
-			class="bg-blue-500 flex-shrink-0 w-full md:w-auto text-white text-secondary font-bold rounded-md px-4 "	
-			on:click={submit}		
-			>
-				 ↵
-		</button>
-
-	</li>
+	<div
+		hidden={hidden}
+	>
+		<li class="flex">
+			<input
+				bind:value={new_pouch}
+				class="bg-transparent w-full h-full focus:outline-none placeholder:italic rounded-b-xl pl-4 pb-1  "
+				type="text"
+				placeholder="Enter a value..."
+				on:keydown={(event) => handleKeyboard(event, 'submit')}
+			/>
+	
+			<button
+				class="bg-blue-500 flex-shrink-0 w-full md:w-auto text-white text-secondary font-bold rounded-md px-4 "	
+				on:click={submit}		
+				>
+					 ↵
+			</button>
+	
+		</li>
+	</div>
 </ul>
