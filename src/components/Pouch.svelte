@@ -159,7 +159,7 @@
 		}else{
 			dispatch('pouch_elements', {
 					id: id, 
-					name :name, 
+					name :name.toLowerCase(), 
 					elements : elements 
 		})
 		}
