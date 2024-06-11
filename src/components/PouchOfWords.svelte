@@ -17,6 +17,8 @@
 	let input_value = '';
 	let max = 20;
 
+	let pouch_id = 0;
+
 	$: input_value = String(input_value).toLowerCase();
 
 	/*Functions */
@@ -26,6 +28,7 @@
 	 * It is not possible to create a pouch with an empty name or an name which already exist
 	 */
 	function submit() {
+
 		input_value = input_value.trim();
 		if (
 			input_value !== null &&
@@ -44,16 +47,22 @@
 			}
 			if (!found) {
 				let new_pouch = {
+					id : pouch_id,
 					name: input_value,
 					elements: []
 				};
-
+				pouch_id++;
 				pouch_list = [...pouch_list, new_pouch];
 				input_value = '';
+
 			}
 		}
 	}
 
+	/**
+	 *  This function redirect the user that submit through the enter key to the submit method
+	 * @param event the key pressed by the user
+	 */
 	function handleKeyboard(event) {
 		switch (event.key) {
 			case 'Enter':
@@ -65,29 +74,51 @@
 		}
 	}
 
+	/**
+	 * This method is triggered when the event 'pouch_elements' is catched
+	 * Its goal is to update the pouch_list with the last modification done in the childs components (Pouch and PouchElements)
+	 * @param event : the pouch to update
+	 */
 	function refreshPouch(event) {
 		const pouch = event.detail;
 
-		let found = false;
-		for (let i = 0; i < pouch_list.length && !found; i++) {
-			if (pouch_list[i].name === pouch.name) {
-				pouch_list[i] = pouch;
+		if(pouch.name.trim() !== ''){
+			let nameAlreadyExist = false;
+
+			for(let i=0; i<pouch_list.length; i++){
+				if(pouch_list[i].name === pouch.name && pouch.id !== pouch.id){
+					nameAlreadyExist = true;
+				}
+			}
+
+			if(!nameAlreadyExist){
+				let found = false;
+				for (let i = 0; i < pouch_list.length && !found; i++) {
+					if (pouch_list[i].id === pouch.id) {
+						pouch_list[i] = pouch;
+						found = true;
+					}
+				}
+			}else{
+				console.error("The name :",pouch.name," already exist ! \n Please enter a new one");
+
+
 			}
 		}
-
+		pouch_list = [...pouch_list];
 		console.log("List :", pouch_list);
 	}
 
 	/**
 	 * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
-	 * @param e : the name of the pouch to delete
+	 * @param e : the id of the pouch to delete
 	 */
 	function deletePouch(e) {
-		const pouchName = e.detail;
+		const pouchId = e.detail;
 		let i = 0;
 		let found = false;
 		while (i < pouch_list.length && !found) {
-			if (pouch_list[i].name === pouchName) {
+			if (pouch_list[i].id === pouchId) {
 				pouch_list.splice(i, 1);
 			}
 			i++;
@@ -113,6 +144,7 @@
 	</div>
 	{#each pouch_list as pouch}
 		<Pouch
+			id={pouch.id}
 			name={pouch.name}
 			elements={pouch.elements}
 			on:pouch_elements={refreshPouch}

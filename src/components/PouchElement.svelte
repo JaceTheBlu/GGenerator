@@ -47,24 +47,40 @@
 		}
 	}
 
+
+	/**
+	 *  This function redirect the user that submit through the enter key to the changeEditableState method
+	 * @param event the key pressed by the user
+	 */
+	function handleKeyboard(event) {
+		switch (event.key) {
+			case 'Enter':
+				changeEditableState();
+				break;
+
+			default:
+				break;
+		}
+	}
+
 </script>
 
 <li class="flex justify-between items-center odd:bg-slate-800/10 even:bg-slate-800/50 pl-4">
 	
 	{#if isEditable}
-
-	<!-- on:change={updatePouchElementName} -->
 		<input 
 			type="text"
 			contenteditable={isEditable}
 			bind:this={inputElement}
 			bind:value={name}
 			on:blur={changeEditableState}
+			on:keypress={handleKeyboard}
 			class="p-2 flex font-bold text-center bg-transparent rounded focus:outline-none focus:ring w-full pl-1 mr-2 mb-2"
 
 		>
 	
 	{:else}
+	
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<span 
 			class=" flex-grow truncate ..."
