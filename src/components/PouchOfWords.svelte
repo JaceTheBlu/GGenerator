@@ -27,9 +27,8 @@
 	 * This function handle the add of a new pouch
 	 * It is not possible to create a pouch with an empty name or an name which already exist
 	 */
-	function submit() {
-
-		input_value = input_value.trim();
+	export const submit = (name) => {
+		input_value = name || input_value.trim();
 		if (
 			input_value !== null &&
 			input_value !== undefined &&
@@ -47,17 +46,16 @@
 			}
 			if (!found) {
 				let new_pouch = {
-					id : pouch_id,
+					id: pouch_id,
 					name: input_value,
 					elements: []
 				};
 				pouch_id++;
 				pouch_list = [...pouch_list, new_pouch];
 				input_value = '';
-
 			}
 		}
-	}
+	};
 
 	/**
 	 *  This function redirect the user that submit through the enter key to the submit method
@@ -82,16 +80,16 @@
 	function refreshPouch(event) {
 		const pouch = event.detail;
 
-		if(pouch.name.trim() !== ''){
+		if (pouch.name.trim() !== '') {
 			let nameAlreadyExist = false;
 
-			for(let i=0; i<pouch_list.length; i++){
-				if(pouch_list[i].name === pouch.name && pouch.id !== pouch.id){
+			for (let i = 0; i < pouch_list.length; i++) {
+				if (pouch_list[i].name === pouch.name && pouch.id !== pouch.id) {
 					nameAlreadyExist = true;
 				}
 			}
 
-			if(!nameAlreadyExist){
+			if (!nameAlreadyExist) {
 				let found = false;
 				for (let i = 0; i < pouch_list.length && !found; i++) {
 					if (pouch_list[i].id === pouch.id) {
@@ -99,14 +97,12 @@
 						found = true;
 					}
 				}
-			}else{
-				console.error("The name :",pouch.name," already exist ! \n Please enter a new one");
-
-
+			} else {
+				console.error('The name :', pouch.name, ' already exist ! \n Please enter a new one');
 			}
 		}
 		pouch_list = [...pouch_list];
-		console.log("List :", pouch_list);
+		console.log('List :', pouch_list);
 	}
 
 	/**

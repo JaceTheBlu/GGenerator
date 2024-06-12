@@ -34,7 +34,7 @@
 
 	const disableEditing = () => {
 		isEditing = false;
-		dispatch('update', { id, text });
+		dispatch('update', { id, text, type });
 	};
 
 	const handleBlur = () => {
