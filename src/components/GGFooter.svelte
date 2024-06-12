@@ -1,5 +1,12 @@
 <div class="bg-primary-color p-2 flex justify-between text-tertiary">
-	GGFooter
+	<a href="https://github.com/JaceTheBlu/GGenerator/blob/main/LICENSE">
+		<u>License GNU GPL v3.0</u></a
+	>
+	<div class="flex">
+		Made with
+		<p class="mx-2 hover:scale-150 transition duration-300">❤️</p>
+		in 2024
+	</div>
 	<div class="flex items-right">
 		<a
 			class="flex items-center"
