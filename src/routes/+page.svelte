@@ -1,10 +1,10 @@
 <script>
+	import { inject } from '@vercel/analytics';
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
-	import { inject } from '@vercel/analytics';
 	inject();
 	let rundown_list;
 	let pouch_list;
@@ -70,14 +70,19 @@
 				console.log(content);
 			};
 		};
-
 		input.click();
 	};
 </script>
 
+
 <div class="flex flex-col min-h-screen">
-	<GGHeader />
-	<div class="flex grow">
+	
+	<GGHeader/>
+	<div 
+		class="flex grow"
+		id="tutorial-step0"
+
+	>
 		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4">
 			<Rundown bind:rundown_list on:generate={generateWords} />
 		</div>
@@ -91,3 +96,4 @@
 	</div>
 	<GGFooter />
 </div>
+

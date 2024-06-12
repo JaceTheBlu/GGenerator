@@ -12,8 +12,8 @@
 		<button
 			class="flex px-2
 			bg-gradient-to-r
-			from-secondary-color
-			to-tertiary-color
+			from-background-primary-color
+			to-background-secondary-color
 			border-2
 			rounded-primary
 			transition duration-300 ease-out
@@ -31,8 +31,8 @@
 		<button
 			class="flex px-2
 			bg-gradient-to-r
-			from-tertiary-color
-			to-secondary-color
+			from-background-secondary-color
+			to-background-primary-color
 			border-2
 			rounded-primary
 			transition duration-300 ease-out
@@ -48,6 +48,7 @@
 			xport Save
 		</button>
 	</div>
+	
 	<a
 		class="flex items-center text-tertiary"
 		href="https://github.com/JaceTheBlu/GGenerator"
