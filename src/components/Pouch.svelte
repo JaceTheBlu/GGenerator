@@ -17,10 +17,13 @@
 
 	let isEditable = false;
 	let inputElement = "";
-	let hidden = false;
+	let isHidden = false;
+	let editableButton = false;
 
 	let element_id = 0;
 	let new_pouch = '';
+
+	let foldValue='▷';
 
 
 	$: elements_id = name.toLowerCase() + element_id;
@@ -166,7 +169,8 @@
 	}
 
 	function changeHiddenState(){
-		hidden = !hidden
+		isHidden = !isHidden
+		console.log(isHidden)
 	}
 
 
@@ -178,10 +182,15 @@
 	<li class="flex justify-between text-xl h-full">
 
 		<button
-			class="flex items-center px-2 hover:rotate-90 transition duration-300 hover:cursor-pointer hover:bg-indigo-500 rounded-tl-xl rounded-bl-xl"
+			class={`flex items-center px-2 hover:bg-blue-500 ${isHidden ? 'rounded-bl-xl' : 'rounded-none'} transition duration-300 hover:cursor-pointer rounded-tl-xl`}
 			on:click={changeHiddenState}
 		>
-		 >
+		{#if isHidden}
+			▽
+		{:else}
+			▷ 
+
+		{/if}
 		</button>
 		
 		<div
@@ -192,37 +201,35 @@
 			{#if isEditable}
 				<input 
 					type="text" 
-					contenteditable={isEditable}
 					bind:this={inputElement}
 					bind:value={name}
 					on:blur={changeEditableState}
 					on:keydown={(event) => handleKeyboard(event, 'update')}
-					class="bg-transparent text-center flex w-full font-bold rounded focus:outline-none focus:ring pl-1 mr-2 mb-2"
+					class="bg-transparent flex w-full font-bold rounded focus:outline-none focus:ring"
 					>
 			{:else}
-			
-				<!-- svelte-ignore a11y-no-static-element-interactions -->
-				<span 
+		
+				<button 
 					class="flex font-bold items-center"
-					on:dblclick={changeEditableState}
+					on:click={changeEditableState}
 				>
 					{name}
-				</span>
+				</button>
 			{/if}
 
 		</div>
 		<button
-			class="flex justify-end items-center text-white h-full rounded-tr-xl hover:bg-red-500 transition-colors duration-300 px-2"
+			class="flex justify-end items-center text-white h-full rounded-tr-xl hover:bg-cancel-color transition-colors duration-300 px-2"
 			on:click={dispatchDeletePouch}
 		>
 			X
-	</button>
+		</button>
 	</li>
 
 	{#if elements.length !== 0}
 		<div 
 			class="divide-y divide-dashed"
-			hidden={hidden}
+			hidden={isHidden}
 		>
 			{#each elements as pouch}
 				<PouchElement
@@ -236,22 +243,21 @@
 	{/if}
 
 	<div
-		hidden={hidden}
+		hidden={isHidden}
 	>
 		<li class="flex">
 			<input
 				bind:value={new_pouch}
-				class="bg-transparent w-full h-full focus:outline-none placeholder:italic rounded-b-xl pl-4 pb-1  "
+				class="bg-transparent w-full h-full focus:outline-none focus:ring placeholder:italic rounded-bl-xl pl-4"
 				type="text"
 				placeholder="Enter a value..."
 				on:keydown={(event) => handleKeyboard(event, 'submit')}
 			/>
-	
+
 			<button
-				class="bg-blue-500 flex-shrink-0 w-full md:w-auto text-white text-secondary font-bold rounded-md px-4 "	
-				on:click={submit}		
-				>
-					 ↵
+				class="text-xl text-white border-l border-white hover:bg-validate-color rounded-br-xl transition-colors duration-300 px-2"
+				on:click={submit}
+			>↵
 			</button>
 	
 		</li>

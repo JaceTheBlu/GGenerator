@@ -1,4 +1,5 @@
 <script>
+
 	/**
 	 * This component represent a pouch element
 	 * A pouch element is represented by :
@@ -70,30 +71,28 @@
 	{#if isEditable}
 		<input 
 			type="text"
-			contenteditable={isEditable}
 			bind:this={inputElement}
 			bind:value={name}
 			on:blur={changeEditableState}
 			on:keypress={handleKeyboard}
-			class="p-2 flex font-bold text-center bg-transparent rounded focus:outline-none focus:ring w-full pl-1 mr-2 mb-2"
+			class="flex font-bold bg-transparent rounded focus:outline-none focus:ring w-full"
 
 		>
 	
 	{:else}
-	
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<span 
+
+		<button 
 			class=" flex-grow truncate ..."
-			on:dblclick={changeEditableState}
+			on:click={changeEditableState}
 		>
 			{name}
-		</span>
+		</button>
 
 	{/if}
 
 
 	<button
-		class="text-xl text-white border-l border-white hover:bg-red-500 transition-colors duration-300 px-2"
+		class="text-xl text-white border-l border-white hover:bg-cancel-color transition-colors duration-300 px-2"
 		on:click={dispatchDelete(id)}
 	>X
 	</button>

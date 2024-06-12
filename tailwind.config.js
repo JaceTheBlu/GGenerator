@@ -6,8 +6,12 @@ module.exports = {
     extend: {
       colors: {
         "primary-color": colors.slate[800],
-        "secondary-color": colors.pink[500],
-        "tertiary-color": colors.indigo[900],
+        "secondary-color": colors.orange[500],
+        "tertiary-color": colors.gray[500],
+        "validate-color": colors.green[500],
+        "cancel-color": colors.red[500],
+        "background-primary-color": colors.indigo[900],
+        "background-secondary-color":colors.pink[500]
       },
       textColor:{
         "primary-color": colors.white,
