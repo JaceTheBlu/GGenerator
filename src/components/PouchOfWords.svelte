@@ -130,6 +130,7 @@
 <div class="flex-col">
 	<div class="flex">
 		<input
+		id="tutorial-step-2"
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
 			type="text"
 			bind:value={input_value}

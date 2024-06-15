@@ -48,6 +48,23 @@
 			xport Save
 		</button>
 	</div>
+
+	<button
+		class="rounded-primary px-2
+		border-2
+		bg-gradient-to-r
+		from-background-secondary-color 
+		to-background-primary-color
+		transition duration-300 ease out
+		hover:shadow-black
+		hover:shadow-md
+		hover:scale-110
+		font-bold text-2xl"
+		
+		on:click={()=>{dispatch('tutorial')}}
+	>
+		?
+	</button>
 	
 	<a
 		class="flex items-center text-tertiary"
