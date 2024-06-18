@@ -21,6 +21,22 @@
 
 	$: input_value = String(input_value).toLowerCase();
 
+
+	function contain(pouch){
+		let nameAlreadyExist = false;
+
+		if(pouch.name.trim() !==''){
+			for(let i=0; (i<pouch_list.length) && (!nameAlreadyExist); i++){
+				if(pouch_list[i].name === pouch.name && pouch_list[i].id !== pouch.id){
+					nameAlreadyExist = true;
+				}
+			}
+
+		}
+
+		return nameAlreadyExist;
+	}
+
 	/*Functions */
 
 	/**
@@ -37,23 +53,23 @@
 			input_value.length > 0 &&
 			input_value.length < max
 		) {
-			let i = 0;
-			let found = false;
-			while (i < pouch_list.length && !found) {
-				if (pouch_list[i] === input_value) {
-					found = true;
-				}
-				i++;
-			}
-			if (!found) {
-				let new_pouch = {
-					id : pouch_id,
-					name: input_value,
-					elements: []
-				};
+			
+			let new_pouch = {
+				id : pouch_id,
+				name: input_value,
+				elements: []
+			};
+
+			let nameAlreadyExist = contain(new_pouch);
+
+			if (!nameAlreadyExist) {
 				pouch_id++;
 				pouch_list = [...pouch_list, new_pouch];
 				input_value = '';
+
+			}else{
+				console.error("A list with the name  :",new_pouch.name," already exist ! \n Please enter a new one");
+				input_value='';
 
 			}
 		}
@@ -82,14 +98,11 @@
 	function refreshPouch(event) {
 		const pouch = event.detail;
 
+		console.log();
 		if(pouch.name.trim() !== ''){
 			let nameAlreadyExist = false;
 
-			for(let i=0; i<pouch_list.length; i++){
-				if(pouch_list[i].name === pouch.name && pouch.id !== pouch.id){
-					nameAlreadyExist = true;
-				}
-			}
+			nameAlreadyExist = contain(pouch);
 
 			if(!nameAlreadyExist){
 				let found = false;
@@ -100,7 +113,7 @@
 					}
 				}
 			}else{
-				console.error("The name :",pouch.name," already exist ! \n Please enter a new one");
+				console.error("A list with the name :",pouch.name," already exist ! \n Please enter a new one");
 
 
 			}
@@ -108,6 +121,7 @@
 		pouch_list = [...pouch_list];
 		console.log("List :", pouch_list);
 	}
+
 
 	/**
 	 * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
