@@ -80,7 +80,9 @@
 		};
 		input.click();
 	};
-
+	const exportJSON = () => {
+		console.log('export');
+	};
 	const createPouchIfNE = (event) => {
 		console.log(event);
 		let pouchName = event.detail.text.substring(1);
@@ -90,7 +92,7 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
-	<GGHeader />
+	<GGHeader on:import={importJSON} on:export={exportJSON} />
 	<div class="flex grow" id="tutorial-step0">
 		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4">
 			<Rundown

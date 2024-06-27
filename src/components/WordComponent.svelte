@@ -34,6 +34,7 @@
 
 	const disableEditing = () => {
 		isEditing = false;
+		text = text.trim();
 		dispatch('update', { id, text, type });
 	};
 
