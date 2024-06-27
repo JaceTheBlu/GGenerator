@@ -52,7 +52,7 @@
 		>
 			<div />
 			{#each rundown_list as component}
-				<WordComponent id={component.id} on:update={updateWordComponent} />
+				<WordComponent id={component.id} text={component.text} on:update={updateWordComponent} />
 			{/each}
 		</div>
 		<button

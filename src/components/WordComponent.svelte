@@ -72,14 +72,14 @@
 	{:else}
 		<button
 			class="p-2
-	transition
-	ease-in-out
-	duration-300
-	bg-primary-color/50
-	hover:scale-110
-	hover:cursor-pointer
-	rounded-primary mr-2 mb-2
-	{type === 'pouch' ? 'text-secondary-color underline' : ''}"
+			transition
+			ease-in-out
+			duration-300
+			bg-primary-color/50
+			hover:scale-110
+			hover:cursor-pointer
+			rounded-primary mr-2 mb-2
+			{type === 'pouch' ? 'text-secondary-color underline' : ''}"
 			on:mouseup={enableEditing}
 		>
 			{text}
