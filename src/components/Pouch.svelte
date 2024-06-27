@@ -16,15 +16,12 @@
 	export let elements = [];
 
 	let isEditable = false;
-	let inputElement = "";
 	let isHidden = false;
-	let editableButton = false;
-
-	let element_id = 0;
+	
+	let inputElement = "";
 	let new_pouch = '';
 
-	let foldValue='▷';
-
+	let element_id = 0;
 
 	$: elements_id = name.toLowerCase() + element_id;
 	const dispatch = createEventDispatcher();
@@ -35,7 +32,7 @@
 	 * This function handle the add of a elements in the pouch
 	 * @param event : the element to add, with and id and a name property
 	 */
-	function submit() {
+	function addElements() {
 		if (new_pouch.trim() !== '') {
 			element_id++;
 			elements = [
@@ -56,14 +53,14 @@
 	}
 		
 	/**
-	 *  This function redirect the user that submit through the enter key to the submit method
+	 *  This function redirect the user that submit through the enter key to the addElements method
 	 * @param event the key pressed by the user
 	 */
 	function handleKeyboard(event, methodName) {
 		if(event.key === 'Enter'){
 			switch (methodName) {
-				case 'submit':
-					submit();
+				case 'addElements':
+					addElements();
 				break;
 	
 				case 'update':
@@ -86,8 +83,6 @@
 		const pouch_elem = event.detail;
 		let found = false;
 		if(pouch_elem.name.trim()!== ''){
-
-			console.log("In Pouch :", pouch_elem);
 
 			for (let i = 0; (i < elements.length) && (!found); i++) {
 				if(elements[i].id === pouch_elem.id){
@@ -130,7 +125,6 @@
 					elements : elements 
 		});
 
-		console.log("elements :",elements);
 	}
 
 
@@ -139,7 +133,6 @@
 	 * @param pouchName : the name of the pouch to delete
 	 */
 	function dispatchDeletePouch() {
-		//dispatch('delete-pouch', pouchName);
 		dispatch('delete-pouch',{id : id});
 	}
 
@@ -170,31 +163,23 @@
 
 	function changeHiddenState(){
 		isHidden = !isHidden
-		console.log(isHidden)
 	}
-
-
-
 </script>
 
 
-<ul class="bg-slate-800/50 rounded-xl divide-y mt-4 mb-4">
+<ul class="bg-slate-800/50 rounded-xl divide-y my-2">
 	<li class="flex justify-between text-xl h-full">
 
 		<button
 			class={`flex items-center px-2 hover:bg-blue-500 ${isHidden ? 'rounded-bl-xl' : 'rounded-none'} transition duration-300 hover:cursor-pointer rounded-tl-xl`}
 			on:click={changeHiddenState}
 		>
-		{#if isHidden}
-			▽
-		{:else}
-			▷ 
-
-		{/if}
+			{isHidden ? '▷' : '▽'}
+			 
 		</button>
 		
 		<div
-			class="flex hover:cursor-move grow hover:text-orange-500 transition-colors duration-300 justify-center"
+			class="flex hover:cursor-move grow hover:text-secondary-color transition-colors duration-300 justify-center"
 		>
 			<span class="flex items-center text-white/50"> @ </span>
 
@@ -205,7 +190,7 @@
 					bind:value={name}
 					on:blur={changeEditableState}
 					on:keydown={(event) => handleKeyboard(event, 'update')}
-					class="bg-transparent flex w-full font-bold rounded focus:outline-none focus:ring"
+					class="bg-transparent flex w-full text-center font-bold rounded focus:outline-none focus:ring-2 focus:ring-secondary-color"
 					>
 			{:else}
 		
@@ -218,6 +203,7 @@
 			{/if}
 
 		</div>
+
 		<button
 			class="flex justify-end items-center text-white h-full rounded-tr-xl hover:bg-cancel-color transition-colors duration-300 px-2"
 			on:click={dispatchDeletePouch}
@@ -226,10 +212,10 @@
 		</button>
 	</li>
 
-	{#if elements.length !== 0}
+	{#if elements.length !== 0 && !isHidden}
+
 		<div 
 			class="divide-y divide-dashed"
-			hidden={isHidden}
 		>
 			{#each elements as pouch}
 				<PouchElement
@@ -242,24 +228,25 @@
 		</div>
 	{/if}
 
-	<div
-		hidden={isHidden}
-	>
-		<li class="flex">
-			<input
-				bind:value={new_pouch}
-				class="bg-transparent w-full h-full focus:outline-none focus:ring placeholder:italic rounded-bl-xl pl-4"
-				type="text"
-				placeholder="Enter a value..."
-				on:keydown={(event) => handleKeyboard(event, 'submit')}
-			/>
+	{#if !isHidden}
+		<div>
+			<li class="flex">
+				<input
+					bind:value={new_pouch}
+					class="bg-transparent w-full h-full focus:outline-none focus:ring placeholder:italic rounded-bl-xl pl-4"
+					type="text"
+					placeholder="Enter a value..."
+					on:keydown={(event) => handleKeyboard(event, 'addElements')}
+				/>
 
-			<button
-				class="text-xl text-white border-l border-white hover:bg-validate-color rounded-br-xl transition-colors duration-300 px-2"
-				on:click={submit}
-			>↵
-			</button>
+				<button
+					class="text-xl text-white border-l border-white hover:bg-validate-color rounded-br-xl transition-colors duration-300 px-2"
+					on:click={addElements}
+				>↵
+				</button>
+		
+			</li>
+		</div>
+	{/if}
 	
-		</li>
-	</div>
 </ul>

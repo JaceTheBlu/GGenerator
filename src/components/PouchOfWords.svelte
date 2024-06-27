@@ -7,10 +7,8 @@
 	 */
 
 	/* Imports */
-	import { createEventDispatcher } from 'svelte';
 	import Pouch from './Pouch.svelte';
 
-	const dispatch = createEventDispatcher();
 
 	/* Variables */
 	export let pouch_list = [];
@@ -27,7 +25,7 @@
 	 * This function handle the add of a new pouch
 	 * It is not possible to create a pouch with an empty name or an name which already exist
 	 */
-	function submit() {
+	function addPouch() {
 
 		input_value = input_value.trim();
 		if (
@@ -37,41 +35,57 @@
 			input_value.length > 0 &&
 			input_value.length < max
 		) {
+			let pouch = {
+				id : pouch_id,
+				name: input_value,
+				elements: []
+			};
 			let i = 0;
-			let found = false;
-			while (i < pouch_list.length && !found) {
-				if (pouch_list[i] === input_value) {
-					found = true;
-				}
-				i++;
-			}
-			if (!found) {
-				let new_pouch = {
-					id : pouch_id,
-					name: input_value,
-					elements: []
-				};
+			let nameAlreadyExist = contains(pouch);
+			if (!nameAlreadyExist) {
 				pouch_id++;
-				pouch_list = [...pouch_list, new_pouch];
-				input_value = '';
-
+				pouch_list = [...pouch_list, pouch];
+				
 			}
+			input_value = '';
 		}
 	}
 
 	/**
-	 *  This function redirect the user that submit through the enter key to the submit method
+	 *  This function redirect the user that addPouch through the enter key to the addPouch method
 	 * @param event the key pressed by the user
 	 */
 	function handleKeyboard(event) {
 		switch (event.key) {
 			case 'Enter':
-				submit();
+				addPouch();
 				break;
 
 			default:
 				break;
 		}
+	}
+
+	/**
+	 * A function that verify if a pouch name is already present
+	 * @param pouch : the pouch to verify its name
+	 * @return found : true if the name is already in the list, false otherwise
+	 */
+	function contains(pouch){
+		let found = false;
+
+		console.log("pouch :",pouch.id);
+		console.log("pouch list :",pouch_list);
+		
+
+
+		for(let i =0; i<(pouch_list.length) && (!found); i++){
+			if(pouch_list[i].name === pouch.name && pouch.id !== pouch_list[i].id ){
+				found = true;
+			}
+		}
+
+		return found;
 	}
 
 	/**
@@ -83,13 +97,7 @@
 		const pouch = event.detail;
 
 		if(pouch.name.trim() !== ''){
-			let nameAlreadyExist = false;
-
-			for(let i=0; i<pouch_list.length; i++){
-				if(pouch_list[i].name === pouch.name && pouch.id !== pouch.id){
-					nameAlreadyExist = true;
-				}
-			}
+			let nameAlreadyExist = contains(pouch);
 
 			if(!nameAlreadyExist){
 				let found = false;
@@ -101,12 +109,9 @@
 				}
 			}else{
 				console.error("The name :",pouch.name," already exist ! \n Please enter a new one");
-
-
 			}
 		}
 		pouch_list = [...pouch_list];
-		console.log("List :", pouch_list);
 	}
 
 	/**
@@ -124,6 +129,7 @@
 			i++;
 		}
 		pouch_list = [...pouch_list];
+
 	}
 </script>
 
@@ -138,10 +144,11 @@
 
 		<button
 			class="bg-validate-color flex-shrink-0 w-full md:w-auto text-white rounded-md px-4 py-2"
-			on:click={submit}
+			on:click={addPouch}
 			>Add list
 		</button>
 	</div>
+	
 	{#each pouch_list as pouch}
 		<Pouch
 			id={pouch.id}

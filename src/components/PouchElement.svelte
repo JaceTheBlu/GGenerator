@@ -1,5 +1,4 @@
 <script>
-
 	/**
 	 * This component represent a pouch element
 	 * A pouch element is represented by :
@@ -75,14 +74,14 @@
 			bind:value={name}
 			on:blur={changeEditableState}
 			on:keypress={handleKeyboard}
-			class="flex font-bold bg-transparent rounded focus:outline-none focus:ring w-full"
+			class="flex font-bold bg-transparent rounded focus:outline-none focus:ring-2 focus:ring-secondary-color  w-full"
 
 		>
 	
 	{:else}
 
 		<button 
-			class=" flex-grow truncate ..."
+			class=" flex-grow text-left truncate ..."
 			on:click={changeEditableState}
 		>
 			{name}
