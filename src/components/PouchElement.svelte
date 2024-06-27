@@ -1,5 +1,4 @@
 <script>
-
 	/**
 	 * This component represent a pouch element
 	 * A pouch element is represented by :
@@ -15,7 +14,7 @@
 	export let name = '';
 
 	let isEditable = false;
-	let inputElement = "";
+	let inputElement = '';
 
 	const dispatch = createEventDispatcher();
 
@@ -31,23 +30,22 @@
 	/**
 	 * This method is used for the update of a pouch element
 	 * Double clicking on a pouch element make it editable
-	 * When focus is lost new informations are sent to the parent component
+	 * When focus is lost new information are sent to the parent component
 	 */
-	function changeEditableState(){
+	function changeEditableState() {
 		isEditable = !isEditable;
 
-		if(isEditable){
+		if (isEditable) {
 			requestAnimationFrame(() => {
 				if (inputElement) {
 					inputElement.focus();
 					inputElement.select();
 				}
 			});
-		}else{
-			dispatch('update-pouch-element',{id, name});
+		} else {
+			dispatch('update-pouch-element', { id, name });
 		}
 	}
-
 
 	/**
 	 *  This function redirect the user that submit through the enter key to the changeEditableState method
@@ -63,37 +61,27 @@
 				break;
 		}
 	}
-
 </script>
 
 <li class="flex justify-between items-center odd:bg-slate-800/10 even:bg-slate-800/50 pl-4">
-	
 	{#if isEditable}
-		<input 
+		<input
 			type="text"
 			bind:this={inputElement}
 			bind:value={name}
 			on:blur={changeEditableState}
 			on:keypress={handleKeyboard}
 			class="flex font-bold bg-transparent rounded focus:outline-none focus:ring w-full"
-
-		>
-	
+		/>
 	{:else}
-
-		<button 
-			class=" flex-grow truncate ..."
-			on:click={changeEditableState}
-		>
+		<button class="text-left flex-grow truncate ..." on:click={changeEditableState}>
 			{name}
 		</button>
-
 	{/if}
-
 
 	<button
 		class="text-xl text-white border-l border-white hover:bg-cancel-color transition-colors duration-300 px-2"
 		on:click={dispatchDelete(id)}
-	>X
+		>X
 	</button>
 </li>
