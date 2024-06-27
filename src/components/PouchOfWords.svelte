@@ -25,9 +25,8 @@
 	 * This function handle the add of a new pouch
 	 * It is not possible to create a pouch with an empty name or an name which already exist
 	 */
-	function addPouch() {
-
-		input_value = input_value.trim();
+	export const submit = (name) => {
+		input_value = name || input_value.trim();
 		if (
 			input_value !== null &&
 			input_value !== undefined &&
@@ -49,7 +48,7 @@
 			}
 			input_value = '';
 		}
-	}
+	};
 
 	/**
 	 *  This function redirect the user that addPouch through the enter key to the addPouch method
@@ -97,7 +96,13 @@
 		const pouch = event.detail;
 
 		if(pouch.name.trim() !== ''){
-			let nameAlreadyExist = contains(pouch);
+			let nameAlreadyExist = false;
+
+			for(let i=0; i<pouch_list.length; i++){
+				if(pouch_list[i].name === pouch.name && pouch.id !== pouch.id){
+					nameAlreadyExist = true;
+				}
+			}
 
 			if(!nameAlreadyExist){
 				let found = false;

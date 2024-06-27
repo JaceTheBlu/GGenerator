@@ -1,13 +1,21 @@
 <script>
+	// Code for analytics
 	import { inject } from '@vercel/analytics';
+	inject();
+
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
-	inject();
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
 	let rundown_list;
+	let rundown_elem;
 	let pouch_list;
+	let pouch_elem;
 	let result_div;
 
 	const generateWords = () => {
@@ -72,22 +80,28 @@
 		};
 		input.click();
 	};
+
+	const createPouchIfNE = (event) => {
+		console.log(event);
+		let pouchName = event.detail.text.substring(1);
+		const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
+		if (!pouch) pouch_elem.submit(pouchName);
+	};
 </script>
 
-
 <div class="flex flex-col min-h-screen">
-	
-	<GGHeader/>
-	<div 
-		class="flex grow"
-		id="tutorial-step0"
-
-	>
+	<GGHeader />
+	<div class="flex grow" id="tutorial-step0">
 		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4">
-			<Rundown bind:rundown_list on:generate={generateWords} />
+			<Rundown
+				bind:this={rundown_elem}
+				bind:rundown_list
+				on:generate={generateWords}
+				on:NewPouchWord={createPouchIfNE}
+			/>
 		</div>
 		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 overflow-auto">
-			<PouchOfWords bind:pouch_list />
+			<PouchOfWords bind:this={pouch_elem} bind:pouch_list />
 		</div>
 	</div>
 	<div class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
@@ -96,4 +110,3 @@
 	</div>
 	<GGFooter />
 </div>
-
