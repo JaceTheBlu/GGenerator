@@ -3,12 +3,12 @@
 	import { inject } from '@vercel/analytics';
 	inject();
 
+	import { createEventDispatcher } from 'svelte';
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
-	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -87,7 +87,7 @@
 		console.log(event);
 		let pouchName = event.detail.text.substring(1);
 		const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
-		if (!pouch) pouch_elem.submit(pouchName);
+		if (!pouch) pouch_elem.addPouch(pouchName);
 	};
 </script>
 
