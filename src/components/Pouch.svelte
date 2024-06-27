@@ -233,7 +233,7 @@
 			<li class="flex">
 				<input
 					bind:value={new_pouch}
-					class="bg-transparent w-full h-full focus:outline-none focus:ring placeholder:italic rounded-bl-xl pl-4"
+					class="bg-transparent w-full h-full focus:outline-none focus:ring-2 focus:ring-secondary-color placeholder:italic rounded-bl-xl pl-4"
 					type="text"
 					placeholder="Enter a value..."
 					on:keydown={(event) => handleKeyboard(event, 'addElements')}
