@@ -9,8 +9,11 @@
 
 	$: newId = rundown_list.length ? Math.max(...rundown_list.map((t) => t.id)) + 1 : 1;
 
-	const addWordComponent = () => {
-		rundown_list = [...rundown_list, { id: newId, text: '' }];
+	const addWordComponent = (event) => {
+		rundown_list = [
+			...rundown_list,
+			{ id: newId, text: event?.detail.text || '', type: event?.detail.type || 'static' }
+		];
 	};
 
 	const removeWordComponent = (event) => {
@@ -26,6 +29,9 @@
 				}
 				return component;
 			});
+			if (word.type === 'pouch') {
+				dispatch('NewPouchWord', word);
+			}
 		} else {
 			removeWordComponent(event);
 		}

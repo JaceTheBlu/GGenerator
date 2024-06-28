@@ -1,4 +1,5 @@
 import colors from 'tailwindcss/colors';
+import plugin from 'tailwindcss/plugin';
 
 module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -47,6 +48,10 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ addVariant }) {
+      addVariant('children', '&>*')
+    })
+  ]
 };
 
