@@ -3,7 +3,7 @@
 	import { inject } from '@vercel/analytics';
 	inject();
 
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
@@ -17,6 +17,7 @@
 	let pouch_list;
 	let pouch_elem;
 	let result_div;
+	export let data;
 
 	const generateWords = () => {
 		const words = rundown_list.map((word) => {
@@ -89,6 +90,9 @@
 		const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
 		if (!pouch) pouch_elem.addPouch(pouchName);
 	};
+	onMount(() => {
+		if (!data.visited) console.log('firsttime');
+	});
 </script>
 
 <div class="flex flex-col min-h-screen">
