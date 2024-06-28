@@ -12,12 +12,16 @@
 
 	const dispatch = createEventDispatcher();
 
-	let rundown_list;
+	export let data;
+
+	let rundown_list = data.rundown_list;
+	let pouch_list = data.pouch_list;
+
+	$: cookie;
+
 	let rundown_elem;
-	let pouch_list;
 	let pouch_elem;
 	let result_div;
-	export let data;
 
 	const generateWords = () => {
 		const words = rundown_list.map((word) => {
@@ -81,15 +85,18 @@
 		};
 		input.click();
 	};
+
 	const exportJSON = () => {
 		console.log('export');
 	};
+
 	const createPouchIfNE = (event) => {
 		console.log(event);
 		let pouchName = event.detail.text.substring(1);
 		const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
 		if (!pouch) pouch_elem.addPouch(pouchName);
 	};
+
 	onMount(() => {
 		if (!data.visited) console.log('firsttime');
 	});
