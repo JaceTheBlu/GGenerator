@@ -134,7 +134,7 @@
 	}
 </script>
 
-<div class="flex flex h-[calc(100vh-13.5rem)] flex-1 flex-col flex-1 flex-col">
+<div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
 	
 	<div class="flex">
 		<input
