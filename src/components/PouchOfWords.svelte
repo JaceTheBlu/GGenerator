@@ -134,7 +134,8 @@
 	}
 </script>
 
-<div class="flex-col">
+<div class="flex flex h-[calc(100vh-13.5rem)] flex-1 flex-col flex-1 flex-col">
+	
 	<div class="flex">
 		<input
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
@@ -150,13 +151,16 @@
 		</button>
 	</div>
 	
-	{#each pouch_list as pouch}
-		<Pouch
-			id={pouch.id}
-			name={pouch.name}
-			elements={pouch.elements}
-			on:pouch_elements={refreshPouch}
-			on:delete-pouch={deletePouch}
-		/>
-	{/each}
+	<div class="flex-1 overflow-y-auto rounded-primary">
+		{#each pouch_list as pouch}
+			<Pouch
+				id={pouch.id}
+				name={pouch.name}
+				elements={pouch.elements}
+				on:pouch_elements={refreshPouch}
+				on:delete-pouch={deletePouch}
+			/>
+		{/each}
+
+	</div>
 </div>
