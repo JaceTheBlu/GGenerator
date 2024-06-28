@@ -2,7 +2,7 @@
 	// Code for analytics
 	import { inject } from '@vercel/analytics';
 	
-	import Shepherd from 'shepherd.js';
+	import Berger from '$lib/berger.js';
 	import { createEventDispatcher } from 'svelte';
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
@@ -88,60 +88,51 @@
 	function startTutorial(){
 		if((tour=== undefined) || (!tour.isActive())){
 
-			tour = new Shepherd.Tour({
-				useModalOverlay: true,
-				defaultStepOptions:{
-					classes: 'shadow-md bg-gradient-to-r from-background-primary-color to-background-secondary-color border-2 rounded-primary min-w-xs max-w-xl px-2 pt-2 pb-2 mb-4',
-					scrollTo: false,
-				}
-			});
+			tour = new Berger(null);
 	
 			const firstText =
-				"<div class='flex-col items-center justify-center'> "+
-					"<p class='text-center font-bold text-2xl mb-4'>"+
+				"<div class='flex-col items-center justify-center children:text-lg first:text-2xl'> "+
+					"<p class='text-center font-bold mb-4'>"+
 						"Welcome to GGenerator"+
 					"</p>"+ 
-					"<p class='text-justify break-words max-w-xl px-4 pb-4'>"+ 
-						"A multi-purpose generator for (theoretically) every cases where you need random things !"+
+					"<p class='px-4 pb-4'>"+ 
+						"A multi-purpose generator for every cases where you need random things !"+
 					"</p>"+ 
-					"<p class='text-justify px-4 pb-2'>"+ 
+					"<p class='px-4 pb-2'>"+ 
 						"When you are ready let's start the tutorial."+ 
 					"</p>"+ 
 				"</div>"
 			;
 	
 			const secondText=
-				"<div class='flex-col items-center justify-center'> "+
+				"<div class='flex-col items-center justify-center chidlren:text-lg'> "+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
 						"Main sections "+
 					"</p>"+ 
-					"<p class='text-justify px-4'>"+ 
+					"<p class='px-4'>"+ 
 						"We have two sections : "+
 					"</p>"+
 					"<ul class='list-disc list-inside  px-4 pb-4'>"+ 
-						"<li> On the left, the Rundown to create a sentence</li>"+	
-						"<li> On the right, the Pouch of words to create list</li>"+	
+						"<li> On the left, the Rundown used  to create a sentence</li>"+	
+						"<li> On the right, the Pouch of words to create lists</li>"+	
 					"</ul>"+
-					"<p class='text-justify break-words max-w-xl px-4 pb-4'>"+ 
-						"Let's continue with the sentence section !"+ 
+					"<p class='px-4 pb-4'>"+ 
+						"Let's continue with the Pouch of Words !"+ 
 					"</p>"+ 
 				"</div>"
 	
 			;
 			const thirdText=
-				"<div class='flex-col flex-wrap items-center justify-center'> "+
+				"<div class='flex flex-col items-center justify-between'> "+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
-						"Left section : Sentence"+
+						"Right section : Pouch Of Words"+
 					"</p>"+ 
-					"<p class='text-justify break-words max-w-xl px-4' mb-2>"+ 
-						"The sentence is composed of blocks,you have two types of blocks :"+
+					"<p class='text-lg px-4 mb-2'>"+ 
+						"The goal of this section is to create pouches, which are lists of things. For example you can have a pouch named as animals with cat and dog in it :"+
 					"</p>"+
-					"<ul class='list-disc list-inside break-words max-w-xl px-4 pb-4'>"+ 
-						"<li> A list block which a block with ONLY a list in it.</li>"+	
-						"<li> A block with text which will be used to add meaning to the sentence </li>"+	
-					"</ul>"+
-					"<p class='text-justify break-words max-w-xl px-4 pb-4'>"+ 
-						"Next more details about blocks !"+
+					"<img src='images/pouch_animals.png' alt='pouch example' class='w-96 mb-4'/>"+
+					"<p class='text-lg px-4 pb-4'>"+ 
+						"Next how to create a pouch !"+
 					"</p>"+ 
 				"</div>"
 			;
@@ -149,37 +140,34 @@
 			const fourthText=
 				"<div class='flex-col flex-wrap items-center justify-center'> "+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
-						"Blocks : List & Static text"+
+						"Create a pouch"+
 					"</p>"+ 
 					"<p class='text-justify break-words max-w-2xl px-4 pb-2'>"+ 
-						"First to create a block click on the '+' button."+  
-					"</p>"+ 
-					"<p class='text-justify px-4'>"+ 
-						"After that to do a list block add the name of the list forwaded by '@' don't put anything else in it !"+  
+						"To create a pouch enter the name of pouch in the bar and press Enter or click the 'Add pouch' button "+  
 					"</p>"+ 
 					"<p class='text-justify break-words max-w-4xl px-4'>"+ 
-						"If you want a static text block just type some words in it, when you finished you can create another block by clicking on the '+' again or by pressing 'Tab'"+  
+						"To add element to a pouch do it in the 'Enter a value ...' section and press Enter or the 'submit ↵' button next to it"+  
 					"</p>"+ 
-					"<p class='text-justify break-words max-w-xl px-4'>"+ 
-						"For example :"+
+					"<p class='text-justify break-words max-w-4xl px-4'>"+ 
+						"In the next section how to manage a pouch and its elements"+  
 					"</p>"+ 
-					"<img src='sentence-2.png' alt='sentence example' class='w-96'/>"
+					
 				"</div>"
 			;
 	
 			const fifthText = 
 				"<div class='flex-col items-centers justify center'>"+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
-						"Creating a list"+
+						"Manage a pouch"+
 					"</p>"+	
 					"<p class='text-justify break-words max-w-2xl px-4 pb-2'>"+
-						"Now, we have a sentence, we need next to create the list, to do that just type the name of the list in the bar and press enter or submit."+
+						"In a pouch you also can modify its name by clicking on the pouch name, note that you cannot put a name of an existing pouch. You can also in the same way change the name of the elements."+
 					"</p>"+	
 					"<p class='italic text-base break-words max-w-xl px-4 pb-4'>"+ 
-						"No need this time to add '@' in front of it ! It is done automatically"+ 
+						"If you want to delete an element click on the red cross next to it, to delete a pouch click the red cross next to its name."+ 
 					"</p>"+
 					"<p class='text-justify break-words max-w-2xl px-4 pb-2'>"+
-						"Before continuing to the next step create 3 lists : people, tasks and days"+
+						"It cover everything you need to know about pouches ! Next Rundown section ! "+
 					"</p>"+	
 				"</div>"
 			;
@@ -187,51 +175,52 @@
 			const sixthText = 
 				"<div class='flex-col items-centers justify center'>"+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
-						"Add elements to a list"+
+						"Rundown section"+
 					"</p>"+	
 					"<p class='text-justify break-words max-w-2xl px-4 pb-2'>"+
-						"Since we have now 3 lists, we just need to add some elements, same as before but this time to add an element it's the bar within the list."+
+						"The goal of this section is to create a sentence, it will be used as a template for the random generation."+
 					"</p>"+	
 					"<p class='text-justify px-4 pb-2'>"+
-						"To continue you will need to fill the lists with that :"+
+						"A sentence is composed of multiples words, we have two types of them : "+
 					"</p>"+	
 					"<ul class='list-disc  list-inside px-4 pb-4'>"+ 
-						"<li> @people : John, Marie, Pablo and Elena</li>"+	
-						"<li> @tasks : laundry, cooking, groceries</li>"+	
-						"<li> @days : Thursday, Friday, Saturday and Sunday </li>"+		
+						"<li> A pouch word : it's the name of one the list you created earlier</li>"+	
+						"<li> A static text word : it's used to add meaning to the sentence </li>"+	
 					"</ul>"+
+					"<p class='text-justify px-4 pb-2'>"+
+						"Next detail on words !"+
+					"</p>"+	
 				"</div>"
 			;
 				
 			const seventhText = 
 				"<div class='flex-col items-centers justify center'>"+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
-						"Update/Delete an element from a list"+
+						"Words : Pouch & Static text"+
 					"</p>"+	
 					"<p class='text-justify break-words max-w-2xl px-4 pb-2'>"+
-						"Now we will see on how we can modify our list, to update en element just click on it and type a new value, if you want to delete it just click on the cross."+
+						"First to create a word click on the '+' button, when you have finished you can create another word by clicking again on the '+' button on by pressing Tab."+
 					"</p>"+	
-					
-					"<p class='text-italice break-words max-w-2xl px-4 pb-2'>"+
-						"You can also do that on the name of the list, and of course delete the list as well"+
+					"<p class='text-justify break-words max-w-2xl px-4 pb-2'>"+
+						"If you want to create a Pouch word, put the name of the pouch forwared by '@', don't put anything else ! A pouch word contains only a pouch."+
 					"</p>"+	
 					"<p class='text-justify px-4 pb-2'>"+
-						"Pratice time ! "+
+						"To create a Static text word ... just type some text ! Note that you can modify your words by clicking on them, to delete them just remove everything in them."+
 					"</p>"+	
-					"<ul class='list-disc list-inside break-words max-w-2xl px-4 pb-4'>"+ 
-						"<li> Pablo already left the shared flat, he was replaced by Nathan</li>"+	
-						"<li> On Sunday everybody take care of himself so no need to have it</li>"+		
-					"</ul>"+
+					"<p class='text-justify px-4 pb-2'>"+
+						"When you finished you will have something like that : "+
+					"</p>"+	
+					"<img src='images/sentence.png' alt='sentence example' class='w-96'/>"+
 				"</div>"
 			;
 	
 			const eighthText = 
 				"<div class='flex-col items-centers justify center'>"+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
-						"Fold a list"+
+						"GGenerate !"+
 					"</p>"+	
 					"<p class='text-justify break-words max-w-2xl px-4 pb-2'>"+
-						"To finish on the list you can also fold and unfold them ! Just click on ▽/▷"+
+						"When you're happy with your sentence and your pouches, click on GGenrate ! to generate a random result."+
 					"</p>"+	
 				"</div>"
 			;
