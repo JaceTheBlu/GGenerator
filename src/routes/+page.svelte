@@ -111,7 +111,8 @@
 
 <div class="flex flex-col min-h-screen">
 	<GGHeader on:import={importJSON} on:export={exportJSON} />
-	<div class="flex grow" id="tutorial-step0">
+	
+	<div class="main flex flex-1">
 		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4">
 			<Rundown
 				bind:this={rundown_elem}
@@ -120,10 +121,11 @@
 				on:NewPouchWord={createPouchIfNE}
 			/>
 		</div>
-		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 overflow-auto">
+		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full">
 			<PouchOfWords bind:this={pouch_elem} bind:pouch_list />
 		</div>
 	</div>
+
 	<div class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
 		<p class="pl-2 text-secondary mr-2">Output:</p>
 		<p bind:this={result_div} class="text-secondary-color" />

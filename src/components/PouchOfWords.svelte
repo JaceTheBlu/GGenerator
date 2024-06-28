@@ -1,6 +1,6 @@
 <script>
 	/**
-	 * A class that wraps the Pouch of Words functionnality
+	 * A class that wraps the Pouch of Words functionality
 	 * It allows creating pouches and displays them
 	 * @param pouch_list: a list of string that contains the name of every pouch created, used to track the existing pouch and display them
 	 * @param max : a number that tells the maximum numbers of characters possible in the input
@@ -88,7 +88,7 @@
 
 	/**
 	 * This method is triggered when the event 'pouch_elements' is catched
-	 * Its goal is to update the pouch_list with the last modification done in the childs components (Pouch and PouchElements)
+	 * Its goal is to update the pouch_list with the last modification done in the child components (Pouch and PouchElements)
 	 * @param event : the pouch to update
 	 */
 	function refreshPouch(event) {
@@ -130,7 +130,7 @@
 	}
 </script>
 
-<div class="flex-col">
+<div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
 	<div class="flex">
 		<input
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
@@ -146,13 +146,15 @@
 		</button>
 	</div>
 
-	{#each pouch_list as pouch}
-		<Pouch
-			id={pouch.id}
-			name={pouch.name}
-			elements={pouch.elements}
-			on:pouch_elements={refreshPouch}
-			on:delete-pouch={deletePouch}
-		/>
-	{/each}
+	<div class="flex-1 overflow-y-auto rounded-primary">
+		{#each pouch_list as pouch}
+			<Pouch
+				id={pouch.id}
+				name={pouch.name}
+				elements={pouch.elements}
+				on:pouch_elements={refreshPouch}
+				on:delete-pouch={deletePouch}
+			/>
+		{/each}
+	</div>
 </div>
