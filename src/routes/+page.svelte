@@ -64,6 +64,7 @@
 				try {
 					var content = JSON.parse(readerEvent.target.result);
 					rundown_list = pouch_list = [];
+					result_div.innerText = '';
 					requestAnimationFrame(() => {
 						content?.rundown.map((word) => {
 							rundown_elem.addWordComponent({

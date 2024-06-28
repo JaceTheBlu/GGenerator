@@ -42,7 +42,7 @@
 			let pouch = {
 				id: pouch_id,
 				name: input_value,
-				elements: event?.detail.elements || []
+				elements: event?.detail?.elements || []
 			};
 			let i = 0;
 			let nameAlreadyExist = contains(pouch);

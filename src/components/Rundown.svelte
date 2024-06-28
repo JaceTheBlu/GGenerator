@@ -1,6 +1,6 @@
 <script>
-	import WordComponent from './WordComponent.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import WordComponent from './WordComponent.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -59,7 +59,6 @@
 				<WordComponent
 					id={component.id}
 					text={component.text}
-					type={component.type}
 					on:update={updateWordComponent}
 				/>
 			{/each}
