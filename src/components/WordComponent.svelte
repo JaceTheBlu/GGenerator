@@ -15,11 +15,13 @@
 		enableEditing();
 	});
 
-	$: if (String(text).charAt(0) === '@' && text.length > 1) {
-		type = 'pouch';
-		text = text.toLocaleLowerCase();
-	} else {
-		type = 'static';
+	$: {
+		if (String(text).charAt(0) === '@' && text.length > 1) {
+			type = 'pouch';
+			text = text.toLocaleLowerCase();
+		} else {
+			type = 'static';
+		}
 	}
 
 	export function enableEditing() {
