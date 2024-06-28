@@ -1,6 +1,6 @@
 <script>
-	import WordComponent from './WordComponent.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import WordComponent from './WordComponent.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -9,10 +9,14 @@
 
 	$: newId = rundown_list.length ? Math.max(...rundown_list.map((t) => t.id)) + 1 : 1;
 
-	const addWordComponent = (event) => {
+	export const addWordComponent = (event) => {
 		rundown_list = [
 			...rundown_list,
-			{ id: newId, text: event?.detail.text || '', type: event?.detail.type || 'static' }
+			{
+				id: event?.detail.id || newId,
+				text: event?.detail.text || '',
+				type: event?.detail.type || 'static'
+			}
 		];
 	};
 
@@ -52,7 +56,11 @@
 		>
 			<div />
 			{#each rundown_list as component}
-				<WordComponent id={component.id} on:update={updateWordComponent} />
+				<WordComponent
+					id={component.id}
+					text={component.text}
+					on:update={updateWordComponent}
+				/>
 			{/each}
 		</div>
 		<button

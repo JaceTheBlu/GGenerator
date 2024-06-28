@@ -33,8 +33,8 @@
 				"
 			on:click={importSave}
 		>
-			<p class="underline">I</p>
-			<p>mport Save</p>
+			<p class="underline">L</p>
+			<p>oad</p>
 		</button>
 		<button
 			class="flex px-2
@@ -53,8 +53,8 @@
 				"
 			on:click={exportSave}
 		>
-			<p class="underline">E</p>
-			xport Save
+			<p class="underline">S</p>
+			ave
 		</button>
 	</div>
 	<div class="flex divide-x divide-solid children:px-2 my-2">

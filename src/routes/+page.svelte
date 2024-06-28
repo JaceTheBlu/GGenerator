@@ -27,7 +27,6 @@
 				const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
 
 				if (pouch && pouch.elements.length > 0) {
-					console.log(pouch);
 					word = getPouchElement(pouch);
 				} else {
 					word = `<${pouchName}> is empty`;
@@ -51,40 +50,59 @@
 		return Math.ceil(Math.random() * (max - min + 1)) + min - 1;
 	};
 
-	let exampleJSON = {
-		rundown: ['@name', 'is', '@something'],
-		pouches: [
-			{ name: '@name', elements: ['Patrick', 'Emilie', 'GG'] },
-			{ name: '@something', elements: ['in Paris', 'skating', 'cute'] }
-		]
-	};
-
 	const importJSON = () => {
-		console.log('received');
 		var input = document.createElement('input');
 		input.type = 'file';
 
 		input.onchange = (e) => {
-			// getting a hold of the file reference
 			var file = e.target.files[0];
 
-			// setting up the reader
 			var reader = new FileReader();
 			reader.readAsText(file, 'UTF-8');
 
-			// here we tell the reader what to do when it's done reading...
 			reader.onload = (readerEvent) => {
-				var content = readerEvent.target.result; // this is the content!
-				console.log(content);
+				try {
+					var content = JSON.parse(readerEvent.target.result);
+					rundown_list = pouch_list = [];
+					result_div.innerText = '';
+					requestAnimationFrame(() => {
+						content?.rundown.map((word) => {
+							rundown_elem.addWordComponent({
+								detail: { id: word.id, text: word.text, type: word.type }
+							});
+						});
+						content?.pouch_list.map((pouch) => {
+							pouch_elem.addPouch({
+								type: 'import',
+								detail: { name: pouch.name, elements: pouch.elements }
+							});
+						});
+					});
+				} catch (e) {
+					console.error(e);
+				}
 			};
 		};
 		input.click();
 	};
+
 	const exportJSON = () => {
-		console.log('export');
+		const filename = 'data.json';
+		const jsonStr = JSON.stringify({ rundown: rundown_list, pouch_list: pouch_list });
+
+		let element = document.createElement('a');
+		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+		element.setAttribute('download', filename);
+
+		element.style.display = 'none';
+		document.body.appendChild(element);
+
+		element.click();
+
+		document.body.removeChild(element);
 	};
+
 	const createPouchIfNE = (event) => {
-		console.log(event);
 		let pouchName = event.detail.text.substring(1);
 		const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
 		if (!pouch) pouch_elem.addPouch(pouchName);
