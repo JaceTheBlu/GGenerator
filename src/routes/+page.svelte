@@ -86,14 +86,12 @@
 
 
 	function startTutorial(){
-		console.log("A");
 		if((tour=== undefined) || (!tour.isActive())){
-			console.log("C");
 
 			tour = new Shepherd.Tour({
 				useModalOverlay: true,
 				defaultStepOptions:{
-					classes: 'shadow-md bg-gradient-to-r from-background-primary-color to-background-secondary-color border-2 rounded-primary px-2 pt-2 pb-2 mb-4',
+					classes: 'shadow-md bg-gradient-to-r from-background-primary-color to-background-secondary-color border-2 rounded-primary min-w-xs max-w-xl px-2 pt-2 pb-2 mb-4',
 					scrollTo: false,
 				}
 			});
@@ -106,9 +104,6 @@
 					"<p class='text-justify break-words max-w-xl px-4 pb-4'>"+ 
 						"A multi-purpose generator for (theoretically) every cases where you need random things !"+
 					"</p>"+ 
-					"<p class='text-justify break-words max-w-xl px-4 pb-4'>"+ 
-						"To explain how it works we will take the example of shared flat  who want to plan the tasks to do."+ 
-					"</p>"+ 
 					"<p class='text-justify px-4 pb-2'>"+ 
 						"When you are ready let's start the tutorial."+ 
 					"</p>"+ 
@@ -118,17 +113,17 @@
 			const secondText=
 				"<div class='flex-col items-center justify-center'> "+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
-						"Sentence & blocks"+
+						"Main sections "+
 					"</p>"+ 
 					"<p class='text-justify px-4'>"+ 
-						"A sentence is composed by blocks a block can be :"+
+						"We have two sections : "+
 					"</p>"+
-					"<ul class='list-disc list-inside break-words max-w-xl px-4 pb-4'>"+ 
-						"<li> A group of words (to add some meaning)</li>"+	
-						"<li> A list (for example a list of people)</li>"+	
+					"<ul class='list-disc list-inside  px-4 pb-4'>"+ 
+						"<li> On the left, the Rundown to create a sentence</li>"+	
+						"<li> On the right, the Pouch of words to create list</li>"+	
 					"</ul>"+
 					"<p class='text-justify break-words max-w-xl px-4 pb-4'>"+ 
-						"In fact the sentence will be our template for the random generation."+ 
+						"Let's continue with the sentence section !"+ 
 					"</p>"+ 
 				"</div>"
 	
@@ -136,17 +131,17 @@
 			const thirdText=
 				"<div class='flex-col flex-wrap items-center justify-center'> "+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
-						"Blocks : Word & list"+
+						"Left section : Sentence"+
 					"</p>"+ 
 					"<p class='text-justify break-words max-w-xl px-4' mb-2>"+ 
-						"First to create a block click on '+' over there and start typing to have a block of words."+
+						"The sentence is composed of blocks,you have two types of blocks :"+
 					"</p>"+
-					"<p class='italic text-base break-words max-w-xl px-4 pb-4'>"+ 
-						"Notice that you can press tab within a block to create a new one. Also to delete a block just delete everything in it."+ 
-					"</p>"+
+					"<ul class='list-disc list-inside break-words max-w-xl px-4 pb-4'>"+ 
+						"<li> A list block which a block with ONLY a list in it.</li>"+	
+						"<li> A block with text which will be used to add meaning to the sentence </li>"+	
+					"</ul>"+
 					"<p class='text-justify break-words max-w-xl px-4 pb-4'>"+ 
-						"For the list it\'s different, first a list is alone in it\'s block "+  
-						" you cannot have words with a list, not either another list. Second you need to put the name of list with an \'@\' in front of it."+
+						"Next more details about blocks !"+
 					"</p>"+ 
 				"</div>"
 			;
@@ -154,27 +149,21 @@
 			const fourthText=
 				"<div class='flex-col flex-wrap items-center justify-center'> "+
 					"<p class='text-center font-bold text-2xl mb-4'>"+
-						"Create our first sentence"+
+						"Blocks : List & Static text"+
 					"</p>"+ 
 					"<p class='text-justify break-words max-w-2xl px-4 pb-2'>"+ 
-						"In our case we want to have this kind of result : Thursday it's the turn of John to do the laundry."+  
+						"First to create a block click on the '+' button."+  
 					"</p>"+ 
 					"<p class='text-justify px-4'>"+ 
-						"To do that we need :"+  
+						"After that to do a list block add the name of the list forwaded by '@' don't put anything else in it !"+  
 					"</p>"+ 
-					"<ul class='list-disc  list-inside px-4 pb-4'>"+ 
-						"<li> A block with '@days' to get the list of days</li>"+	
-						"<li> Another with 'it\'s the turn of', so a block of words </li>"+	
-						"<li> A block with '@people' to get the list of people </li>"+	
-						"<li>  Again a word block with 'to do the' </li>"+	
-						"<li> Finally a list block with '@tasks' this time </li>"+	
-					"</ul>"+
+					"<p class='text-justify break-words max-w-4xl px-4'>"+ 
+						"If you want a static text block just type some words in it, when you finished you can create another block by clicking on the '+' again or by pressing 'Tab'"+  
+					"</p>"+ 
 					"<p class='text-justify break-words max-w-xl px-4'>"+ 
-						"The result must be that :"+
+						"For example :"+
 					"</p>"+ 
-					"<p class='text-justify px-4 pb-2'>"+ 
-						"@days it's the turn of @people to do the @tasks."+
-					"</p>"+ 
+					"<img src='sentence-2.png' alt='sentence example' class='w-96'/>"
 				"</div>"
 			;
 	
@@ -501,6 +490,8 @@
 	class="flex flex-col min-h-screen"
 	id="tutorial-step-0"
 >
+
+
 	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial} />
 	<div class="flex grow" id="tutorial-step0">
 		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4">
