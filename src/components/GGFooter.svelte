@@ -32,9 +32,15 @@
 		];
 
 		const listOfAlan = ['🍦', '🚐', '🛻', '🛣️', '🛞', '📦'];
-		emoji =
-			listOfHeart[Math.floor(Math.random() * (listOfHeart.length + 1))] ||
-			listOfAlan[Math.floor(Math.random() * listOfAlan.length)];
+		const saved_emoji = localStorage.getItem('emoji');
+		if (saved_emoji) {
+			emoji = saved_emoji;
+		} else {
+			emoji =
+				listOfHeart[Math.floor(Math.random() * (listOfHeart.length + 1))] ||
+				listOfAlan[Math.floor(Math.random() * listOfAlan.length)];
+			localStorage.setItem('emoji', emoji);
+		}
 	});
 </script>
 
@@ -50,7 +56,7 @@
 		</a>
 		<div class="flex px-2">
 			Made with
-			<button class="cursor-default mx-2 text-l hover:scale-150 transition duration-300">
+			<button class="cursor-default text-l hover:scale-150 transition duration-300">
 				{emoji}
 			</button>
 			in 2024

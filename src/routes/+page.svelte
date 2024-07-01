@@ -1,8 +1,10 @@
 <script>
 	// Code for analytics
 	import { inject } from '@vercel/analytics';
-	
-	import { createEventDispatcher } from 'svelte';
+	inject();
+
+	import { createEventDispatcher, onMount } from 'svelte';
+
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
@@ -12,15 +14,43 @@
 	import Berger from '$lib/berger.js';
 	import 'shepherd.js/dist/css/shepherd.css';
 
-	import { onMount } from 'svelte';
 	const dispatch = createEventDispatcher();
 	
-	inject();
 	let rundown_list;
-	let rundown_elem;
 	let pouch_list;
+
+	let rundown_elem;
 	let pouch_elem;
 	let result_div;
+	let loaded = false;
+
+	onMount(() => {
+		const visited = localStorage.getItem('visited');
+
+		if (!visited) {
+			console.log('First Time !');
+			localStorage.setItem('visited', true);
+		}
+
+		const saved_rundown_list = localStorage.getItem('rundown_list');
+		if (saved_rundown_list) {
+			rundown_list = JSON.parse(saved_rundown_list)?.rundown;
+		}
+
+		const saved_pouch_list = localStorage.getItem('pouch_list');
+		if (saved_pouch_list) {
+			pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
+		}
+
+		loaded = true;
+	});
+
+	$: if (loaded) saveAsCookie(rundown_list, pouch_list);
+
+	export const saveAsCookie = (rl, pl) => {
+		localStorage.setItem('rundown_list', JSON.stringify({ rundown: rl }));
+		localStorage.setItem('pouch_list', JSON.stringify({ pouch_list: pl }));
+	};
 
 	let tour;
 	let onboardingScript = [];
@@ -46,10 +76,9 @@
 				const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
 
 				if (pouch && pouch.elements.length > 0) {
-					console.log(pouch);
 					word = getPouchElement(pouch);
 				} else {
-					word = `<${pouchName}> is empty`;
+					word = `<${pouchName} EMPTY>`;
 				}
 			} else {
 				word = text;
@@ -70,47 +99,63 @@
 		return Math.ceil(Math.random() * (max - min + 1)) + min - 1;
 	};
 
-	let exampleJSON = {
-		rundown: ['@name', 'is', '@something'],
-		pouches: [
-			{ name: '@name', elements: ['Patrick', 'Emilie', 'GG'] },
-			{ name: '@something', elements: ['in Paris', 'skating', 'cute'] }
-		]
-	};
-
 	const importJSON = () => {
-		console.log('received');
 		var input = document.createElement('input');
 		input.type = 'file';
 
 		input.onchange = (e) => {
-			// getting a hold of the file reference
 			var file = e.target.files[0];
 
-			// setting up the reader
 			var reader = new FileReader();
 			reader.readAsText(file, 'UTF-8');
 
-			// here we tell the reader what to do when it's done reading...
 			reader.onload = (readerEvent) => {
-				var content = readerEvent.target.result; // this is the content!
-				console.log(content);
+				try {
+					var content = JSON.parse(readerEvent.target.result);
+					rundown_list = pouch_list = [];
+					result_div.innerText = '';
+					requestAnimationFrame(() => {
+						content?.rundown.map((word) => {
+							rundown_elem.addWordComponent({
+								detail: { id: word.id, text: word.text, type: word.type }
+							});
+						});
+						content?.pouch_list.map((pouch) => {
+							pouch_elem.addPouch({
+								type: 'import',
+								detail: { name: pouch.name, elements: pouch.elements }
+							});
+						});
+					});
+				} catch (e) {
+					console.error(e);
+				}
 			};
 		};
 		input.click();
 	};
 
-
 	function startTutorial(){
-
 			tour = new Berger(onboardingScript);
 	}
 	
 	const exportJSON = () => {
-		console.log('export');
+		const filename = 'data.json';
+		const jsonStr = JSON.stringify({ rundown: rundown_list, pouch_list: pouch_list });
+
+		let element = document.createElement('a');
+		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+		element.setAttribute('download', filename);
+
+		element.style.display = 'none';
+		document.body.appendChild(element);
+
+		element.click();
+
+		document.body.removeChild(element);
 	};
+
 	const createPouchIfNE = (event) => {
-		console.log(event);
 		let pouchName = event.detail.text.substring(1);
 		const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
 		if (!pouch) pouch_elem.addPouch(pouchName);
@@ -118,10 +163,10 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
-
-	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial} />
-	<div class="flex grow" id="onboarding-step-welcome">
-		<div id="onboarding-step-rundown" class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4">
+	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial}/>
+	
+	<div class="main flex flex-1" id="onboarding-step-welcome">
+		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4" id="onboarding-step-rundown">
 			<Rundown
 				bind:this={rundown_elem}
 				bind:rundown_list
@@ -129,10 +174,12 @@
 				on:NewPouchWord={createPouchIfNE}
 			/>
 		</div>
-		<div id="onboarding-step-pouch-of-words" class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 overflow-auto">
+
+		<div id="onboarding-step-pouch-of-words" class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto">
 			<PouchOfWords bind:this={pouch_elem} bind:pouch_list />
 		</div>
 	</div>
+
 	<div id="onboarding-step-output" class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
 		<p class="pl-2 text-secondary mr-2">Output:</p>
 		<p bind:this={result_div} class="text-secondary-color"/>
