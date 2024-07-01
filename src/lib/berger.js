@@ -1,36 +1,96 @@
 import Shepherd from 'shepherd.js';
-
+import 'shepherd.js/dist/css/shepherd.css';
 class Berger {
-  constructor(steps = []) {
+
+
+  constructor(script) {
     this.tour = new Shepherd.Tour({
         useModalOverlay: true,
         defaultStepOptions:{
-            classes: 'shadow-md bg-gradient-to-r from-background-primary-color to-background-secondary-color border-2 rounded-primary min-w-xs max-w-xl px-2 pt-2 pb-2 mb-4',
-            scrollTo: false,
-        }
-    });
-    this.steps = steps;
+            classes: 'shepherd-theme-custom',
+          scrollTo: false,
+          useModalOverlay : true
+        },        
+      },
+
+  );
+    this.script = script;
+    this.steps = script.steps;
+    this.prefix = this.script.idPrefix;
     this.initTour();
   }
 
   initTour() {
-    this.steps.forEach(step => {
-      this.tour.addStep(step);
-    });
+    this.addSteps(this.steps);
+    this.start();
+  }
+
+  /**
+   * Returns a boolean that tells  if the tour is on
+   * @returns : true if on, false if off
+   */
+  isActive(){
+    return this.tour.isActive();
   }
 
   // Custom preprocessing logic
   preprocessSteps(steps) {
-    // Example: Add a default title to each step if not provided
-    return steps.map(step => ({
+    return steps.map((step) => ({
       title: step.title || 'Default Title',
+      arrow: true,
+      buttons:[
+        		{
+        			text: 'Back',
+        			action: this.tour.back,
+        			classes:'border-2 rounded-primary px-2 hover:bg-cancel-color transition duration-300 ease out py-1 mr-2 mt-2',
+        			label: 'Back'
+        		},
+        		{
+        			text:'Next',
+        			action: this.tour.next,
+        			classes:'border-2 rounded-primary px-2 hover:bg-validate-color transition duration-300 ease out py-1 mr-2 mt-2',
+        			label:'Next'
+    
+        		}
+        	],
       ...step
     }));
   }
 
   addSteps(steps) {
+    const length = this.steps.length;
     const preprocessedSteps = this.preprocessSteps(steps);
-    preprocessedSteps.forEach(step => {
+    preprocessedSteps.forEach((step, index) => {
+      if(index ===0){
+        step.buttons = [
+          {
+            text:'Exit',
+            action: this.tour.cancel,
+            label:'Exit'
+          },
+          {
+            text: 'Next',
+            action: this.tour.next,
+            label: 'Next'
+          }
+        ]
+      }
+
+      if(index === length-1 ){
+        step.buttons = [
+          {
+            text:'Back',
+            action: this.tour.back,
+            label:'Back'
+          },
+          {
+            text: 'Complete',
+            action: this.tour.next,
+            label: 'Complete'
+          }
+        ]
+      }
+
       this.tour.addStep(step);
     });
   }

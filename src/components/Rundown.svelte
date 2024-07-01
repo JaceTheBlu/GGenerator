@@ -56,7 +56,7 @@
 			{/each}
 		</div>
 		<button
-			id="tutorial-step-1"
+			id="onboarding-step-rundown-button"
 			class="mx-auto my-2 h-fit w-fit px-2 transition ease-in-out duration-300 bg-transparent hover:scale-110 hover:cursor-pointer rounded-lg border-4 border-white border-dotted"
 			on:focus={addWordComponent}
 		>
@@ -64,7 +64,7 @@
 		</button>
 	</ul>
 	<button
-		id="tutorial-step-3"
+		id="onboarding-step-ggenerate"
 		class="rounded-xl flex bg-slate-800 p-2 font-bold text-3xl h-fit w-fit transition duration-300 ease-out hover:ring hover:shadow-pink-100 place-self-end"
 		on:click={generate}
 	>

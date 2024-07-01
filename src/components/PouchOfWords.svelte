@@ -154,10 +154,13 @@
 	}
 </script>
 
-<div class="flex-col">
-	<div class="flex">
+<div class="flex-col" id="onboarding-step-pouch">
+	<div 
+		class="flex"
+		>
 		<input
-		id="tutorial-step-2"
+			id="onboarding-step-pouch"
+		
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
 			type="text"
 			bind:value={input_value}
@@ -170,14 +173,15 @@
 			>Add list
 		</button>
 	</div>
-	
-	{#each pouch_list as pouch}
-		<Pouch
-			id={pouch.id}
-			name={pouch.name}
-			elements={pouch.elements}
-			on:pouch_elements={refreshPouch}
-			on:delete-pouch={deletePouch}
-		/>
-	{/each}
+	<div id="onboarding-step-pouch-element">
+		{#each pouch_list as pouch}
+			<Pouch
+				id={pouch.id}
+				name={pouch.name}
+				elements={pouch.elements}
+				on:pouch_elements={refreshPouch}
+				on:delete-pouch={deletePouch}
+			/>
+		{/each}
+	</div>
 </div>
