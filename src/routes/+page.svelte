@@ -3,20 +3,48 @@
 	import { inject } from '@vercel/analytics';
 	inject();
 
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
 
-	const dispatch = createEventDispatcher();
-
 	let rundown_list;
-	let rundown_elem;
 	let pouch_list;
+
+	let rundown_elem;
 	let pouch_elem;
 	let result_div;
+	let loaded = false;
+
+	onMount(() => {
+		const visited = localStorage.getItem('visited');
+
+		if (!visited) {
+			console.log('First Time !');
+			localStorage.setItem('visited', true);
+		}
+
+		const saved_rundown_list = localStorage.getItem('rundown_list');
+		if (saved_rundown_list) {
+			rundown_list = JSON.parse(saved_rundown_list)?.rundown;
+		}
+
+		const saved_pouch_list = localStorage.getItem('pouch_list');
+		if (saved_pouch_list) {
+			pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
+		}
+
+		loaded = true;
+	});
+
+	$: if (loaded) saveAsCookie(rundown_list, pouch_list);
+
+	export const saveAsCookie = (rl, pl) => {
+		localStorage.setItem('rundown_list', JSON.stringify({ rundown: rl }));
+		localStorage.setItem('pouch_list', JSON.stringify({ pouch_list: pl }));
+	};
 
 	const generateWords = () => {
 		const words = rundown_list.map((word) => {
@@ -29,7 +57,7 @@
 				if (pouch && pouch.elements.length > 0) {
 					word = getPouchElement(pouch);
 				} else {
-					word = `<${pouchName}> is empty`;
+					word = `<${pouchName} EMPTY>`;
 				}
 			} else {
 				word = text;
