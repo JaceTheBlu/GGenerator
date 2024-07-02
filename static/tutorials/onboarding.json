@@ -13,18 +13,18 @@
             "text": [
                 "We have two sections :", 
                 "On the left, the Rundown used to create a sentence", 
-                "On the right, the Pouch of words to create lists"
+                "On the right, the Pouch of words to create lists."
             ],
             "attachTo":{
                 "element":"#onboarding-step-welcome",
-                "on": "bottom"
+                "on": ""
             }
         },
 
         {
             "title":"Output section",
             "text":[
-                "Here the result sentence will be shown",
+                "Here the result sentence will be shown.",
                 "Now let's continue with the Pouch of Words !"
             ],
             "attachTo":{
@@ -35,7 +35,8 @@
         {
             "title": "Right section : Pouch of Words",
             "text": [
-                "The goal of this section is to create pouches, which are lists of things. For example you can have a pouch named as animals with cat and dog in it :",
+                "The goal of this section is to create pouches, which are lists of things.",
+                "For example you can have a pouch named as animals with cat and dog in it :",
                 "Next how to create a pouch !"
             ],
             "attachTo":{
@@ -47,9 +48,9 @@
         {
             "title": "Create a pouch",
             "text": [
-                "To create a pouch enter the name of pouch in the bar and press Enter or click the 'Add pouch' button", 
-                "To add element to a pouch do it in the 'Enter a value ...' section and press Enter or the 'submit ↵' button next to it", 
-                "In the next section how to manage a pouch and its elements"
+                "To create a pouch enter the name of pouch in the bar and press Enter or click the \"Add pouch\" button.", 
+                "To add element to a pouch click on the \"Enter a value ...\" section and press Enter or the \"submit ↵\" button next to it.", 
+                "In the next section how to manage a pouch and its elements."
             ],
             "attachTo":{
                 "element":"#onboarding-step-pouch",
@@ -85,15 +86,27 @@
 
         },
         {
-            "title": "Words : Pouch & Static text",
+            "title": "Words : Pouch ",
             "text": [
-                "First to create a word click on the '+' button, when you have finished you can create another word by clicking again on the '+' button on by pressing Tab.",
-                "If you want to create a Pouch word, put the name of the pouch forwared by '@', don't put anything else ! A pouch word contains only a pouch.",
-                "To create a Static text word ... just type some text ! Note that you can modify your words by clicking on them, to delete them just remove everything in them.", "When you finished you will have something like that : "
+                "First to create a word click on the \"+\" button, you can create another word by clicking again on it or by pressing Tab.",
+                "If you want to create a Pouch word, put its name forwared by \"@\", don't put anything else, a pouch word contains only a pouch.",
+                "Click on next to continue with the Static text words."
             ],
             "attachTo":{
                 "element":"#onboarding-step-rundown-button",
                 "on": "left"
+            }
+        },
+        {
+            "title": "Words : Static text",
+            "text": [
+                "To create a Static text word ... just type some text !",
+                "Note that you can modify your words by clicking on them, you can also delete them by remove their content.", 
+                "When you finished you will have something like above."
+            ],
+            "attachTo":{
+                "element":"#onboarding-step-rundown-button",
+                "on": "bottom"
             },
             "image":"images/sentence.png"
         },

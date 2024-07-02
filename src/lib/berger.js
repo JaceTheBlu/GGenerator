@@ -50,10 +50,58 @@ class Berger {
     }));
   }
 
+
+  addText(step){
+    let htmlString;
+
+    console.log("title :",step.title," :",step.image);
+    if(step.image!== undefined){
+      htmlString = "<div class='flex flex-col'>";
+      
+      for(let i=0; i<step.text.length-1;i++){
+        let text= `<p> ${step.text[i]} </p>`;
+        htmlString+= text;
+      }        
+
+      let alt = step.image.split(/images\/|\.png/);
+      let image = `<img src='${step.image}' alt='${alt}' />`;
+      htmlString+= image;
+
+      let lastText= `<p> ${step.text[step.text.length-1]} </p>`;
+        htmlString+= lastText;
+
+      let endString = "</div>";
+      htmlString +=endString;
+           
+
+
+    }else{
+      htmlString = "<div class='flex flex-col children:pb-2'>";
+      
+    
+      step.text.forEach((t)=>{
+        let text = `<p> ${t}</p>`;
+        console.log(text);
+        htmlString += text; 
+      });
+
+      let endString = "</div>";
+      htmlString +=endString;
+
+    }
+
+
+    console.log("html :",htmlString);
+    return htmlString;
+
+  }
+
   addSteps(steps) {
     const length = this.steps.length;
     const preprocessedSteps = this.preprocessSteps(steps);
     preprocessedSteps.forEach((step, index) => {
+
+      step.text = this.addText(step);
       if(index ===0){
         step.buttons = [
           {
