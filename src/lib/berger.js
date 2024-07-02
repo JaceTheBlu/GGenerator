@@ -54,7 +54,6 @@ class Berger {
   addText(step){
     let htmlString;
 
-    console.log("title :",step.title," :",step.image);
     if(step.image!== undefined){
       htmlString = "<div class='flex flex-col'>";
       
@@ -81,7 +80,6 @@ class Berger {
     
       step.text.forEach((t)=>{
         let text = `<p> ${t}</p>`;
-        console.log(text);
         htmlString += text; 
       });
 
@@ -90,8 +88,6 @@ class Berger {
 
     }
 
-
-    console.log("html :",htmlString);
     return htmlString;
 
   }
@@ -102,6 +98,7 @@ class Berger {
     preprocessedSteps.forEach((step, index) => {
 
       step.text = this.addText(step);
+      
       if(index ===0){
         step.buttons = [
           {

@@ -60,7 +60,8 @@
         {
             "title": "Manage a pouch",
             "text": [
-                "In a pouch you also can modify its name by clicking on the pouch name, note that you cannot put a name of an existing pouch. You can also in the same way change the name of the elements.",
+                "In a pouch you also can modify its name by clicking on the pouch name, note that you cannot put a name of an existing pouch.",
+                "You can also in the same way change the name of the elements.",
                 "If you want to delete an element click on the red cross next to it, to delete a pouch click the red cross next to its name.", 
                 "It cover everything you need to know about pouches ! Next Rundown section !" 
             ],
