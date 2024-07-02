@@ -14,6 +14,7 @@ class Berger {
       },
 
   );
+    console.log("hey :",script);
     this.script = script;
     this.steps = script.steps;
     this.initTour();

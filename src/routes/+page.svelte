@@ -16,32 +16,57 @@
 	inject();
 	let rundown_list;
 	let pouch_list;
-
+	
 	let rundown_elem;
 	let pouch_elem;
 	let result_div;
 	let loaded = false;
 
+	let tour;
+	let help_guide_script = [];
+	let onboarding_script = [];
+	
 	onMount(() => {
-		const visited = localStorage.getItem('visited');
+    const urls = ['tutorials/help_guide.json', 'tutorials/onboarding.json'];
 
-		if (!visited) {
-			console.log('First Time !');
-			localStorage.setItem('visited', true);
-		}
+    Promise.all(urls.map(url => fetchData(url)))
+        .then(results => {
+            const [data1, data2] = results;
 
-		const saved_rundown_list = localStorage.getItem('rundown_list');
-		if (saved_rundown_list) {
-			rundown_list = JSON.parse(saved_rundown_list)?.rundown;
-		}
+			help_guide_script = data1;
+			onboarding_script = data2;
 
-		const saved_pouch_list = localStorage.getItem('pouch_list');
-		if (saved_pouch_list) {
-			pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
-		}
+			const visited = localStorage.getItem('visited');
 
-		loaded = true;
-	});
+			if (!visited) {
+				console.log('First Time !');
+				localStorage.setItem('visited', true);
+				tour = new Berger(onboarding_script);
+			}
+
+			const saved_rundown_list = localStorage.getItem('rundown_list');
+			if (saved_rundown_list) {
+				rundown_list = JSON.parse(saved_rundown_list)?.rundown;
+			}
+
+			const saved_pouch_list = localStorage.getItem('pouch_list');
+			if (saved_pouch_list) {
+				pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
+			}
+
+			loaded = true;
+
+
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+
+		
+
+});
+
 
 	$: if (loaded) saveAsCookie(rundown_list, pouch_list);
 
@@ -50,20 +75,18 @@
 		localStorage.setItem('pouch_list', JSON.stringify({ pouch_list: pl }));
 	};
 
-	let tour;
-	let help_guide_script = [];
 
-	onMount(async ()=>{
-		try {
-			const response = await fetch('/tutorials/help_guide.json');
-			if(!response.ok){
-				throw new Error('help_guide not loaded !');
-			}
-			help_guide_script = await response.json();
-		} catch (error) {
-			console.error('Error data was not fetched :',error);
-		}
-	})
+
+
+	function fetchData(url) {
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        });
+}
 
 	const generateWords = () => {
 		const words = rundown_list.map((word) => {

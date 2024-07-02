@@ -1,0 +1,51 @@
+{
+    "scriptTitle": "onboarding",
+    "steps":[
+        {
+            "title": "Welcome the  GGenerator !",
+            "text":[
+                "We will now start the onboarding :",
+                "The goal of this website is to generate random things based on multiples lists and a sentence."
+            ]
+        },
+        {
+            "title":"Rundown",
+            "text":[
+                "In the rundown you can create words of text and list (named as pouch) by clicking on the \"+\" button.",
+                "If you type some text its a text word, if you want to create a pouch just type its name forwarded by \"@\"."
+            ],
+            "attachTo":{
+                "element":"#help_guide-step-rundown",
+                "on": "left"
+            } 
+
+        },
+
+        {
+            "title":"Pouch of Words",
+            "text":[
+                "Here it's the part to create pouches.",
+                "You can create one by typing its name on the bar.",
+                "When its created you can add an element to a pouch by typing its name on the bar of the pouch.",
+                "You can also modify an element or a pouch by clicking on it, or delete it by clicking on the red cross."
+            ],
+            "attachTo":{
+                "element":"#help_guide-step-pouch-of-words",
+                "on": "left"
+            }
+
+        },
+        {
+            "title":"GGenerate",
+            "text":[
+                "When you are ready click on GGenerate ! to have your first result",
+                "After this an example will be loaded to inspire you, be creative !"
+            ],
+            "attachTo":{
+                "element":"#help_guide-step-ggenerate",
+                "on": "top"
+            }
+
+        }
+    ]
+}
