@@ -1,0 +1,112 @@
+{
+    "idPrefix":"onboarding",
+    "steps":[
+        {
+            "title":"Welcome to GGenerator !",
+            "text": [
+                "A multi-purpose generator for every cases where you need random things !",
+                "When you are ready let's start the tutorial."
+            ]
+        },
+        {
+            "title": "Main sections",
+            "text": [
+                "We have two sections :", 
+                "On the left, the Rundown used to create a sentence", 
+                "On the right, the Pouch of words to create lists"
+            ],
+            "attachTo":{
+                "element":"#onboarding-step-welcome",
+                "on": "bottom"
+            }
+        },
+
+        {
+            "title":"Output section",
+            "text":[
+                "Here the result sentence will be shown",
+                "Now let's continue with the Pouch of Words !"
+            ],
+            "attachTo":{
+                "element":"#onboarding-step-output",
+                "on": "top"
+            }
+        },
+        {
+            "title": "Right section : Pouch of Words",
+            "text": [
+                "The goal of this section is to create pouches, which are lists of things. For example you can have a pouch named as animals with cat and dog in it :",
+                "Next how to create a pouch !"
+            ],
+            "attachTo":{
+                "element":"#onboarding-step-pouch-of-words",
+                "on": "left"
+            }, 
+            "image":"images/pouch_animals.png"
+        },
+        {
+            "title": "Create a pouch",
+            "text": [
+                "To create a pouch enter the name of pouch in the bar and press Enter or click the 'Add pouch' button", 
+                "To add element to a pouch do it in the 'Enter a value ...' section and press Enter or the 'submit ↵' button next to it", 
+                "In the next section how to manage a pouch and its elements"
+            ],
+            "attachTo":{
+                "element":"#onboarding-step-pouch",
+                "on": "left"
+            }  
+        },
+        {
+            "title": "Manage a pouch",
+            "text": [
+                "In a pouch you also can modify its name by clicking on the pouch name, note that you cannot put a name of an existing pouch. You can also in the same way change the name of the elements.",
+                "If you want to delete an element click on the red cross next to it, to delete a pouch click the red cross next to its name.", 
+                "It cover everything you need to know about pouches ! Next Rundown section !" 
+            ],
+            "attachTo":{
+                "element":"#onboarding-step-pouch-of-words",
+                "on": "left"
+            } 
+        },
+
+        {
+            "title":"Rundown section",
+            "text": [
+                "The goal of this section is to create a sentence, it will be used as a template for the random generation.",
+                "A sentence is composed of multiples words, we have two types of them :",
+                "A pouch word : it's the name of one the list you created earlier", 
+                "A static text word : it's used to add meaning to the sentence",
+                "Next detail on words !"
+            ],
+            "attachTo":{
+                "element":"#onboarding-step-rundown",
+                "on": "left"
+            } 
+
+        },
+        {
+            "title": "Words : Pouch & Static text",
+            "text": [
+                "First to create a word click on the '+' button, when you have finished you can create another word by clicking again on the '+' button on by pressing Tab.",
+                "If you want to create a Pouch word, put the name of the pouch forwared by '@', don't put anything else ! A pouch word contains only a pouch.",
+                "To create a Static text word ... just type some text ! Note that you can modify your words by clicking on them, to delete them just remove everything in them.", "When you finished you will have something like that : "
+            ],
+            "attachTo":{
+                "element":"#onboarding-step-rundown-button",
+                "on": "left"
+            },
+            "image":"images/sentence.png"
+        },
+
+        {
+            "title":"GGenerate !",
+            "text": [
+                "When you're happy with your sentence and your pouches, click on GGenerate ! to generate a random result."
+            ],
+            "attachTo":{
+                "element":"#onboarding-step-ggenerate",
+                "on": "top"
+            }
+        }
+    ]
+}

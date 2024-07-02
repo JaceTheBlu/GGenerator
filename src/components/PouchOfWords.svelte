@@ -112,6 +112,7 @@
 		pouch_list = [...pouch_list];
 	}
 
+
 	/**
 	 * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
 	 * @param e : the id of the pouch to delete
@@ -131,8 +132,8 @@
 </script>
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
-	<div class="flex">
-		<input
+	<div class="flex" id="onboarding-step-pouch">
+		<input		
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
 			type="text"
 			bind:value={input_value}
@@ -145,7 +146,6 @@
 			>Add list
 		</button>
 	</div>
-
 	<div class="flex-1 overflow-y-auto rounded-primary">
 		{#each pouch_list as pouch}
 			<Pouch

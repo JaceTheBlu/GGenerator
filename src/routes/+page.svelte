@@ -1,15 +1,19 @@
 <script>
 	// Code for analytics
 	import { inject } from '@vercel/analytics';
-	inject();
-
-	import { createEventDispatcher, onMount } from 'svelte';
+	
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
 
+	import Berger from '$lib/berger.js';
+	import 'shepherd.js/dist/css/shepherd.css';
+
+	import { onMount } from 'svelte';
+		
+	inject();
 	let rundown_list;
 	let pouch_list;
 
@@ -45,6 +49,21 @@
 		localStorage.setItem('rundown_list', JSON.stringify({ rundown: rl }));
 		localStorage.setItem('pouch_list', JSON.stringify({ pouch_list: pl }));
 	};
+
+	let tour;
+	let onboardingScript = [];
+
+	onMount(async ()=>{
+		try {
+			const response = await fetch('/tutorials/onboarding.json');
+			if(!response.ok){
+				throw new Error('onboarding not loaded !');
+			}
+			onboardingScript = await response.json();
+		} catch (error) {
+			console.error('Error data was not fetched :',error);
+		}
+	})
 
 	const generateWords = () => {
 		const words = rundown_list.map((word) => {
@@ -114,6 +133,10 @@
 		input.click();
 	};
 
+	function startTutorial(){
+			tour = new Berger(onboardingScript);
+	}
+	
 	const exportJSON = () => {
 		const filename = 'data.json';
 		const jsonStr = JSON.stringify({ rundown: rundown_list, pouch_list: pouch_list });
@@ -138,10 +161,10 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
-	<GGHeader on:import={importJSON} on:export={exportJSON} />
+	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial}/>
 	
-	<div class="main flex flex-1">
-		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4">
+	<div class="main flex flex-1" id="onboarding-step-welcome">
+		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4" id="onboarding-step-rundown">
 			<Rundown
 				bind:this={rundown_elem}
 				bind:rundown_list
@@ -149,14 +172,15 @@
 				on:NewPouchWord={createPouchIfNE}
 			/>
 		</div>
-		<div class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full">
+
+		<div id="onboarding-step-pouch-of-words" class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto">
 			<PouchOfWords bind:this={pouch_elem} bind:pouch_list />
 		</div>
 	</div>
 
-	<div class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
+	<div id="onboarding-step-output" class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
 		<p class="pl-2 text-secondary mr-2">Output:</p>
-		<p bind:this={result_div} class="text-secondary-color" />
+		<p bind:this={result_div} class="text-secondary-color"/>
 	</div>
 	<GGFooter />
 </div>
