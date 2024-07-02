@@ -25,13 +25,6 @@ class Berger {
     this.start();
   }
 
-  /**
-   * Returns a boolean that tells  if the tour is on
-   * @returns : true if on, false if off
-   */
-  isActive(){
-    return this.tour.isActive();
-  }
 
   // Custom preprocessing logic
   preprocessSteps(steps) {

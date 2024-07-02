@@ -2,7 +2,6 @@
 	// Code for analytics
 	import { inject } from '@vercel/analytics';
 	
-	import { createEventDispatcher } from 'svelte';
 	import '../app.css';
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
@@ -13,8 +12,7 @@
 	import 'shepherd.js/dist/css/shepherd.css';
 
 	import { onMount } from 'svelte';
-	const dispatch = createEventDispatcher();
-	
+		
 	inject();
 	let rundown_list;
 	let rundown_elem;

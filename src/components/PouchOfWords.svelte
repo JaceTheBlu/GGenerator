@@ -19,22 +19,6 @@
 
 	$: input_value = String(input_value).toLowerCase();
 
-
-	function contain(pouch){
-		let nameAlreadyExist = false;
-
-		if(pouch.name.trim() !==''){
-			for(let i=0; (i<pouch_list.length) && (!nameAlreadyExist); i++){
-				if(pouch_list[i].name === pouch.name && pouch_list[i].id !== pouch.id){
-					nameAlreadyExist = true;
-				}
-			}
-
-		}
-
-		return nameAlreadyExist;
-	}
-
 	/*Functions */
 
 	/**
@@ -155,12 +139,8 @@
 </script>
 
 <div class="flex-col" id="onboarding-step-pouch">
-	<div 
-		class="flex"
-		>
+	<div class="flex">
 		<input
-			id="onboarding-step-pouch"
-		
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
 			type="text"
 			bind:value={input_value}
