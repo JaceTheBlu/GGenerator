@@ -1,6 +1,6 @@
 <script>
 	/**
-	 * A class that wraps the Pouch of Words functionnality
+	 * A class that wraps the Pouch of Words functionality
 	 * It allows creating pouches and displays them
 	 * @param pouch_list: a list of string that contains the name of every pouch created, used to track the existing pouch and display them
 	 * @param max : a number that tells the maximum numbers of characters possible in the input
@@ -8,7 +8,6 @@
 
 	/* Imports */
 	import Pouch from './Pouch.svelte';
-
 
 	/* Variables */
 	export let pouch_list = [];
@@ -26,35 +25,33 @@
 	 * It is not possible to create a pouch with an empty name or an name which already exist
 	 */
 	export const addPouch = (event) => {
-		if(event?.type === 'click'){
-		input_value = input_value.trim();	
-			
-			
-		}else{
+		if (event?.type === 'click') {
+			input_value = input_value.trim();
+		} else if (event?.type === 'import') {
+			input_value = event.detail.name;
+		} else {
 			input_value = event || input_value.trim();
-
 		}
-			if (
-				input_value !== null &&
-				input_value !== undefined &&
-				input_value !== '' &&
-				input_value.length > 0 &&
-				input_value.length < max
-			) {
-				let pouch = {
-					id : pouch_id,
-					name: input_value,
-					elements: []
-				};
-				let i = 0;
-				let nameAlreadyExist = contains(pouch);
-				if (!nameAlreadyExist) {
-					pouch_id++;
-					pouch_list = [...pouch_list, pouch];
-					
-				}
-				input_value = '';
+		if (
+			input_value !== null &&
+			input_value !== undefined &&
+			input_value !== '' &&
+			input_value.length > 0 &&
+			input_value.length < max
+		) {
+			let pouch = {
+				id: pouch_id,
+				name: input_value,
+				elements: event?.detail?.elements || []
+			};
+			let i = 0;
+			let nameAlreadyExist = contains(pouch);
+			if (!nameAlreadyExist) {
+				pouch_id++;
+				pouch_list = [...pouch_list, pouch];
 			}
+			input_value = '';
+		}
 	};
 
 	/**
@@ -77,11 +74,11 @@
 	 * @param pouch : the pouch to verify its name
 	 * @return found : true if the name is already in the list, false otherwise
 	 */
-	function contains(pouch){
+	function contains(pouch) {
 		let found = false;
 
-        for(let i =0; i<(pouch_list.length) && (!found); i++){
-			if(pouch_list[i].name === pouch.name && pouch.id !== pouch_list[i].id ){
+		for (let i = 0; i < pouch_list.length && !found; i++) {
+			if (pouch_list[i].name === pouch.name && pouch.id !== pouch_list[i].id) {
 				found = true;
 			}
 		}
@@ -91,17 +88,16 @@
 
 	/**
 	 * This method is triggered when the event 'pouch_elements' is catched
-	 * Its goal is to update the pouch_list with the last modification done in the childs components (Pouch and PouchElements)
+	 * Its goal is to update the pouch_list with the last modification done in the child components (Pouch and PouchElements)
 	 * @param event : the pouch to update
 	 */
 	function refreshPouch(event) {
 		const pouch = event.detail;
 
-		console.log();
-		if(pouch.name.trim() !== ''){
+		if (pouch.name.trim() !== '') {
 			let nameAlreadyExist = contains(pouch);
 
-			if(!nameAlreadyExist){
+			if (!nameAlreadyExist) {
 				let found = false;
 				for (let i = 0; i < pouch_list.length && !found; i++) {
 					if (pouch_list[i].id === pouch.id) {
@@ -109,10 +105,8 @@
 						found = true;
 					}
 				}
-			}else{
-				console.error("A list with the name :",pouch.name," already exist ! \n Please enter a new one");
-
-
+			} else {
+				console.error('The name :', pouch.name, ' already exist ! \n Please enter a new one');
 			}
 		}
 		pouch_list = [...pouch_list];
@@ -134,13 +128,12 @@
 			i++;
 		}
 		pouch_list = [...pouch_list];
-
 	}
 </script>
 
-<div class="flex-col" id="onboarding-step-pouch">
+<div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col" id="onboarding-step-pouch">
 	<div class="flex">
-		<input
+		<input		
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
 			type="text"
 			bind:value={input_value}
@@ -153,7 +146,7 @@
 			>Add list
 		</button>
 	</div>
-	<div id="onboarding-step-pouch-element">
+	<div class="flex-1 overflow-y-auto rounded-primary">
 		{#each pouch_list as pouch}
 			<Pouch
 				id={pouch.id}

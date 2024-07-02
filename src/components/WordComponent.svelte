@@ -15,11 +15,13 @@
 		enableEditing();
 	});
 
-	$: if (String(text).charAt(0) === '@' && text.length > 1) {
-		type = 'pouch';
-		text = text.toLocaleLowerCase();
-	} else {
-		type = 'static';
+	$: {
+		if (String(text).charAt(0) === '@' && text.length > 1) {
+			type = 'pouch';
+			text = text.toLocaleLowerCase();
+		} else {
+			type = 'static';
+		}
 	}
 
 	export function enableEditing() {
@@ -72,14 +74,14 @@
 	{:else}
 		<button
 			class="p-2
-	transition
-	ease-in-out
-	duration-300
-	bg-primary-color/50
-	hover:scale-110
-	hover:cursor-pointer
-	rounded-primary mr-2 mb-2
-	{type === 'pouch' ? 'text-secondary-color underline' : ''}"
+			transition
+			ease-in-out
+			duration-300
+			bg-primary-color/50
+			hover:scale-110
+			hover:cursor-pointer
+			rounded-primary mr-2 mb-2
+			{type === 'pouch' ? 'text-secondary-color underline' : ''}"
 			on:mouseup={enableEditing}
 		>
 			{text}
