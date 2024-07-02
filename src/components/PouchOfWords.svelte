@@ -131,8 +131,8 @@
 	}
 </script>
 
-<div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col" id="onboarding-step-pouch">
-	<div class="flex">
+<div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
+	<div class="flex" id="onboarding-step-pouch">
 		<input		
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
 			type="text"
