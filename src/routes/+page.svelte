@@ -51,15 +51,15 @@
 	};
 
 	let tour;
-	let onboardingScript = [];
+	let help_guide_script = [];
 
 	onMount(async ()=>{
 		try {
-			const response = await fetch('/tutorials/onboarding.json');
+			const response = await fetch('/tutorials/help_guide.json');
 			if(!response.ok){
-				throw new Error('onboarding not loaded !');
+				throw new Error('help_guide not loaded !');
 			}
-			onboardingScript = await response.json();
+			help_guide_script = await response.json();
 		} catch (error) {
 			console.error('Error data was not fetched :',error);
 		}
@@ -134,7 +134,7 @@
 	};
 
 	function startTutorial(){
-			tour = new Berger(onboardingScript);
+			tour = new Berger(help_guide_script);
 	}
 	
 	const exportJSON = () => {
@@ -163,8 +163,8 @@
 <div class="flex flex-col min-h-screen">
 	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial}/>
 	
-	<div class="main flex flex-1" id="onboarding-step-welcome">
-		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4" id="onboarding-step-rundown">
+	<div class="main flex flex-1" id="help_guide-step-welcome">
+		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4" id="help_guide-step-rundown">
 			<Rundown
 				bind:this={rundown_elem}
 				bind:rundown_list
@@ -173,12 +173,12 @@
 			/>
 		</div>
 
-		<div id="onboarding-step-pouch-of-words" class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto">
+		<div id="help_guide-step-pouch-of-words" class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto">
 			<PouchOfWords bind:this={pouch_elem} bind:pouch_list />
 		</div>
 	</div>
 
-	<div id="onboarding-step-output" class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
+	<div id="help_guide-step-output" class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
 		<p class="pl-2 text-secondary mr-2">Output:</p>
 		<p bind:this={result_div} class="text-secondary-color"/>
 	</div>

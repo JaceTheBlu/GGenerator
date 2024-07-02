@@ -16,7 +16,6 @@ class Berger {
   );
     this.script = script;
     this.steps = script.steps;
-    this.prefix = this.script.idPrefix;
     this.initTour();
   }
 

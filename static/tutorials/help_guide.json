@@ -1,5 +1,5 @@
 {
-    "idPrefix":"onboarding",
+    "scriptTitle":"help_guide",
     "steps":[
         {
             "title":"Welcome to GGenerator !",
@@ -16,7 +16,7 @@
                 "On the right, the Pouch of words to create lists."
             ],
             "attachTo":{
-                "element":"#onboarding-step-welcome",
+                "element":"#help_guide-step-welcome",
                 "on": ""
             }
         },
@@ -28,7 +28,7 @@
                 "Now let's continue with the Pouch of Words !"
             ],
             "attachTo":{
-                "element":"#onboarding-step-output",
+                "element":"#help_guide-step-output",
                 "on": "top"
             }
         },
@@ -40,7 +40,7 @@
                 "Next how to create a pouch !"
             ],
             "attachTo":{
-                "element":"#onboarding-step-pouch-of-words",
+                "element":"#help_guide-step-pouch-of-words",
                 "on": "left"
             }, 
             "image":"images/pouch_animals.png"
@@ -53,7 +53,7 @@
                 "In the next section how to manage a pouch and its elements."
             ],
             "attachTo":{
-                "element":"#onboarding-step-pouch",
+                "element":"#help_guide-step-pouch",
                 "on": "left"
             }  
         },
@@ -66,7 +66,7 @@
                 "It cover everything you need to know about pouches ! Next Rundown section !" 
             ],
             "attachTo":{
-                "element":"#onboarding-step-pouch-of-words",
+                "element":"#help_guide-step-pouch-of-words",
                 "on": "left"
             } 
         },
@@ -81,7 +81,7 @@
                 "Next detail on words !"
             ],
             "attachTo":{
-                "element":"#onboarding-step-rundown",
+                "element":"#help_guide-step-rundown",
                 "on": "left"
             } 
 
@@ -94,7 +94,7 @@
                 "Click on next to continue with the Static text words."
             ],
             "attachTo":{
-                "element":"#onboarding-step-rundown-button",
+                "element":"#help_guide-step-rundown-button",
                 "on": "left"
             }
         },
@@ -106,7 +106,7 @@
                 "When you finished you will have something like above."
             ],
             "attachTo":{
-                "element":"#onboarding-step-rundown-button",
+                "element":"#help_guide-step-rundown-button",
                 "on": "bottom"
             },
             "image":"images/sentence.png"
@@ -118,7 +118,7 @@
                 "When you're happy with your sentence and your pouches, click on GGenerate ! to generate a random result."
             ],
             "attachTo":{
-                "element":"#onboarding-step-ggenerate",
+                "element":"#help_guide-step-ggenerate",
                 "on": "top"
             }
         }
