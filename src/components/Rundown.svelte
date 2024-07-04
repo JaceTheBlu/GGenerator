@@ -54,14 +54,26 @@
 			class="flex flex-wrap w-full justify-center content-center place-items-center"
 			bind:this={rundownRootElement}
 		>
-			<div />
-			{#each rundown_list as component}
-				<WordComponent
-					id={component.id}
-					text={component.text}
-					on:update={updateWordComponent}
-				/>
-			{/each}
+			{#if rundown_list.length >0}
+				{#each rundown_list as component}
+					<WordComponent
+						id={component.id}
+						text={component.text}
+						on:update={updateWordComponent}
+					/>
+				{/each}
+			{:else}
+
+				<p class="text-xl mb-2">
+					Your sentence is empty... <br>
+					Add some pouches and some words !
+				</p>
+
+
+
+
+			{/if}
+
 		</div>
 		<button
 			id="help_guide-step-rundown-button"

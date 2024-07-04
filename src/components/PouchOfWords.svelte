@@ -147,14 +147,28 @@
 		</button>
 	</div>
 	<div class="flex-1 overflow-y-auto rounded-primary">
-		{#each pouch_list as pouch}
-			<Pouch
-				id={pouch.id}
-				name={pouch.name}
-				elements={pouch.elements}
-				on:pouch_elements={refreshPouch}
-				on:delete-pouch={deletePouch}
-			/>
-		{/each}
+
+		{#if pouch_list.length >0}
+			{#each pouch_list as pouch}
+				<Pouch
+					id={pouch.id}
+					name={pouch.name}
+					elements={pouch.elements}
+					on:pouch_elements={refreshPouch}
+					on:delete-pouch={deletePouch}
+				/>
+			{/each}
+
+		{:else}
+
+		<p class="text-xl mt-2">
+			Hey this is empty around there ... <br>
+			Try adding something !
+
+		</p>
+
+
+		{/if}
+
 	</div>
 </div>
