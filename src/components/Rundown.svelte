@@ -44,12 +44,30 @@
 	const generate = () => {
 		dispatch('generate');
 	};
+
+	const clearRundown = () =>{
+		rundown_list= [];
+
+	};
+
 </script>
 
 <div class="relative w-full h-full flex flex-col">
+	
+	<div class="flex first:children:border-r first:children:border-white children:px-2">
+		<span class="text-secondary font-bold text-primary-color">Rundown</span>
+		<button 
+			class="hover:text-cancel-color transition-colors"
+			on:click={clearRundown}
+		>
+			clear
+		</button>
+	</div>
+
 	<ul
 		class="ml-1 flex flex-wrap flex-1 flex-col content-center justify-center w-full h-full text-2xl"
 	>
+	
 		<div
 			class="flex flex-wrap w-full justify-center content-center place-items-center"
 			bind:this={rundownRootElement}

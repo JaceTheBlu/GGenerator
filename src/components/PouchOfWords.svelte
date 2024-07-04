@@ -69,6 +69,13 @@
 		}
 	}
 
+
+	const clearPouchofWords = () => {
+		pouch_list = [];
+
+
+	};
+
 	/**
 	 * A function that verify if a pouch name is already present
 	 * @param pouch : the pouch to verify its name
@@ -132,6 +139,17 @@
 </script>
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
+
+	<div class="flex first:children:border-r first:children:border-white children:px-2">
+		<span class="text-secondary font-bold text-primary-color">Pouch of Words</span>
+		<button 
+			class="hover:text-cancel-color transition-colors"
+			on:click={clearPouchofWords}
+		>
+			clear
+		</button>
+	</div>
+
 	<div class="flex" id="help_guide-step-pouch">
 		<input		
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
