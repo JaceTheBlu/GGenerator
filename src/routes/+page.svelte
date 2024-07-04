@@ -1,92 +1,87 @@
 <script>
+	import { onMount } from 'svelte';
 	// Code for analytics
 	import { inject } from '@vercel/analytics';
-	
+	inject();
+
 	import '../app.css';
+
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
 
 	import Berger from '$lib/berger.js';
-	import 'shepherd.js/dist/css/shepherd.css';
 
-	import { onMount } from 'svelte';
-		
-	inject();
 	let rundown_list;
 	let pouch_list;
-	
+
 	let rundown_elem;
 	let pouch_elem;
 	let result_div;
 	let loaded = false;
 
 	let tour;
-	let help_guide_script = [];
-	let onboarding_script = [];
-	
+
+	let tutorials_name = ['help_guide', 'onboarding'];
+	let tutorials = {};
+
 	onMount(() => {
-    const urls = ['tutorials/help_guide.json', 'tutorials/onboarding.json'];
+		visited = localStorage.getItem('visited');
 
-    Promise.all(urls.map(url => fetchData(url)))
-        .then(results => {
-            const [data1, data2] = results;
+		if (!visited) {
+			localStorage.setItem('visited', true);
+		}
 
-			help_guide_script = data1;
-			onboarding_script = data2;
-
-			const visited = localStorage.getItem('visited');
-
+		initTutorials(tutorials_name).then(() => {
 			if (!visited) {
-				console.log('First Time !');
-				localStorage.setItem('visited', true);
-				tour = new Berger(onboarding_script);
+				tour = new Berger(tutorials.onboarding);
 			}
+		});
 
-			const saved_rundown_list = localStorage.getItem('rundown_list');
-			if (saved_rundown_list) {
-				rundown_list = JSON.parse(saved_rundown_list)?.rundown;
+		const saved_rundown_list = localStorage.getItem('rundown_list');
+		if (saved_rundown_list) {
+			rundown_list = JSON.parse(saved_rundown_list)?.rundown;
+		}
+
+		const saved_pouch_list = localStorage.getItem('pouch_list');
+		if (saved_pouch_list) {
+			pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
+		}
+
+		loaded = true;
+	});
+
+	const initTutorials = async (tutos_name) => {
+		const tutorialsArray = await Promise.all(
+			tutos_name.map(async (tutorial_name) => {
+				try {
+					const response = await fetch(`/tutorials/${tutorial_name}.json`);
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					const jsonData = await response.json();
+					return jsonData;
+				} catch (error) {
+					console.error('There was a problem with the fetch operation:', error);
+					return null;
+				}
+			})
+		);
+
+		tutorialsArray.forEach((tutorial) => {
+			if (tutorial) {
+				tutorials[tutorial.scriptTitle] = tutorial;
 			}
+		});
 
-			const saved_pouch_list = localStorage.getItem('pouch_list');
-			if (saved_pouch_list) {
-				pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
-			}
-
-			loaded = true;
-
-
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-
-
-		
-
-});
-
-
-	$: if (loaded) saveAsCookie(rundown_list, pouch_list);
+		console.log(tutorials);
+	};
 
 	export const saveAsCookie = (rl, pl) => {
 		localStorage.setItem('rundown_list', JSON.stringify({ rundown: rl }));
 		localStorage.setItem('pouch_list', JSON.stringify({ pouch_list: pl }));
 	};
-
-
-
-
-	function fetchData(url) {
-    return fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        });
-}
 
 	const generateWords = () => {
 		const words = rundown_list.map((word) => {
@@ -156,10 +151,10 @@
 		input.click();
 	};
 
-	function startTutorial(){
-			tour = new Berger(help_guide_script);
+	function startTutorial() {
+		tour = new Berger(tutorials.help_guide);
 	}
-	
+
 	const exportJSON = () => {
 		const filename = 'data.json';
 		const jsonStr = JSON.stringify({ rundown: rundown_list, pouch_list: pouch_list });
@@ -184,10 +179,13 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
-	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial}/>
-	
+	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial} />
+
 	<div class="main flex flex-1" id="help_guide-step-welcome">
-		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4" id="help_guide-step-rundown">
+		<div
+			class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4"
+			id="help_guide-step-rundown"
+		>
 			<Rundown
 				bind:this={rundown_elem}
 				bind:rundown_list
@@ -196,14 +194,20 @@
 			/>
 		</div>
 
-		<div id="help_guide-step-pouch-of-words" class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto">
+		<div
+			id="help_guide-step-pouch-of-words"
+			class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto"
+		>
 			<PouchOfWords bind:this={pouch_elem} bind:pouch_list />
 		</div>
 	</div>
 
-	<div id="help_guide-step-output" class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
+	<div
+		id="help_guide-step-output"
+		class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center"
+	>
 		<p class="pl-2 text-secondary mr-2">Output:</p>
-		<p bind:this={result_div} class="text-secondary-color"/>
+		<p bind:this={result_div} class="text-secondary-color" />
 	</div>
 	<GGFooter />
 </div>

@@ -1,150 +1,139 @@
 import Shepherd from 'shepherd.js';
 import 'shepherd.js/dist/css/shepherd.css';
+
 class Berger {
+	constructor(script) {
+		this.tour = new Shepherd.Tour({
+			useModalOverlay: true,
+			defaultStepOptions: {
+				classes: 'shepherd-theme-custom',
+				scrollTo: false,
+				useModalOverlay: true
+			}
+		});
+		console.log('hey :', script);
+		this.script = script;
+		this.steps = script.steps;
+		this.initTour();
+	}
 
+	initTour() {
+		this.addSteps(this.steps);
+		this.start();
+	}
 
-  constructor(script) {
-    this.tour = new Shepherd.Tour({
-        useModalOverlay: true,
-        defaultStepOptions:{
-            classes: 'shepherd-theme-custom',
-          scrollTo: false,
-          useModalOverlay : true
-        },        
-      },
+	// Custom preprocessing logic
+	preprocessSteps(steps) {
+		return steps.map((step) => ({
+			title: step.title || 'Default Title',
+			arrow: true,
+			buttons: [
+				{
+					text: 'Back',
+					action: this.tour.back,
+					classes:
+						'border-2 rounded-primary px-2 hover:bg-cancel-color transition duration-300 ease out py-1 mr-2 mt-2',
+					label: 'Back'
+				},
+				{
+					text: 'Next',
+					action: this.tour.next,
+					classes:
+						'border-2 rounded-primary px-2 hover:bg-validate-color transition duration-300 ease out py-1 mr-2 mt-2',
+					label: 'Next'
+				}
+			],
+			...step
+		}));
+	}
 
-  );
-    console.log("hey :",script);
-    this.script = script;
-    this.steps = script.steps;
-    this.initTour();
-  }
+	addText(step) {
+		let htmlString;
 
-  initTour() {
-    this.addSteps(this.steps);
-    this.start();
-  }
+		if (step.image !== undefined) {
+			htmlString = "<div class='flex flex-col'>";
 
+			for (let i = 0; i < step.text.length - 1; i++) {
+				let text = `<p> ${step.text[i]} </p>`;
+				htmlString += text;
+			}
 
-  // Custom preprocessing logic
-  preprocessSteps(steps) {
-    return steps.map((step) => ({
-      title: step.title || 'Default Title',
-      arrow: true,
-      buttons:[
-        		{
-        			text: 'Back',
-        			action: this.tour.back,
-        			classes:'border-2 rounded-primary px-2 hover:bg-cancel-color transition duration-300 ease out py-1 mr-2 mt-2',
-        			label: 'Back'
-        		},
-        		{
-        			text:'Next',
-        			action: this.tour.next,
-        			classes:'border-2 rounded-primary px-2 hover:bg-validate-color transition duration-300 ease out py-1 mr-2 mt-2',
-        			label:'Next'
-    
-        		}
-        	],
-      ...step
-    }));
-  }
+			let alt = step.image.split(/images\/|\.png/);
+			let image = `<img src='${step.image}' alt='${alt}' />`;
+			htmlString += image;
 
+			let lastText = `<p> ${step.text[step.text.length - 1]} </p>`;
+			htmlString += lastText;
 
-  addText(step){
-    let htmlString;
+			let endString = '</div>';
+			htmlString += endString;
+		} else {
+			htmlString = "<div class='flex flex-col children:pb-2'>";
 
-    if(step.image!== undefined){
-      htmlString = "<div class='flex flex-col'>";
-      
-      for(let i=0; i<step.text.length-1;i++){
-        let text= `<p> ${step.text[i]} </p>`;
-        htmlString+= text;
-      }        
+			step.text.forEach((t) => {
+				let text = `<p> ${t}</p>`;
+				htmlString += text;
+			});
 
-      let alt = step.image.split(/images\/|\.png/);
-      let image = `<img src='${step.image}' alt='${alt}' />`;
-      htmlString+= image;
+			let endString = '</div>';
+			htmlString += endString;
+		}
 
-      let lastText= `<p> ${step.text[step.text.length-1]} </p>`;
-        htmlString+= lastText;
+		return htmlString;
+	}
 
-      let endString = "</div>";
-      htmlString +=endString;
-           
+	addSteps(steps) {
+		const length = this.steps.length;
+		const preprocessedSteps = this.preprocessSteps(steps);
+		preprocessedSteps.forEach((step, index) => {
+			step.text = this.addText(step);
 
+			if (index === 0) {
+				step.buttons = [
+					{
+						text: 'Exit',
+						action: this.tour.cancel,
+						label: 'Exit'
+					},
+					{
+						text: 'Next',
+						action: this.tour.next,
+						label: 'Next'
+					}
+				];
+			}
 
-    }else{
-      htmlString = "<div class='flex flex-col children:pb-2'>";
-      
-    
-      step.text.forEach((t)=>{
-        let text = `<p> ${t}</p>`;
-        htmlString += text; 
-      });
+			if (index === length - 1) {
+				step.buttons = [
+					{
+						text: 'Back',
+						action: this.tour.back,
+						label: 'Back'
+					},
+					{
+						text: 'Complete',
+						action: this.tour.next,
+						label: 'Complete'
+					}
+				];
+			}
 
-      let endString = "</div>";
-      htmlString +=endString;
+			this.tour.addStep(step);
+		});
+	}
 
-    }
+	start() {
+		this.tour.start();
+	}
 
-    return htmlString;
+	// Other custom methods
+	complete() {
+		this.tour.complete();
+	}
 
-  }
-
-  addSteps(steps) {
-    const length = this.steps.length;
-    const preprocessedSteps = this.preprocessSteps(steps);
-    preprocessedSteps.forEach((step, index) => {
-
-      step.text = this.addText(step);
-      
-      if(index ===0){
-        step.buttons = [
-          {
-            text:'Exit',
-            action: this.tour.cancel,
-            label:'Exit'
-          },
-          {
-            text: 'Next',
-            action: this.tour.next,
-            label: 'Next'
-          }
-        ]
-      }
-
-      if(index === length-1 ){
-        step.buttons = [
-          {
-            text:'Back',
-            action: this.tour.back,
-            label:'Back'
-          },
-          {
-            text: 'Complete',
-            action: this.tour.next,
-            label: 'Complete'
-          }
-        ]
-      }
-
-      this.tour.addStep(step);
-    });
-  }
-
-  start() {
-    this.tour.start();
-  }
-
-  // Other custom methods
-  complete() {
-    this.tour.complete();
-  }
-
-  cancel() {
-    this.tour.cancel();
-  }
+	cancel() {
+		this.tour.cancel();
+	}
 }
 
 export default Berger;

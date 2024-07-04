@@ -56,11 +56,7 @@
 		>
 			<div />
 			{#each rundown_list as component}
-				<WordComponent
-					id={component.id}
-					text={component.text}
-					on:update={updateWordComponent}
-				/>
+				<WordComponent id={component.id} text={component.text} on:update={updateWordComponent} />
 			{/each}
 		</div>
 		<button
@@ -73,7 +69,7 @@
 	</ul>
 	<button
 		id="help_guide-step-ggenerate"
-		class="rounded-xl flex bg-slate-800 p-2 font-bold text-3xl h-fit w-fit transition duration-300 ease-out hover:ring hover:shadow-pink-100 place-self-end"
+		class="rounded-lg flex bg-slate-800 p-2 font-bold text-3xl h-fit w-fit transition duration-300 ease-out hover:ring hover:shadow-pink-100 place-self-end"
 		on:click={generate}
 	>
 		GGenerate
