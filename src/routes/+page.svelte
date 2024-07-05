@@ -22,22 +22,19 @@
 	let loaded = false;
 
 	let tour;
+	let data = {};
 
 	let tutorials_name = ['help_guide', 'onboarding'];
-	let tutorials = {};
+	let examples_save = ['animals', 'hello_i_am'];
 
 	onMount(() => {
-		let visited = localStorage.getItem('visited');
+		data['visited'] = localStorage.getItem('visited');
 
-		if (!visited) {
+		if (!data.visited) {
 			localStorage.setItem('visited', true);
 		}
 
-		initTutorials(tutorials_name).then(() => {
-			if (!visited) {
-				tour = new Berger(tutorials.onboarding);
-			}
-		});
+		initTutorials(tutorials_name);
 
 		const saved_rundown_list = localStorage.getItem('rundown_list');
 		if (saved_rundown_list) {
@@ -53,27 +50,38 @@
 	});
 
 	const initTutorials = async (tutos_name) => {
-		const tutorialsArray = await Promise.all(
-			tutos_name.map(async (tutorial_name) => {
-				try {
-					const response = await fetch(`/tutorials/${tutorial_name}.json`);
-					if (!response.ok) {
-						throw new Error('Network response was not ok');
-					}
-					const jsonData = await response.json();
-					return jsonData;
-				} catch (error) {
-					console.error('There was a problem with the fetch operation:', error);
-					return null;
-				}
-			})
-		);
-
-		tutorialsArray.forEach((tutorial) => {
-			if (tutorial) {
-				tutorials[tutorial.scriptTitle] = tutorial;
+		fillFromFile('tutorials', tutos_name).then(() => {
+			if (!data.visited) {
+				tour = new Berger(data.tutorials.onboarding);
 			}
 		});
+	};
+
+	const loadExamples = async (ex_names) => {};
+
+	const fillFromFile = async (data_name, files) => {
+		data[data_name] = {};
+		const dataArray = await Promise.all(
+			files.map(async (file_name) => {
+				const content = await readFile(`/${data_name}/${file_name}.json`);
+				data[data_name][file_name] = content;
+			})
+		);
+		console.log(data);
+	};
+
+	const readFile = async (path) => {
+		try {
+			const response = await fetch(path);
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			const jsonData = await response.json();
+			return jsonData;
+		} catch (error) {
+			console.error('There was a problem with the fetch operation:', error);
+			return null;
+		}
 	};
 
 	export const saveAsCookie = (rl, pl) => {
@@ -101,6 +109,7 @@
 			return word;
 		});
 		result_div.innerText = words.join(' ');
+		console.log(data);
 	};
 
 	const getPouchElement = (pouch) => {
@@ -126,21 +135,7 @@
 			reader.onload = (readerEvent) => {
 				try {
 					var content = JSON.parse(readerEvent.target.result);
-					rundown_list = pouch_list = [];
-					result_div.innerText = '';
-					requestAnimationFrame(() => {
-						content?.rundown.map((word) => {
-							rundown_elem.addWordComponent({
-								detail: { id: word.id, text: word.text, type: word.type }
-							});
-						});
-						content?.pouch_list.map((pouch) => {
-							pouch_elem.addPouch({
-								type: 'import',
-								detail: { name: pouch.name, elements: pouch.elements }
-							});
-						});
-					});
+					loadSave(content);
 				} catch (e) {
 					console.error(e);
 				}
@@ -149,8 +144,26 @@
 		input.click();
 	};
 
+	const loadSave = (obj) => {
+		rundown_list = pouch_list = [];
+		result_div.innerText = '';
+		requestAnimationFrame(() => {
+			obj?.rundown.map((word) => {
+				rundown_elem.addWordComponent({
+					detail: { id: word.id, text: word.text, type: word.type }
+				});
+			});
+			obj?.pouch_list.map((pouch) => {
+				pouch_elem.addPouch({
+					type: 'import',
+					detail: { name: pouch.name, elements: pouch.elements }
+				});
+			});
+		});
+	};
+
 	function startTutorial() {
-		tour = new Berger(tutorials.help_guide);
+		tour = new Berger(data.tutorials.help_guide);
 	}
 
 	const exportJSON = () => {
