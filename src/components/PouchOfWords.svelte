@@ -69,11 +69,8 @@
 		}
 	}
 
-
 	const clearPouchofWords = () => {
 		pouch_list = [];
-
-
 	};
 
 	/**
@@ -119,7 +116,6 @@
 		pouch_list = [...pouch_list];
 	}
 
-
 	/**
 	 * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
 	 * @param e : the id of the pouch to delete
@@ -139,11 +135,10 @@
 </script>
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
-
-	<div class="flex first:children:border-r first:children:border-white children:px-2">
+	<div class="flex children:px-2 mb-2 justify-between">
 		<span class="text-secondary font-bold text-primary-color">Pouch of Words</span>
-		<button 
-			class="hover:text-cancel-color transition-colors"
+		<button
+			class="hover:text-cancel-color transition-colors text-tertiary"
 			on:click={clearPouchofWords}
 		>
 			clear
@@ -151,7 +146,7 @@
 	</div>
 
 	<div class="flex" id="help_guide-step-pouch">
-		<input		
+		<input
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
 			type="text"
 			bind:value={input_value}
