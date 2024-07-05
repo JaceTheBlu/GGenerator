@@ -12,8 +12,8 @@
             "title": "Main sections",
             "text": [
                 "We have two sections :",
-                "On the left, the Rundown used to create a sentence",
-                "On the right, the Pouch of words to create lists."
+                "-On the left, the Rundown used to create a sentence",
+                "-On the right, the Pouch of words to create lists."
             ],
             "attachTo": {
                 "element": "#help_guide-step-welcome",
@@ -36,13 +36,13 @@
             "text": [
                 "The goal of this section is to create pouches, which are lists of things.",
                 "For example you can have a pouch named as animals with cat and dog in it :",
+                "+images/pouch_animals.png",
                 "Next how to create a pouch !"
             ],
             "attachTo": {
                 "element": "#help_guide-step-pouch-of-words",
                 "on": "left"
-            },
-            "image": "images/pouch_animals.png"
+            }
         },
         {
             "title": "Create a pouch",
@@ -74,8 +74,8 @@
             "text": [
                 "The goal of this section is to create a sentence, it will be used as a template for the random generation.",
                 "A sentence is composed of multiples words, we have two types of them :",
-                "A pouch word : it's the name of one the list you created earlier",
-                "A static text word : it's used to add meaning to the sentence",
+                "-A pouch word : it's the name of one the list you created earlier",
+                "-A static text word : it's used to add meaning to the sentence",
                 "Next detail on words !"
             ],
             "attachTo": {
@@ -100,13 +100,13 @@
             "text": [
                 "To create a Static text word ... just type some text !",
                 "Note that you can modify your words by clicking on them, you can also delete them by remove their content.",
+                "+images/sentence.png",
                 "When you finished you will have something like above."
             ],
             "attachTo": {
                 "element": "#help_guide-step-rundown-button",
                 "on": "bottom"
-            },
-            "image": "images/sentence.png"
+            }
         },
         {
             "title": "GGenerate !",

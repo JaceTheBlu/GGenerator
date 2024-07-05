@@ -1,3 +1,79 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* shepherd-tailwind.css */
+.shepherd-element {
+    @apply bg-primary-color rounded-secondary p-4 max-w-lg z-[9999];
+}
+
+.shepherd-arrow,
+.shepherd-arrow:before {
+    @apply h-4 absolute w-4 z-[-1];
+}
+
+.shepherd-arrow:before {
+    @apply bg-primary-color;
+    content: "";
+    transform: rotate(45deg);
+}
+
+.shepherd-element[data-popper-placement^=top]>.shepherd-arrow {
+    bottom: -8px
+}
+
+.shepherd-element[data-popper-placement^=bottom]>.shepherd-arrow {
+    top: -8px
+}
+
+.shepherd-element[data-popper-placement^=left]>.shepherd-arrow {
+    right: -8px
+}
+
+.shepherd-element[data-popper-placement^=right]>.shepherd-arrow {
+    left: -8px
+}
+
+.shepherd-element.shepherd-centered>.shepherd-arrow {
+    opacity: 0
+}
+
+.shepherd-element.shepherd-has-title[data-popper-placement^=bottom]>.shepherd-arrow:before {
+    @apply bg-primary-color
+}
+
+.shepherd-target-click-disabled.shepherd-enabled.shepherd-target,
+.shepherd-target-click-disabled.shepherd-enabled.shepherd-target * {
+    pointer-events: none
+}
+
+.shepherd-button {
+    @apply bg-validate-color/75 hover:bg-validate-color/50 text-primary-color font-bold py-2 px-4 mr-4 rounded-secondary transition duration-300 ease-out;
+}
+
+.shepherd-button.shepherd-button-secondary {
+    @apply bg-cancel-color hover:bg-cancel-color/50;
+}
+
+.shepherd-header {
+    @apply text-secondary font-bold pb-2 mb-2 text-secondary-color border-b-white border-b;
+}
+
+.shepherd-content {
+    @apply text-primary-color text-tertiary;
+}
+
+.shepherd-modal-overlay-container {
+    @apply h-0 left-0 opacity-0 overflow-hidden pointer-events-none fixed top-0 w-screen z-[9997];
+    transition: all 0.3s ease-out, height 0ms 0.3s, opacity 0.3s 0ms;
+}
+
+.shepherd-modal-overlay-container.shepherd-modal-is-visible {
+    @apply h-screen opacity-50;
+    transform: translateZ(0);
+    transition: all 0.3s ease-out, height 0s 0s, opacity 0.3s 0s;
+}
+
+.shepherd-modal-overlay-container.shepherd-modal-is-visible path {
+    @apply pointer-events-auto;
+}

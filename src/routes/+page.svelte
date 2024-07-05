@@ -27,7 +27,7 @@
 	let tutorials = {};
 
 	onMount(() => {
-		visited = localStorage.getItem('visited');
+		let visited = localStorage.getItem('visited');
 
 		if (!visited) {
 			localStorage.setItem('visited', true);
@@ -74,8 +74,6 @@
 				tutorials[tutorial.scriptTitle] = tutorial;
 			}
 		});
-
-		console.log(tutorials);
 	};
 
 	export const saveAsCookie = (rl, pl) => {

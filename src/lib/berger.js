@@ -1,5 +1,4 @@
 import Shepherd from 'shepherd.js';
-import 'shepherd.js/dist/css/shepherd.css';
 
 class Berger {
 	constructor(script) {
@@ -11,14 +10,12 @@ class Berger {
 				useModalOverlay: true
 			}
 		});
-		console.log('hey :', script);
 		this.script = script;
-		this.steps = script.steps;
 		this.initTour();
 	}
 
 	initTour() {
-		this.addSteps(this.steps);
+		this.addSteps(this.script.steps);
 		this.start();
 	}
 
@@ -31,15 +28,12 @@ class Berger {
 				{
 					text: 'Back',
 					action: this.tour.back,
-					classes:
-						'border-2 rounded-primary px-2 hover:bg-cancel-color transition duration-300 ease out py-1 mr-2 mt-2',
+					secondary: true,
 					label: 'Back'
 				},
 				{
 					text: 'Next',
 					action: this.tour.next,
-					classes:
-						'border-2 rounded-primary px-2 hover:bg-validate-color transition duration-300 ease out py-1 mr-2 mt-2',
 					label: 'Next'
 				}
 			],
@@ -50,40 +44,35 @@ class Berger {
 	addText(step) {
 		let htmlString;
 
-		if (step.image !== undefined) {
-			htmlString = "<div class='flex flex-col'>";
+		htmlString = "<div class='flex flex-col children:mb-2 last:children:mb-4'>";
+		step.text.map((text) => {
+			let elem;
+			switch (text.substring(0, 1)) {
+				case '-':
+					elem = `<li class="ml-4"> ${text.slice(1)} </li>`;
+					break;
 
-			for (let i = 0; i < step.text.length - 1; i++) {
-				let text = `<p> ${step.text[i]} </p>`;
-				htmlString += text;
+				case '+':
+					elem = `<img src='${text.slice(1)}' alt='${text
+						.slice(1)
+						.split(/images\/|\.png/)}' class="rounded-primary w-auto" />`;
+					break;
+
+				default:
+					elem = `<p> ${text} </p>`;
+					break;
 			}
 
-			let alt = step.image.split(/images\/|\.png/);
-			let image = `<img src='${step.image}' alt='${alt}' />`;
-			htmlString += image;
+			htmlString += elem;
+		});
 
-			let lastText = `<p> ${step.text[step.text.length - 1]} </p>`;
-			htmlString += lastText;
-
-			let endString = '</div>';
-			htmlString += endString;
-		} else {
-			htmlString = "<div class='flex flex-col children:pb-2'>";
-
-			step.text.forEach((t) => {
-				let text = `<p> ${t}</p>`;
-				htmlString += text;
-			});
-
-			let endString = '</div>';
-			htmlString += endString;
-		}
-
+		let endString = '</div>';
+		htmlString += endString;
 		return htmlString;
 	}
 
 	addSteps(steps) {
-		const length = this.steps.length;
+		const length = this.script.steps.length;
 		const preprocessedSteps = this.preprocessSteps(steps);
 		preprocessedSteps.forEach((step, index) => {
 			step.text = this.addText(step);
@@ -91,9 +80,10 @@ class Berger {
 			if (index === 0) {
 				step.buttons = [
 					{
-						text: 'Exit',
+						text: 'Skip',
 						action: this.tour.cancel,
-						label: 'Exit'
+						secondary: true,
+						label: 'Skip'
 					},
 					{
 						text: 'Next',
@@ -108,6 +98,7 @@ class Berger {
 					{
 						text: 'Back',
 						action: this.tour.back,
+						secondary: true,
 						label: 'Back'
 					},
 					{
@@ -117,7 +108,6 @@ class Berger {
 					}
 				];
 			}
-
 			this.tour.addStep(step);
 		});
 	}
