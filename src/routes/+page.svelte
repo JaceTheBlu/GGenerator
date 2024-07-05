@@ -50,21 +50,24 @@
 	});
 
 	const initTutorials = async (tutos_name) => {
-		fillFromFile('tutorials', tutos_name).then(() => {
-			if (!data.visited) {
-				tour = new Berger(data.tutorials.onboarding);
-			}
-		});
+		await fillFromFile('tutorials', tutos_name);
+		if (!data.visited) {
+			tour = new Berger(data.tutorials.onboarding);
+			const randomExample = examples_save[Math.floor(Math.random() * examples_save.length)];
+			await fillFromFile('examples', [randomExample]);
+			loadSave(data.examples[randomExample]);
+		}
 	};
 
-	const loadExamples = async (ex_names) => {};
-
 	const fillFromFile = async (data_name, files) => {
-		data[data_name] = {};
+		data[data_name] = {
+			_length: 0
+		};
 		const dataArray = await Promise.all(
 			files.map(async (file_name) => {
 				const content = await readFile(`/${data_name}/${file_name}.json`);
 				data[data_name][file_name] = content;
+				data[data_name]['_length'] += 1;
 			})
 		);
 		console.log(data);
