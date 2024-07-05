@@ -64,9 +64,8 @@
 				{/each}
 			{:else}
 
-				<p class="text-xl mb-2">
-					Your sentence is empty... <br>
-					Add some pouches and some words !
+				<p class="text-lg mb-2">
+					Start by adding a new word! Click the + button to get started.
 				</p>
 
 

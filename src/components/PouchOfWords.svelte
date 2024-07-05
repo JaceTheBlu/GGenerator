@@ -161,9 +161,8 @@
 
 		{:else}
 
-		<p class="text-xl mt-2">
-			Hey this is empty around there ... <br>
-			Try adding something !
+		<p class="text-lg mt-2">
+			Create your first pouch by adding a pouch word in the rundown. You can also add it on the top!
 
 		</p>
 
