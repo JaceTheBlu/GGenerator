@@ -10,7 +10,8 @@
         {
             "title": "🔝 Top Bar Overview",
             "text": [
-                "The top bar contains buttons to save, load, view version history, access help, and open settings."
+                "The top bar contains various tools to interact with the app",
+                "some of the functions are buttons to save, load, view changelog, access help, and open settings."
             ],
             "attachTo": {
                 "element": "#help_guide-top-bar",
@@ -20,7 +21,9 @@
         {
             "title": "💾 Save Button",
             "text": [
-                "Click the Save button to save your current work. Remember to save your work regularly."
+                "Click the Save button to save your current work.",
+                "-Saving can be used to share your generator with friends!",
+                "-Or it be used if you have a common usage of this app"
             ],
             "attachTo": {
                 "element": "#help_guide-save-button",
@@ -30,7 +33,8 @@
         {
             "title": "📂 Load Button",
             "text": [
-                "Click the Load button to load previously saved work. You can access previously saved work at any time."
+                "Click the Load button to load previously saved work.",
+                "You can also load work shared by your friends at any time!"
             ],
             "attachTo": {
                 "element": "#help_guide-load-button",
@@ -38,29 +42,11 @@
             }
         },
         {
-            "title": "📜 Version Indicator",
-            "text": [
-                "The version indicator shows the changelog. Click it to view recent changes."
-            ],
-            "attachTo": {
-                "element": "#help_guide-version-button",
-                "on": "bottom"
-            }
-        },
-        {
-            "title": "⚙️ Settings Button",
-            "text": [
-                "The settings button allows you to customize various aspects of the app to suit your preferences."
-            ],
-            "attachTo": {
-                "element": "#help_guide-settings-button",
-                "on": "bottom"
-            }
-        },
-        {
             "title": "📝 Rundown Section",
             "text": [
-                "The rundown section is where you can write words. Start by clicking the + button to add a word."
+                "The rundown section is where you can write words.",
+                "Words can either be 'static' words or 'pouch' words",
+                "All those words will be compiled together to form the sentence."
             ],
             "attachTo": {
                 "element": "#help_guide-step-rundown",
@@ -80,16 +66,8 @@
         {
             "title": "🔤 Static and Pouch Words",
             "text": [
-                "You can add static words or pouch words. Pouch words start with '@' and create a corresponding pouch in the pouches list."
-            ],
-            "attachTo": {
-                "element": "#help_guide-step-rundown",
-                "on": "right"
-            }
-        },
-        {
-            "title": "💡 Example Pouch Word",
-            "text": [
+                "You can add 'static' words or 'pouch' words.",
+                "Pouch words start with '@' and create a corresponding pouch in the Pouches list.",
                 "For example, typing '@name' creates a pouch called 'name' in the pouches list."
             ],
             "attachTo": {
@@ -100,7 +78,8 @@
         {
             "title": "🗂 Pouches List",
             "text": [
-                "The pouches list on the right is where all your pouches are managed. Click on a pouch to add, modify, or delete its elements."
+                "The pouches list on the right is where all your pouches are managed.",
+                "Click on a pouch to add, modify, or delete its elements."
             ],
             "attachTo": {
                 "element": "#help_guide-step-pouch-of-words",
@@ -118,16 +97,6 @@
             }
         },
         {
-            "title": "🛠 Modifying Pouches",
-            "text": [
-                "To modify a pouch, click on it and add elements (strings). You can also edit or delete these elements."
-            ],
-            "attachTo": {
-                "element": "#help_guide-step-pouch-of-words",
-                "on": "left"
-            }
-        },
-        {
             "title": "🗂 Managing Pouches",
             "text": [
                 "Click on a pouch to add elements to it. You can also modify or delete elements."
@@ -140,7 +109,9 @@
         {
             "title": "⚡ Generating Sentences",
             "text": [
-                "Click the Generate button to compile your rundown into a complete sentence. Pouch words are replaced with random elements from their pouches."
+                "Click the Generate button to compile your rundown into a complete sentence.",
+                "-Static Words remain intact",
+                "-Pouch words are replaced with random elements from their pouches."
             ],
             "attachTo": {
                 "element": "#help_guide-step-ggenerate",
@@ -170,7 +141,7 @@
             ]
         },
         {
-            "title": "🔍 Exploring Features",
+            "title": "🔍 That's all Folks!",
             "text": [
                 "Feel free to explore and experiment with different words and pouches to see how they interact and generate sentences."
             ]
