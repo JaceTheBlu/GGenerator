@@ -6,8 +6,7 @@ class Berger {
 			useModalOverlay: true,
 			defaultStepOptions: {
 				classes: 'shepherd-theme-custom',
-				scrollTo: false,
-				useModalOverlay: true
+				scrollTo: false
 			}
 		});
 		this.script = script;
@@ -42,33 +41,20 @@ class Berger {
 	}
 
 	addText(step) {
-		let htmlString;
-
-		htmlString = "<div class='flex flex-col children:mb-2 last:children:mb-4'>";
-		step.text.map((text) => {
-			let elem;
-			switch (text.substring(0, 1)) {
-				case '-':
-					elem = `<li class="ml-4"> ${text.slice(1)} </li>`;
-					break;
-
-				case '+':
-					elem = `<img src='${text.slice(1)}' alt='${text
+		const htmlString = step.text
+			.map((text) => {
+				if (text.startsWith('-')) {
+					return `<li class="ml-4">${text.slice(1)}</li>`;
+				} else if (text.startsWith('+')) {
+					return `<img src='${text.slice(1)}' alt='${text
 						.slice(1)
 						.split(/images\/|\.png/)}' class="rounded-primary w-auto" />`;
-					break;
-
-				default:
-					elem = `<p> ${text} </p>`;
-					break;
-			}
-
-			htmlString += elem;
-		});
-
-		let endString = '</div>';
-		htmlString += endString;
-		return htmlString;
+				} else {
+					return `<p>${text}</p>`;
+				}
+			})
+			.join('');
+		return `<div class='flex flex-col children:mb-2 last:children:mb-4'>${htmlString}</div>`;
 	}
 
 	addSteps(steps) {
@@ -91,9 +77,7 @@ class Berger {
 						label: 'Next'
 					}
 				];
-			}
-
-			if (index === length - 1) {
+			} else if (index === length - 1) {
 				step.buttons = [
 					{
 						text: 'Back',
@@ -102,9 +86,9 @@ class Berger {
 						label: 'Back'
 					},
 					{
-						text: 'Complete',
+						text: 'Complete!',
 						action: this.tour.next,
-						label: 'Complete'
+						label: 'Complete!'
 					}
 				];
 			}
@@ -116,7 +100,6 @@ class Berger {
 		this.tour.start();
 	}
 
-	// Other custom methods
 	complete() {
 		this.tour.complete();
 	}

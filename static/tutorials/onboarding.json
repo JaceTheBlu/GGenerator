@@ -2,41 +2,35 @@
     "scriptTitle": "onboarding",
     "steps": [
         {
-            "title": "Welcome the  GGenerator !",
+            "title": "👋Welcome",
             "text": [
-                "We will now start the onboarding :",
-                "The goal of this website is to generate random things based on multiples lists and a sentence."
+                "Welcome to the app! Let's get started with a quick tour.",
+                "This app has been designed as a way to generate sentences with random input you provided",
+                "We imported an example for you to fiddle around, don't be shy and try to Click everywhere 😀"
             ]
         },
         {
-            "title": "Rundown",
+            "title": "📌Quick tips",
             "text": [
-                "In the rundown you can create words of text and list (named as pouch) by clicking on the \"+\" button.",
-                "If you type some text its a text word, if you want to create a pouch just type its name forwarded by \"@\"."
+                "-In the left section you have words and @pouches that are used to generate sentence",
+                "-To add a word, click the + button in the Rundown section.",
+                "-Pouches are created by typing words starting with '@'."
+            ]
+        },
+        {
+            "title": "🤿In-depth Guide",
+            "text": [
+                "Click here, the help button in the top right corner at any time for a detailed tutorial on all features."
             ],
             "attachTo": {
-                "element": "#help_guide-step-rundown",
-                "on": "left"
+                "element": "#help_guide-help-button",
+                "on": "bottom"
             }
         },
         {
-            "title": "Pouch of Words",
+            "title": "🎲GGenerate",
             "text": [
-                "Here it's the part to create pouches.",
-                "You can create one by typing its name on the bar.",
-                "When its created you can add an element to a pouch by typing its name on the bar of the pouch.",
-                "You can also modify an element or a pouch by clicking on it, or delete it by clicking on the red cross."
-            ],
-            "attachTo": {
-                "element": "#help_guide-step-pouch-of-words",
-                "on": "left"
-            }
-        },
-        {
-            "title": "GGenerate",
-            "text": [
-                "When you are ready click on GGenerate ! to have your first result",
-                "After this an example will be loaded to inspire you, be creative !"
+                "When you are ready click on GGenerate ! to have your first result"
             ],
             "attachTo": {
                 "element": "#help_guide-step-ggenerate",

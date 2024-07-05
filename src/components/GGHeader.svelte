@@ -61,10 +61,13 @@
 		<button class=" hover:text-secondary-color text-primary !px-4 text-primary-color/75 self-center"
 			>v0.1.1</button
 		>
-		<button 
-			class="hover:scale-110 duration-300 transition-all" 
+		<button
+			id="help_guide-help-button"
+			class="hover:scale-110 duration-300 transition-all"
 			title="Help"
-			on:click={()=>{dispatch('tutorial')}}
+			on:click={() => {
+				dispatch('tutorial');
+			}}
 		>
 			❔
 		</button>
