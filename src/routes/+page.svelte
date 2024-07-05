@@ -49,6 +49,8 @@
 		loaded = true;
 	});
 
+	$: if (loaded) saveAsCookie(rundown_list, pouch_list);
+
 	const initTutorials = async (tutos_name) => {
 		await fillFromFile('tutorials', tutos_name);
 		if (!data.visited) {
@@ -70,7 +72,6 @@
 				data[data_name]['_length'] += 1;
 			})
 		);
-		console.log(data);
 	};
 
 	const readFile = async (path) => {
@@ -112,7 +113,6 @@
 			return word;
 		});
 		result_div.innerText = words.join(' ');
-		console.log(data);
 	};
 
 	const getPouchElement = (pouch) => {

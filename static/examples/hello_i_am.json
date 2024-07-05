@@ -2,17 +2,17 @@
     "rundown": [
         {
             "id": 1,
-            "text": "Hello I am an",
+            "text": "Hello there, I'm",
             "type": "static"
         },
         {
             "id": 2,
-            "text": "@animals",
+            "text": "@name",
             "type": "static"
         },
         {
             "id": 3,
-            "text": "and I am",
+            "text": "and I'm",
             "type": "static"
         },
         {
@@ -29,19 +29,19 @@
     "pouch_list": [
         {
             "id": 0,
-            "name": "animals",
+            "name": "name",
             "elements": [
                 {
-                    "id": "animals0",
-                    "name": "cat"
+                    "id": "name0",
+                    "name": "John"
                 },
                 {
-                    "id": "animals1",
-                    "name": "dog"
+                    "id": "name1",
+                    "name": "Fitzgerald"
                 },
                 {
-                    "id": "animals2",
-                    "name": "horse"
+                    "id": "name2",
+                    "name": "Muad'Dib"
                 }
             ]
         },
@@ -55,11 +55,11 @@
                 },
                 {
                     "id": "actions1",
-                    "name": "barking"
+                    "name": "sleeping"
                 },
                 {
                     "id": "actions2",
-                    "name": "jumping"
+                    "name": "riding Shai-Hulud"
                 }
             ]
         }
