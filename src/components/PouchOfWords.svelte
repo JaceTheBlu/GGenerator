@@ -134,7 +134,6 @@
 	}
 
 	
-
 	function handleDragStart(event, pouch){
 		dragged_pouch = pouch;
 		event.dataTransfer.effectAllowed = 'move';
@@ -143,10 +142,28 @@
 	function handleDragOver(event, pouch){
 		event.preventDefault();
 		event.dataTransfer.dropEffect = 'move';
+
+		//New features
+		const element = event.currentTarget;
+		element.classList.add('bg-secondary-color', 'rounded-primary');
+	}
+		
+		
+	function handleDragLeave(event, pouch){
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color', 'rounded-primary');
+
+		isDraggingOver = false;
+
 	}
 
 	function handleDrop(event, pouch){
 		event.preventDefault();
+		
+		// New features 
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color','rounded-primary');
+
 		const draggedIndex = pouch_list.indexOf(dragged_pouch);
 		const droppedIndex = pouch_list.indexOf(pouch);
 
@@ -164,6 +181,8 @@
 	}
 	
 </script>
+
+
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
 	<div class="flex" id="help_guide-step-pouch">
@@ -187,6 +206,7 @@
 				draggable="true"
 				on:dragstart={(event)=> handleDragStart(event, pouch)}
 				on:dragover={(event)=> handleDragOver(event, pouch)}
+				on:dragleave={(event)=> handleDragLeave(event, pouch)}
 				on:drop={(event)=> handleDrop(event, pouch)}
 				aria-label="drag and drop zone"
 				role="region"
