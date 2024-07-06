@@ -197,7 +197,7 @@
 		const draggedIndex = elements.indexOf(dragged_pouch_element);
 		const droppedIndex = elements.indexOf(pouch);
 
-		if(draggedIndex > 0){
+		if(draggedIndex >= 0){
 			console.log("dragged Index : ",draggedIndex);
 			console.log("dropped Index : ",droppedIndex);
 			elements.splice(draggedIndex, 1);
