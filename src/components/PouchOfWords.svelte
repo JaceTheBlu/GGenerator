@@ -152,9 +152,6 @@
 	function handleDragLeave(event, pouch){
 		const element = event.currentTarget;
 		element.classList.remove('bg-secondary-color', 'rounded-primary');
-
-		isDraggingOver = false;
-
 	}
 
 	function handleDrop(event, pouch){
@@ -208,7 +205,7 @@
 				on:dragover={(event)=> handleDragOver(event, pouch)}
 				on:dragleave={(event)=> handleDragLeave(event, pouch)}
 				on:drop={(event)=> handleDrop(event, pouch)}
-				aria-label="drag and drop zone"
+				aria-label="drag and drop zone of pouch"
 				role="region"
 			>
 				<Pouch

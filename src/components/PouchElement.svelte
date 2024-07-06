@@ -63,7 +63,7 @@
 	}
 </script>
 
-<li class="flex justify-between items-center odd:bg-slate-800/10 even:bg-slate-800/50 pl-4">
+<li class="flex justify-between items-center  pl-4">
 	{#if isEditable}
 		<input
 			type="text"
