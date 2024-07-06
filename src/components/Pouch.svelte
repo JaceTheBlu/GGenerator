@@ -164,23 +164,21 @@
 	function changeHiddenState(){
 		isHidden = !isHidden
 	}
+
 </script>
 
 
 <ul class="bg-slate-800/50 rounded-xl divide-y my-2">
 	<li class="flex justify-between text-xl h-full">
-
 		<button
 			class={`flex items-center px-2 hover:bg-blue-500 ${isHidden ? 'rounded-bl-xl' : 'rounded-none'} transition duration-300 hover:cursor-pointer rounded-tl-xl`}
 			on:click={changeHiddenState}
 		>
 			{isHidden ? '▷' : '▽'}
-			 
+				
 		</button>
 		
-		<div
-			class="flex hover:cursor-move grow hover:text-secondary-color transition-colors duration-300 justify-center"
-		>
+		<div class="flex hover:cursor-move grow hover:text-secondary-color transition-colors duration-300 justify-center">
 			<span class="flex items-center text-white/50"> @ </span>
 
 			{#if isEditable}

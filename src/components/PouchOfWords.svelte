@@ -15,8 +15,10 @@
 	let max = 20;
 
 	let pouch_id = 0;
+	let dragged_pouch = null;
 
 	$: input_value = String(input_value).toLowerCase();
+
 
 	/*Functions */
 
@@ -53,6 +55,7 @@
 			input_value = '';
 		}
 	};
+
 
 	/**
 	 *  This function redirect the user that addPouch through the enter key to the addPouch method
@@ -129,6 +132,37 @@
 		}
 		pouch_list = [...pouch_list];
 	}
+
+	
+
+	function handleDragStart(event, pouch){
+		dragged_pouch = pouch;
+		event.dataTransfer.effectAllowed = 'move';
+	}
+
+	function handleDragOver(event, pouch){
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+	}
+
+	function handleDrop(event, pouch){
+		event.preventDefault();
+		const draggedIndex = pouch_list.indexOf(dragged_pouch);
+		const droppedIndex = pouch_list.indexOf(pouch);
+
+		console.log("dragged Index : ",draggedIndex);
+		console.log("dropped Index : ",droppedIndex);
+		pouch_list.splice(draggedIndex, 1);
+
+		pouch_list.splice(droppedIndex, 0,dragged_pouch);
+
+		console.log("pouch list :", pouch_list);
+
+		pouch_list = [...pouch_list];
+
+		dragged_pouch = null;
+	}
+	
 </script>
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
@@ -146,15 +180,26 @@
 			>Add list
 		</button>
 	</div>
+
 	<div class="flex-1 overflow-y-auto rounded-primary">
 		{#each pouch_list as pouch}
-			<Pouch
-				id={pouch.id}
-				name={pouch.name}
-				elements={pouch.elements}
-				on:pouch_elements={refreshPouch}
-				on:delete-pouch={deletePouch}
-			/>
+			<div
+				draggable="true"
+				on:dragstart={(event)=> handleDragStart(event, pouch)}
+				on:dragover={(event)=> handleDragOver(event, pouch)}
+				on:drop={(event)=> handleDrop(event, pouch)}
+				aria-label="drag and drop zone"
+				role="region"
+			>
+				<Pouch
+					id={pouch.id}
+					name={pouch.name}
+					elements={pouch.elements}
+					on:pouch_elements={refreshPouch}
+					on:delete-pouch={deletePouch}
+				/> 
+
+			</div>
 		{/each}
 	</div>
 </div>
