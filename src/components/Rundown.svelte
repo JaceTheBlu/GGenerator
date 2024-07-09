@@ -7,6 +7,8 @@
 	export let rundown_list = [];
 	let rundownRootElement;
 
+	let dragged_component = null;
+
 	$: newId = rundown_list.length ? Math.max(...rundown_list.map((t) => t.id)) + 1 : 1;
 
 	export const addWordComponent = (event) => {
@@ -48,6 +50,49 @@
 	const clearRundown = () => {
 		rundown_list = [];
 	};
+
+
+	function handleDragStart(event, component){
+		dragged_component = component;
+		event.dataTransfer.effectAllowed = 'move';
+	}
+
+	function handleDragOver(event, component){
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+
+		//New features
+		const element = event.currentTarget;
+		element.classList.add('bg-secondary-color', 'rounded-primary');
+	}
+
+	function handleDragLeave(event, component){
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color','rounded-primary');
+	}
+
+	function handleDrop(event, component){
+		event.preventDefault();
+
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color','rounded-primary');
+
+		const draggedIndex = rundown_list.indexOf(dragged_component);
+		const droppedIndex =  rundown_list.indexOf(component);
+
+		rundown_list.splice(draggedIndex, 1);
+		rundown_list.splice(droppedIndex, 0, dragged_component);
+
+		rundown_list = [...rundown_list];
+
+		dragged_component = null;
+
+	}
+
+	
+
+
+
 </script>
 
 <div class="relative w-full h-full flex flex-col">
@@ -68,9 +113,19 @@
 			class="flex flex-wrap w-full justify-center content-center place-items-center"
 			bind:this={rundownRootElement}
 		>
-			<div />
 			{#each rundown_list as component}
-				<WordComponent id={component.id} text={component.text} on:update={updateWordComponent} />
+				<div
+					draggable="true"
+					on:dragstart={(event) => handleDragStart(event, component)}
+					on:dragleave={(event) => handleDragLeave(event,component)}
+					on:dragover={(event) =>handleDragOver(event, component)}
+					on:drop={(event) => handleDrop(event, component)}
+					aria-label="drag n drop rundown"
+					role="region"
+				>
+					<WordComponent id={component.id} text={component.text} on:update={updateWordComponent} />
+
+				</div>
 			{/each}
 		</div>
 		<button
