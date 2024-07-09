@@ -145,13 +145,13 @@
 
 		//New features
 		const element = event.currentTarget;
-		element.classList.add('bg-secondary-color', 'rounded-primary');
+		element.classList.add('bg-secondary-color', 'rounded-t-primary' ,'border-b-8', 'border-dashed');
 	}
 		
 		
 	function handleDragLeave(event, pouch){
 		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color', 'rounded-primary');
+		element.classList.remove('bg-secondary-color','rounded-t-primary','border-b-8', 'border-dashed');
 	}
 
 	function handleDrop(event, pouch){
@@ -159,7 +159,7 @@
 		
 		// New features 
 		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color','rounded-primary');
+		element.classList.remove('bg-secondary-color','rounded-t-primary','border-b-8', 'border-dashed');
 
 		const draggedIndex = pouch_list.indexOf(dragged_pouch);
 		const droppedIndex = pouch_list.indexOf(pouch);
