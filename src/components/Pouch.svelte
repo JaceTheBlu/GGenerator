@@ -164,23 +164,72 @@
 	function changeHiddenState(){
 		isHidden = !isHidden
 	}
+
+	let dragged_pouch_element = null;
+
+	function handleDragStart(event, pouch){
+		dragged_pouch_element = pouch;
+		event.dataTransfer.effectAllowed = 'move';
+	}
+
+	function handleDragOver(event, pouch){
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+
+		//New features
+		const element = event.currentTarget;
+		element.classList.add('bg-secondary-color', 'rounded-primary', 'border-b-8');
+	}
+
+	function handleDragLeave(event, pouch){
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color', 'rounded-primary', 'border-b-8');
+
+	}
+
+	function handleDrop(event, pouch){
+		event.preventDefault();
+		
+		// New features 
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color','rounded-primary', 'border-b-8');
+
+		const draggedIndex = elements.indexOf(dragged_pouch_element);
+		const droppedIndex = elements.indexOf(pouch);
+
+		if(draggedIndex >= 0){
+			console.log("dragged Index : ",draggedIndex);
+			console.log("dropped Index : ",droppedIndex);
+			elements.splice(draggedIndex, 1);
+	
+			elements.splice(droppedIndex, 0,dragged_pouch_element);
+	
+			console.log("elements list :", elements);
+	
+			elements = [...elements];
+			dragged_pouch_element = null;
+		}
+
+	}
+	
+
+
+
+
 </script>
 
 
 <ul class="bg-slate-800/50 rounded-xl divide-y my-2">
 	<li class="flex justify-between text-xl h-full">
-
 		<button
 			class={`flex items-center px-2 hover:bg-blue-500 ${isHidden ? 'rounded-bl-xl' : 'rounded-none'} transition duration-300 hover:cursor-pointer rounded-tl-xl`}
 			on:click={changeHiddenState}
 		>
 			{isHidden ? '▷' : '▽'}
-			 
+				
 		</button>
 		
-		<div
-			class="flex hover:cursor-move grow hover:text-secondary-color transition-colors duration-300 justify-center"
-		>
+		<div class="flex hover:cursor-move grow hover:text-secondary-color transition-colors duration-300 justify-center">
 			<span class="flex items-center text-white/50"> @ </span>
 
 			{#if isEditable}
@@ -213,17 +262,28 @@
 	</li>
 
 	{#if elements.length !== 0 && !isHidden}
-
-		<div 
-			class="divide-y divide-dashed"
-		>
+		<div class="divide-y divide-dashed">
 			{#each elements as pouch}
-				<PouchElement
-					id={pouch.id}
-					name={pouch.name}
-					on:update-pouch-element={refreshElements}
-					on:delete-pouch-element={deletePouchElement}
-				/>
+				<div 
+					draggable="true"
+					on:dragstart={(event)=> handleDragStart(event, pouch)}
+					on:dragover={(event)=> handleDragOver(event, pouch)}
+					on:dragleave={(event)=> handleDragLeave(event, pouch)}
+					on:drop={(event)=> handleDrop(event, pouch)}
+					aria-label="drag and drop zone of pouch elements"
+					role="region"
+					
+					class="odd:bg-slate-800/10 even:bg-slate-800/50"
+				
+				>
+					<PouchElement
+						id={pouch.id}
+						name={pouch.name}
+						on:update-pouch-element={refreshElements}
+						on:delete-pouch-element={deletePouchElement}
+					/>
+				</div>
+
 			{/each}
 		</div>
 	{/if}
