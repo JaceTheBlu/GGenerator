@@ -1,0 +1,40 @@
+{
+    "steps": [
+        {
+            "title": "👋 Welcome",
+            "text": [
+                "Welcome to the app! Let's get started with a quick tour.",
+                "This app has been designed as a way to generate sentences with random input you provided",
+                "We imported an example for you to fiddle around, don't be shy and try to Click everywhere 😀"
+            ]
+        },
+        {
+            "title": "📌 Quick tips",
+            "text": [
+                "-In the left section you have words and @pouches that are used to generate sentence",
+                "-To add a word, click the + button in the Rundown section.",
+                "-Pouches are created by typing words starting with '@'."
+            ]
+        },
+        {
+            "title": "🤿 In-depth Guide",
+            "text": [
+                "Click here, the help button in the top right corner at any time for a detailed tutorial on all features."
+            ],
+            "attachTo": {
+                "element": "#help_guide-help-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "🎲 GGenerate",
+            "text": [
+                "When you are ready click on GGenerate ! to have your first result"
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-ggenerate",
+                "on": "top"
+            }
+        }
+    ]
+}

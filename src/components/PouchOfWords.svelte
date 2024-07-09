@@ -159,7 +159,7 @@
 			>Add list
 		</button>
 	</div>
-	<div class="flex-1 overflow-y-auto rounded-primary">
+	<div class="flex-1 overflow-y-auto rounded-lg">
 		{#each pouch_list as pouch}
 			<Pouch
 				id={pouch.id}
