@@ -139,7 +139,9 @@
 	
 	function handleDragStart(event, pouch){
 		dragged_pouch = pouch;
+
 		event.dataTransfer.effectAllowed = 'move';
+		event.dataTransfer.setData('pouch',dragged_pouch.name);
 	}
 
 	function handleDragOver(event, pouch){
@@ -148,13 +150,13 @@
 
 		//New features
 		const element = event.currentTarget;
-		element.classList.add('bg-secondary-color', 'rounded-t-primary' ,'border-b-8', 'border-dashed');
+		element.classList.add('bg-secondary-color/50', 'rounded-t-primary' ,'border-b-8', 'border-dashed');
 	}
 		
 		
 	function handleDragLeave(event, pouch){
 		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color','rounded-t-primary','border-b-8', 'border-dashed');
+		element.classList.remove('bg-secondary-color/50','rounded-t-primary','border-b-8', 'border-dashed');
 	}
 
 	function handleDrop(event, pouch){
@@ -162,22 +164,24 @@
 		
 		// New features 
 		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color','rounded-t-primary','border-b-8', 'border-dashed');
+		element.classList.remove('bg-secondary-color/50','rounded-t-primary','border-b-8', 'border-dashed');
 
 		const draggedIndex = pouch_list.indexOf(dragged_pouch);
 		const droppedIndex = pouch_list.indexOf(pouch);
 
-		console.log("dragged Index : ",draggedIndex);
-		console.log("dropped Index : ",droppedIndex);
-		pouch_list.splice(draggedIndex, 1);
-
-		pouch_list.splice(droppedIndex, 0,dragged_pouch);
-
-		console.log("pouch list :", pouch_list);
-
-		pouch_list = [...pouch_list];
-
+		if(draggedIndex >=0){
+			console.log("dragged Index : ",draggedIndex);
+			console.log("dropped Index : ",droppedIndex);
+			pouch_list.splice(draggedIndex, 1);
+	
+			pouch_list.splice(droppedIndex, 0,dragged_pouch);
+	
+			console.log("pouch list :", pouch_list);
+	
+			pouch_list = [...pouch_list];
+		}
 		dragged_pouch = null;
+
 	}
 	
 </script>

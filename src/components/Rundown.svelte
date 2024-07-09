@@ -57,45 +57,92 @@
 		event.dataTransfer.effectAllowed = 'move';
 	}
 
-	function handleDragOver(event, component){
+	function handleDragOver(event){
 		event.preventDefault();
 		event.dataTransfer.dropEffect = 'move';
 
-		//New features
-		const element = event.currentTarget;
-		element.classList.add('bg-secondary-color', 'rounded-primary');
+		if(event.dataTransfer.getData('pouch') === ''){
+			const element = event.currentTarget;
+			element.classList.add('bg-secondary-color/50', 'rounded-primary');
+		
+		}
+		
 	}
 
-	function handleDragLeave(event, component){
+	function handleDragOverGeneral(event){
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+
+		if(event.dataTransfer.getData('pouch') !== ''){
+			const element = event.currentTarget;
+			element.classList.add('bg-secondary-color/50', 'rounded-primary');
+		}
+	}
+
+	function handleDragLeave(event){
 		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color','rounded-primary');
+		element.classList.remove('bg-secondary-color/50','rounded-primary');
 	}
 
 	function handleDrop(event, component){
 		event.preventDefault();
 
 		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color','rounded-primary');
+		element.classList.remove('bg-secondary-color/50','rounded-primary');
 
-		const draggedIndex = rundown_list.indexOf(dragged_component);
-		const droppedIndex =  rundown_list.indexOf(component);
+		if(event.dataTransfer.getData('pouch') === ''){
 
-		rundown_list.splice(draggedIndex, 1);
-		rundown_list.splice(droppedIndex, 0, dragged_component);
-
-		rundown_list = [...rundown_list];
-
-		dragged_component = null;
-
+			const draggedIndex = rundown_list.indexOf(dragged_component);
+			const droppedIndex =  rundown_list.indexOf(component);
+	
+			rundown_list.splice(draggedIndex, 1);
+			rundown_list.splice(droppedIndex, 0, dragged_component);
+	
+			rundown_list = [...rundown_list];
+	
+			dragged_component = null;
+		}
 	}
 
-	
+	function handleDropGeneral(event){
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color/50','rounded-primary');
 
 
+		if(event.dataTransfer.getData('pouch') !== ''){
+			console.log("here");
+			const pouch_name = event.dataTransfer.getData('pouch');
+
+			console.log("pouch :",pouch_name);
+
+			const new_item = {
+				id : newId,
+				text : "@"+pouch_name,
+				type : 'pouch'
+			};
+
+			rundown_list.push(new_item);
+
+			console.log("rundown : ", rundown_list);
+			
+			rundown_list = [...rundown_list];
+		}
+	}
 
 </script>
 
-<div class="relative w-full h-full flex flex-col">
+<div 
+	class="relative w-full h-full flex flex-col"
+	on:dragleave={(event) => handleDragLeave(event)}
+	on:dragover={(event) =>handleDragOverGeneral(event)}
+	on:drop={(event) => handleDropGeneral(event)}
+	aria-label="drag n drop pouch"
+	role="region"
+
+>
 	<div class="flex children:px-2 mb-2 justify-between">
 		<span class="text-secondary font-bold text-primary-color">Rundown</span>
 		<button
@@ -117,8 +164,8 @@
 				<div
 					draggable="true"
 					on:dragstart={(event) => handleDragStart(event, component)}
-					on:dragleave={(event) => handleDragLeave(event,component)}
-					on:dragover={(event) =>handleDragOver(event, component)}
+					on:dragleave={(event) => handleDragLeave(event)}
+					on:dragover={(event) =>handleDragOver(event)}
 					on:drop={(event) => handleDrop(event, component)}
 					aria-label="drag n drop rundown"
 					role="region"
