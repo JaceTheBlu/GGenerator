@@ -164,58 +164,7 @@
 	function changeHiddenState(){
 		isHidden = !isHidden
 	}
-
-	let dragged_pouch_element = null;
-
-	function handleDragStart(event, pouch){
-		dragged_pouch_element = pouch;
-		event.dataTransfer.effectAllowed = 'move';
-	}
-
-	function handleDragOver(event, pouch){
-		event.preventDefault();
-		event.dataTransfer.dropEffect = 'move';
-
-		//New features
-		const element = event.currentTarget;
-		element.classList.add('bg-secondary-color/50', 'rounded-primary', 'border-b-8');
-	}
-
-	function handleDragLeave(event, pouch){
-		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color/50', 'rounded-primary', 'border-b-8');
-
-	}
-
-	function handleDrop(event, pouch){
-		event.preventDefault();
-		
-		// New features 
-		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color/50','rounded-primary', 'border-b-8');
-
-		const draggedIndex = elements.indexOf(dragged_pouch_element);
-		const droppedIndex = elements.indexOf(pouch);
-
-		if(draggedIndex >= 0){
-			console.log("dragged Index : ",draggedIndex);
-			console.log("dropped Index : ",droppedIndex);
-			elements.splice(draggedIndex, 1);
 	
-			elements.splice(droppedIndex, 0,dragged_pouch_element);
-	
-			console.log("elements list :", elements);
-	
-			elements = [...elements];
-		}
-		dragged_pouch_element = null;
-
-	}
-	
-
-
-
-
 </script>
 
 
@@ -264,26 +213,12 @@
 	{#if elements.length !== 0 && !isHidden}
 		<div class="divide-y divide-dashed">
 			{#each elements as pouch}
-				<div 
-					draggable="true"
-					on:dragstart={(event)=> handleDragStart(event, pouch)}
-					on:dragover={(event)=> handleDragOver(event, pouch)}
-					on:dragleave={(event)=> handleDragLeave(event, pouch)}
-					on:drop={(event)=> handleDrop(event, pouch)}
-					aria-label="drag and drop zone of pouch elements"
-					role="region"
-					
-					class="odd:bg-slate-800/10 even:bg-slate-800/50"
-				
-				>
-					<PouchElement
-						id={pouch.id}
-						name={pouch.name}
-						on:update-pouch-element={refreshElements}
-						on:delete-pouch-element={deletePouchElement}
-					/>
-				</div>
-
+				<PouchElement
+					id={pouch.id}
+					name={pouch.name}
+					on:update-pouch-element={refreshElements}
+					on:delete-pouch-element={deletePouchElement}
+				/>
 			{/each}
 		</div>
 	{/if}
