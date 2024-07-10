@@ -223,6 +223,7 @@
 					type="text"
 					placeholder="Enter a value..."
 					on:keydown={(event) => handleKeyboard(event, 'addElements')}
+					on:blur={addElements}
 				/>
 
 				<button
