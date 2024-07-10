@@ -63,6 +63,10 @@
     @apply text-primary-color text-tertiary;
 }
 
+.shepherd-text {
+    @apply max-h-[70vh] overflow-y-auto overflow-hidden;
+}
+
 .shepherd-modal-overlay-container {
     @apply h-0 left-0 opacity-0 overflow-hidden pointer-events-none fixed top-0 w-screen z-[9997];
     transition: all 0.3s ease-out, height 0ms 0.3s, opacity 0.3s 0ms;

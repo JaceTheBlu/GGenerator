@@ -24,7 +24,7 @@
 	let tour;
 	let data = {};
 
-	let tutorials_name = ['help_guide', 'onboarding'];
+	let tutorials_name = ['help_guide', 'onboarding', 'changelog'];
 	let examples_save = ['animals', 'hello_i_am'];
 
 	onMount(() => {
@@ -165,9 +165,13 @@
 		});
 	};
 
-	function startTutorial() {
+	const startTutorial = () => {
 		tour = new Berger(data.tutorials.help_guide);
-	}
+	};
+
+	const showChangeLog = () => {
+		tour = new Berger(data.tutorials.changelog);
+	};
 
 	const exportJSON = () => {
 		const filename = 'data.json';
@@ -193,7 +197,12 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
-	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial} />
+	<GGHeader
+		on:import={importJSON}
+		on:export={exportJSON}
+		on:tutorial={startTutorial}
+		on:changelog={showChangeLog}
+	/>
 
 	<div class="main flex flex-1" id="help_guide-step-welcome">
 		<div
