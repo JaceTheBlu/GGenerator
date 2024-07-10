@@ -64,7 +64,7 @@
 	</div>
 	<div>
 		<a
-			href="https://forms.gle/2JKbUNFE4Dd8JMUL9"
+			href="https://forms.gle/ZpG76iQtqsSGXJ2KA"
 			target="_blank"
 			class="flex px-2
 				bg-gradient-to-r
