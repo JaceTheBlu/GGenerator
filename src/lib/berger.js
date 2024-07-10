@@ -49,6 +49,8 @@ class Berger {
 					return `<img src='${text.slice(1)}' alt='${text
 						.slice(1)
 						.split(/images\/|\.png/)}' class="rounded-primary w-auto" />`;
+				} else if (text.startsWith('#')) {
+					return `<h3 class="text-tertiary-color italic text-tertiary">${text.slice(1)}</h3>`;
 				} else {
 					return `<p>${text}</p>`;
 				}
