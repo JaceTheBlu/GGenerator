@@ -112,7 +112,6 @@
 		pouch_list = [...pouch_list];
 	}
 
-
 	/**
 	 * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
 	 * @param e : the id of the pouch to delete
@@ -133,7 +132,7 @@
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
 	<div class="flex" id="help_guide-step-pouch">
-		<input		
+		<input
 			class=" bg-slate-800/50 flex-grow w-full focus:outline-none focus:ring md:w-3/4 rounded-md mr-2 pl-2"
 			type="text"
 			bind:value={input_value}
@@ -147,8 +146,7 @@
 		</button>
 	</div>
 	<div class="flex-1 overflow-y-auto rounded-primary">
-
-		{#if pouch_list.length >0}
+		{#if pouch_list.length > 0}
 			{#each pouch_list as pouch}
 				<Pouch
 					id={pouch.id}
@@ -158,16 +156,50 @@
 					on:delete-pouch={deletePouch}
 				/>
 			{/each}
-
 		{:else}
-
-		<p class="text-lg mt-2">
-			Create your first pouch by adding a pouch word in the rundown. You can also add it on the top!
-
-		</p>
-
-
+			<div class="flex flex-col">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					version="1.1"
+					xmlns:xlink="http://www.w3.org/1999/xlink"
+					xmlns:svgjs="http://svgjs.dev/svgjs"
+					viewBox="0 0 800 800"
+					class="w-2/3 self-end"
+					><g
+						stroke-width="15"
+						stroke="hsl(0, 0%, 100%)"
+						stroke-opacity="0.5"
+						fill="none"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-dasharray="21 39"
+						transform="matrix(-0.10452846326765336,-0.9945218953682734,0.9945218953682734,-0.10452846326765336,30.002627159752024,859.6201434543707)"
+						><path
+							d="M112.85421752929688 106Q393.8542175292969 839 406.8542175292969 400Q-331.1457824707031 588 700.8542175292969 694 "
+							marker-end="url(#SvgjsMarker6867)"
+						/></g
+					><defs
+						><marker
+							markerWidth="7"
+							markerHeight="7"
+							refX="3.5"
+							refY="3.5"
+							viewBox="0 0 7 7"
+							orient="auto"
+							id="SvgjsMarker6867"
+							><polygon
+								points="0,7 2.3333333333333335,3.5 0,0 7,3.5"
+								fill="hsl(0, 0%, 100%)"
+								fill-opacity="0.5"
+							/></marker
+						></defs
+					></svg
+				>
+				<p class="text-secondary text-primary-color/50 text-center">
+					Create your first pouch by adding a pouch word in the rundown. You can also add it on the
+					top!
+				</p>
+			</div>
 		{/if}
-
 	</div>
 </div>
