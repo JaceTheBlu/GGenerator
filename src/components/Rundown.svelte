@@ -60,15 +60,15 @@
 				{/each}
 			{:else}
 				<div class="flex flex-col justify-center align-middle items-center">
-					<p class="text-secondary text-primary-color/50">
-						Start by adding a new word! Click the + button to get started.
+					<p class="text-secondary text-primary-color/50 text-center">
+						Start by adding a new word! <br> Click the + button to get started.
 					</p>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						version="1.1"
 						xmlns:xlink="http://www.w3.org/1999/xlink"
 						xmlns:svgjs="http://svgjs.dev/svgjs"
-						class="w-1/12"
+						class="w-[10%]"
 						viewBox="0 0 200 375"
 						><g
 							stroke-width="15"
@@ -113,15 +113,15 @@
 	</ul>
 	<div class="flex justify-end align-text-bottom">
 		{#if rundown_list.length <= 0}
-			<p class="text-secondary text-primary-color/50 text-end">
-				Then click here to generate for the first time !
+			<p class="flex items-center text-secondary text-primary-color/50 text-end">
+				Then click here to generate for the first time!
 			</p>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				version="1.1"
 				xmlns:xlink="http://www.w3.org/1999/xlink"
 				xmlns:svgjs="http://svgjs.dev/svgjs"
-				class="w-1/3 self-end"
+				class="w-1/5 self-end"
 				viewBox="0 0 800 175"
 				><g
 					stroke-width="15"

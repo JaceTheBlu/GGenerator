@@ -164,7 +164,7 @@
 					xmlns:xlink="http://www.w3.org/1999/xlink"
 					xmlns:svgjs="http://svgjs.dev/svgjs"
 					viewBox="0 0 800 800"
-					class="w-2/3 self-end"
+					class="w-1/2 self-end"
 					><g
 						stroke-width="15"
 						stroke="hsl(0, 0%, 100%)"
@@ -196,8 +196,7 @@
 					></svg
 				>
 				<p class="text-secondary text-primary-color/50 text-center">
-					Create your first pouch by adding a pouch word in the rundown. You can also add it on the
-					top!
+					Create your first pouch here! <br> You can also add it by writing in the rundown.
 				</p>
 			</div>
 		{/if}
