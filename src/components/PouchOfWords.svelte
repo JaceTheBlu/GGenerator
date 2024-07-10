@@ -196,7 +196,7 @@
 </script>
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
-	<div class="flex children:px-2 mb-2 justify-between">
+	<div class="flex children:px-2 mb-2 justify-between not-selectable">
 		<span class="text-secondary font-bold text-primary-color">Pouches</span>
 		<button
 			class="hover:text-cancel-color transition-colors text-tertiary"
@@ -222,24 +222,24 @@
 	</div>
 
 	<div class="flex-1 overflow-y-auto rounded-primary">
-  	{#if pouch_list.length > 0}
-		{#each pouch_list as pouch}
-			<div
-				on:dragstart={(event) => handleDragStart(event, pouch)}
-				on:dragover={(event) => handleDragOver(event, pouch)}
-				on:dragleave={(event) => handleDragLeave(event, pouch)}
-				on:drop={(event) => handleDrop(event, pouch)}
-				aria-label="drag and drop zone of pouch"
-				role="region"
-			>
-				<Pouch
-					id={pouch.id}
-					name={pouch.name}
-					elements={pouch.elements}
-					on:pouch_elements={refreshPouch}
-					on:delete-pouch={deletePouch}
-				/>
-    </div>
+		{#if pouch_list.length > 0}
+			{#each pouch_list as pouch}
+				<div
+					on:dragstart={(event) => handleDragStart(event, pouch)}
+					on:dragover={(event) => handleDragOver(event, pouch)}
+					on:dragleave={(event) => handleDragLeave(event, pouch)}
+					on:drop={(event) => handleDrop(event, pouch)}
+					aria-label="drag and drop zone of pouch"
+					role="region"
+				>
+					<Pouch
+						id={pouch.id}
+						name={pouch.name}
+						elements={pouch.elements}
+						on:pouch_elements={refreshPouch}
+						on:delete-pouch={deletePouch}
+					/>
+				</div>
 			{/each}
 		{:else}
 			<div class="flex flex-col">
@@ -280,8 +280,8 @@
 						></defs
 					></svg
 				>
-				<p class="text-secondary text-primary-color/50 text-center">
-					Create your first pouch here! <br> You can also add it by writing in the rundown.
+				<p class="text-secondary text-primary-color/50 text-center not-selectable">
+					Create your first pouch here! <br /> You can also add it by writing in the rundown.
 				</p>
 			</div>
 		{/if}

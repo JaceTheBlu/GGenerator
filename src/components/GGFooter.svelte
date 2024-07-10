@@ -44,7 +44,7 @@
 	});
 </script>
 
-<div class="bg-primary-color flex justify-between text-tertiary">
+<div class="bg-primary-color flex justify-between text-tertiary not-selectable">
 	<div class="flex divide-x divide-solid py-2">
 		<a
 			class="flex items-center text-tertiary px-2 hover:scale-110 duration-300 transition-all"
