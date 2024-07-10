@@ -1,19 +1,18 @@
 <script>
+	import { onMount } from 'svelte';
 	// Code for analytics
 	import { inject } from '@vercel/analytics';
-	
+	inject();
+
 	import '../app.css';
+
 	import GGFooter from '../components/GGFooter.svelte';
 	import GGHeader from '../components/GGHeader.svelte';
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
 
 	import Berger from '$lib/berger.js';
-	import 'shepherd.js/dist/css/shepherd.css';
 
-	import { onMount } from 'svelte';
-		
-	inject();
 	let rundown_list;
 	let pouch_list;
 
@@ -22,13 +21,20 @@
 	let result_div;
 	let loaded = false;
 
-	onMount(() => {
-		const visited = localStorage.getItem('visited');
+	let tour;
+	let data = {};
 
-		if (!visited) {
-			console.log('First Time !');
+	let tutorials_name = ['help_guide', 'onboarding'];
+	let examples_save = ['animals', 'hello_i_am'];
+
+	onMount(() => {
+		data['visited'] = localStorage.getItem('visited');
+
+		if (!data.visited) {
 			localStorage.setItem('visited', true);
 		}
+
+		initTutorials(tutorials_name);
 
 		const saved_rundown_list = localStorage.getItem('rundown_list');
 		if (saved_rundown_list) {
@@ -45,25 +51,47 @@
 
 	$: if (loaded) saveAsCookie(rundown_list, pouch_list);
 
+	const initTutorials = async (tutos_name) => {
+		await fillFromFile('tutorials', tutos_name);
+		if (!data.visited) {
+			tour = new Berger(data.tutorials.onboarding);
+			const randomExample = examples_save[Math.floor(Math.random() * examples_save.length)];
+			await fillFromFile('examples', [randomExample]);
+			loadSave(data.examples[randomExample]);
+		}
+	};
+
+	const fillFromFile = async (data_name, files) => {
+		data[data_name] = {
+			_length: 0
+		};
+		const dataArray = await Promise.all(
+			files.map(async (file_name) => {
+				const content = await readFile(`/${data_name}/${file_name}.json`);
+				data[data_name][file_name] = content;
+				data[data_name]['_length'] += 1;
+			})
+		);
+	};
+
+	const readFile = async (path) => {
+		try {
+			const response = await fetch(path);
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			const jsonData = await response.json();
+			return jsonData;
+		} catch (error) {
+			console.error('There was a problem with the fetch operation:', error);
+			return null;
+		}
+	};
+
 	export const saveAsCookie = (rl, pl) => {
 		localStorage.setItem('rundown_list', JSON.stringify({ rundown: rl }));
 		localStorage.setItem('pouch_list', JSON.stringify({ pouch_list: pl }));
 	};
-
-	let tour;
-	let help_guide_script = [];
-
-	onMount(async ()=>{
-		try {
-			const response = await fetch('/tutorials/help_guide.json');
-			if(!response.ok){
-				throw new Error('help_guide not loaded !');
-			}
-			help_guide_script = await response.json();
-		} catch (error) {
-			console.error('Error data was not fetched :',error);
-		}
-	})
 
 	const generateWords = () => {
 		const words = rundown_list.map((word) => {
@@ -110,21 +138,7 @@
 			reader.onload = (readerEvent) => {
 				try {
 					var content = JSON.parse(readerEvent.target.result);
-					rundown_list = pouch_list = [];
-					result_div.innerText = '';
-					requestAnimationFrame(() => {
-						content?.rundown.map((word) => {
-							rundown_elem.addWordComponent({
-								detail: { id: word.id, text: word.text, type: word.type }
-							});
-						});
-						content?.pouch_list.map((pouch) => {
-							pouch_elem.addPouch({
-								type: 'import',
-								detail: { name: pouch.name, elements: pouch.elements }
-							});
-						});
-					});
+					loadSave(content);
 				} catch (e) {
 					console.error(e);
 				}
@@ -133,10 +147,28 @@
 		input.click();
 	};
 
-	function startTutorial(){
-			tour = new Berger(help_guide_script);
+	const loadSave = (obj) => {
+		rundown_list = pouch_list = [];
+		result_div.innerText = '';
+		requestAnimationFrame(() => {
+			obj?.rundown.map((word) => {
+				rundown_elem.addWordComponent({
+					detail: { id: word.id, text: word.text, type: word.type }
+				});
+			});
+			obj?.pouch_list.map((pouch) => {
+				pouch_elem.addPouch({
+					type: 'import',
+					detail: { name: pouch.name, elements: pouch.elements }
+				});
+			});
+		});
+	};
+
+	function startTutorial() {
+		tour = new Berger(data.tutorials.help_guide);
 	}
-	
+
 	const exportJSON = () => {
 		const filename = 'data.json';
 		const jsonStr = JSON.stringify({ rundown: rundown_list, pouch_list: pouch_list });
@@ -161,10 +193,13 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
-	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial}/>
-	
+	<GGHeader on:import={importJSON} on:export={exportJSON} on:tutorial={startTutorial} />
+
 	<div class="main flex flex-1" id="help_guide-step-welcome">
-		<div class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4" id="help_guide-step-rundown">
+		<div
+			class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4"
+			id="help_guide-step-rundown"
+		>
 			<Rundown
 				bind:this={rundown_elem}
 				bind:rundown_list
@@ -173,14 +208,20 @@
 			/>
 		</div>
 
-		<div id="help_guide-step-pouch-of-words" class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto">
+		<div
+			id="help_guide-step-pouch-of-words"
+			class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto"
+		>
 			<PouchOfWords bind:this={pouch_elem} bind:pouch_list />
 		</div>
 	</div>
 
-	<div id="help_guide-step-output" class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center">
+	<div
+		id="help_guide-step-output"
+		class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center"
+	>
 		<p class="pl-2 text-secondary mr-2">Output:</p>
-		<p bind:this={result_div} class="text-secondary-color"/>
+		<p bind:this={result_div} class="text-secondary-color" />
 	</div>
 	<GGFooter />
 </div>

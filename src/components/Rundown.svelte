@@ -44,9 +44,23 @@
 	const generate = () => {
 		dispatch('generate');
 	};
+
+	const clearRundown = () => {
+		rundown_list = [];
+	};
 </script>
 
 <div class="relative w-full h-full flex flex-col">
+	<div class="flex children:px-2 mb-2 justify-between">
+		<span class="text-secondary font-bold text-primary-color">Rundown</span>
+		<button
+			class="hover:text-cancel-color transition-colors text-tertiary text-primary-color"
+			on:click={clearRundown}
+		>
+			clear
+		</button>
+	</div>
+
 	<ul
 		class="ml-1 flex flex-wrap flex-1 flex-col content-center justify-center w-full h-full text-2xl"
 	>
@@ -102,6 +116,7 @@
 					>
 				</div>
 			{/if}
+
 		</div>
 		<button
 			id="help_guide-step-rundown-button"
@@ -111,6 +126,7 @@
 			+
 		</button>
 	</ul>
+  
 	<div class="flex justify-end align-text-bottom">
 		{#if rundown_list.length <= 0}
 			<p class="flex items-center text-secondary text-primary-color/50 text-end">
