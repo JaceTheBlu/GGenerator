@@ -63,7 +63,7 @@
 	}
 </script>
 
-<li class="flex justify-between items-center odd:bg-slate-800/10 even:bg-slate-800/50 pl-4">
+<li class="flex justify-between items-center pl-4">
 	{#if isEditable}
 		<input
 			type="text"
@@ -71,16 +71,10 @@
 			bind:value={name}
 			on:blur={changeEditableState}
 			on:keypress={handleKeyboard}
-			class="flex font-bold bg-transparent rounded focus:outline-none focus:ring-2 focus:ring-secondary-color  w-full"
-
-		>
-	
+			class="flex font-bold bg-transparent rounded focus:outline-none focus:ring-2 focus:ring-secondary-color w-full"
+		/>
 	{:else}
-
-		<button 
-			class=" flex-grow text-left truncate ..."
-			on:click={changeEditableState}
-		>
+		<button class=" flex-grow text-left truncate ..." on:click={changeEditableState}>
 			{name}
 		</button>
 	{/if}

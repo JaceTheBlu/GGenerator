@@ -1,0 +1,150 @@
+{
+    "steps": [
+        {
+            "title": "📚 Introduction",
+            "text": [
+                "Welcome to the in-depth guide. Here we will explain all features of the app.",
+                "Don't forget that you can escape this guide at any time by pressing 'Escape'."
+            ]
+        },
+        {
+            "title": "🔝 Top Bar Overview",
+            "text": [
+                "The top bar contains various tools to interact with the app",
+                "some of the functions are buttons to save, load, view changelog, access help, and open settings."
+            ],
+            "attachTo": {
+                "element": "#help_guide-top-bar",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "💾 Save Button",
+            "text": [
+                "Click the Save button to save your current work.",
+                "-Saving can be used to share your generator with friends!",
+                "-Or it be used if you have a common usage of this app"
+            ],
+            "attachTo": {
+                "element": "#help_guide-save-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "📂 Load Button",
+            "text": [
+                "Click the Load button to load previously saved work.",
+                "You can also load work shared by your friends at any time!"
+            ],
+            "attachTo": {
+                "element": "#help_guide-load-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "📝 Rundown Section",
+            "text": [
+                "The rundown section is where you can write words.",
+                "Words can either be 'static' words or 'pouch' words",
+                "All those words will be compiled together to form the sentence."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-rundown",
+                "on": "right"
+            }
+        },
+        {
+            "title": "✏️ Adding Words",
+            "text": [
+                "In the rundown section, click the + button to add a new word."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-rundown-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "🔤 Static and Pouch Words",
+            "text": [
+                "You can add 'static' words or 'pouch' words.",
+                "Pouch words start with '@' and create a corresponding pouch in the Pouches list.",
+                "For example, typing '@name' creates a pouch called 'name' in the pouches list."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-rundown",
+                "on": "right"
+            }
+        },
+        {
+            "title": "🗂 Pouches List",
+            "text": [
+                "The pouches list on the right is where all your pouches are managed.",
+                "Click on a pouch to add, modify, or delete its elements."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-pouch-of-words",
+                "on": "left"
+            }
+        },
+        {
+            "title": "✨ Creating Pouches",
+            "text": [
+                "When you add a pouch word in the rundown, a corresponding pouch is automatically created in the pouches list."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-pouch",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "🗂 Managing Pouches",
+            "text": [
+                "Click on a pouch to add elements to it. You can also modify or delete elements."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-pouch-of-words",
+                "on": "left"
+            }
+        },
+        {
+            "title": "⚡ Generating Sentences",
+            "text": [
+                "Click the Generate button to compile your rundown into a complete sentence.",
+                "-Static Words remain intact",
+                "-Pouch words are replaced with random elements from their pouches."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-ggenerate",
+                "on": "top"
+            }
+        },
+        {
+            "title": "❓ Accessing Help",
+            "text": [
+                "If you need help at any point, click the help button on the top bar to access this detailed tutorial."
+            ],
+            "attachTo": {
+                "element": "#help_guide-help-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "🚀 Advanced Tips",
+            "text": [
+                "Advanced tip: You can manage multiple pouches and use them creatively to generate complex sentences."
+            ]
+        },
+        {
+            "title": "💾 Data Persistence Feature",
+            "text": [
+                "The app's persistence feature ensures that your data is saved automatically, so you don't lose your progress."
+            ]
+        },
+        {
+            "title": "🔍 That's all Folks!",
+            "text": [
+                "Feel free to explore and experiment with different words and pouches to see how they interact and generate sentences."
+            ]
+        }
+    ]
+}

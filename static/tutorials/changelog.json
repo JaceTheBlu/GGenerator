@@ -1,0 +1,32 @@
+{
+    "steps": [
+        {
+            "title": "🎲 Version 1.0.0 - Stable @random",
+            "text": [
+                "#10/07/2024",
+                "-Revamp UI",
+                "-Added Onboarding Tutorial",
+                "-Added Deep Guide (follow the ❓)",
+                "-Added Drag & Drop to reorder things in Rundown/Pouches",
+                "-Added Drag & Drop between Rundown/Pouches",
+                "-Added Fold function to Pouches",
+                "-Added Pouch renaming",
+                "-Added Pouch Elements renaming",
+                "-Added Import & Export Functions",
+                "-Added Persistent Save",
+                "-Added Clear Buttons to Rundown/Pouches",
+                "-Added Changelog of course 👀"
+            ]
+        },
+        {
+            "title": "👣 Version 0.1.1 - First @steps",
+            "text": [
+                "#05/06/2024",
+                "-Prototype",
+                "-Added Pouches",
+                "-Added Rundown",
+                "-Added random sentences generation based on Pouches and Static Words"
+            ]
+        }
+    ]
+}
