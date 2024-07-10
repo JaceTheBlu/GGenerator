@@ -7,6 +7,8 @@
 	export let rundown_list = [];
 	let rundownRootElement;
 
+	let dragged_component = null;
+
 	$: newId = rundown_list.length ? Math.max(...rundown_list.map((t) => t.id)) + 1 : 1;
 
 	export const addWordComponent = (event) => {
@@ -48,9 +50,99 @@
 	const clearRundown = () => {
 		rundown_list = [];
 	};
+
+
+	function handleDragStart(event, component){
+		dragged_component = component;
+		event.dataTransfer.effectAllowed = 'move';
+	}
+
+	function handleDragOver(event){
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+
+		if(event.dataTransfer.getData('pouch') === ''){
+			const element = event.currentTarget;
+			element.classList.add('bg-secondary-color/50', 'rounded-primary');
+		
+		}
+		
+	}
+
+	function handleDragOverGeneral(event){
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+
+		if(event.dataTransfer.getData('pouch') !== ''){
+			const element = event.currentTarget;
+			element.classList.add('bg-secondary-color/50', 'rounded-primary');
+		}
+	}
+
+	function handleDragLeave(event){
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color/50','rounded-primary');
+	}
+
+	function handleDrop(event, component){
+		event.preventDefault();
+
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color/50','rounded-primary');
+
+		if(event.dataTransfer.getData('pouch') === ''){
+
+			const draggedIndex = rundown_list.indexOf(dragged_component);
+			const droppedIndex =  rundown_list.indexOf(component);
+	
+			rundown_list.splice(draggedIndex, 1);
+			rundown_list.splice(droppedIndex, 0, dragged_component);
+	
+			rundown_list = [...rundown_list];
+	
+			dragged_component = null;
+		}
+	}
+
+	function handleDropGeneral(event){
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color/50','rounded-primary');
+
+
+		if(event.dataTransfer.getData('pouch') !== ''){
+			console.log("here");
+			const pouch_name = event.dataTransfer.getData('pouch');
+
+			console.log("pouch :",pouch_name);
+
+			const new_item = {
+				id : newId,
+				text : "@"+pouch_name,
+				type : 'pouch'
+			};
+
+			rundown_list.push(new_item);
+
+			console.log("rundown : ", rundown_list);
+			
+			rundown_list = [...rundown_list];
+		}
+	}
+
 </script>
 
-<div class="relative w-full h-full flex flex-col">
+<div 
+	class="relative w-full h-full flex flex-col"
+	on:dragleave={(event) => handleDragLeave(event)}
+	on:dragover={(event) =>handleDragOverGeneral(event)}
+	on:drop={(event) => handleDropGeneral(event)}
+	aria-label="drag n drop pouch"
+	role="region"
+
+>
 	<div class="flex children:px-2 mb-2 justify-between">
 		<span class="text-secondary font-bold text-primary-color">Rundown</span>
 		<button
@@ -68,10 +160,21 @@
 			class="flex flex-wrap w-full justify-center content-center place-items-center"
 			bind:this={rundownRootElement}
 		>
-			{#if rundown_list.length > 0}
-				{#each rundown_list as component}
+     {#if rundown_list.length > 0}
+			{#each rundown_list as component}
+				<div
+					draggable="true"
+					on:dragstart={(event) => handleDragStart(event, component)}
+					on:dragleave={(event) => handleDragLeave(event)}
+					on:dragover={(event) =>handleDragOver(event)}
+					on:drop={(event) => handleDrop(event, component)}
+					aria-label="drag n drop rundown"
+					role="region"
+				>
 					<WordComponent id={component.id} text={component.text} on:update={updateWordComponent} />
-				{/each}
+
+				</div>
+			{/each}
 			{:else}
 				<div class="flex flex-col justify-center align-middle items-center">
 					<p class="text-secondary text-primary-color/50 text-center">
@@ -116,7 +219,6 @@
 					>
 				</div>
 			{/if}
-
 		</div>
 		<button
 			id="help_guide-step-rundown-button"

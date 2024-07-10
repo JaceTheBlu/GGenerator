@@ -15,6 +15,7 @@
 	let max = 20;
 
 	let pouch_id = 0;
+	let dragged_pouch = null;
 
 	$: input_value = String(input_value).toLowerCase();
 
@@ -132,6 +133,66 @@
 		}
 		pouch_list = [...pouch_list];
 	}
+
+	function handleDragStart(event, pouch) {
+		dragged_pouch = pouch;
+
+		event.dataTransfer.effectAllowed = 'move';
+		event.dataTransfer.setData('pouch', dragged_pouch.name);
+	}
+
+	function handleDragOver(event, pouch) {
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+
+		//New features
+		const element = event.currentTarget;
+		element.classList.add(
+			'bg-secondary-color/50',
+			'rounded-t-primary',
+			'border-b-8',
+			'border-dashed'
+		);
+	}
+
+	function handleDragLeave(event, pouch) {
+		const element = event.currentTarget;
+		element.classList.remove(
+			'bg-secondary-color/50',
+			'rounded-t-primary',
+			'border-b-8',
+			'border-dashed'
+		);
+	}
+
+	function handleDrop(event, pouch) {
+		event.preventDefault();
+
+		// New features
+		const element = event.currentTarget;
+		element.classList.remove(
+			'bg-secondary-color/50',
+			'rounded-t-primary',
+			'border-b-8',
+			'border-dashed'
+		);
+
+		const draggedIndex = pouch_list.indexOf(dragged_pouch);
+		const droppedIndex = pouch_list.indexOf(pouch);
+
+		if (draggedIndex >= 0) {
+			console.log('dragged Index : ', draggedIndex);
+			console.log('dropped Index : ', droppedIndex);
+			pouch_list.splice(draggedIndex, 1);
+
+			pouch_list.splice(droppedIndex, 0, dragged_pouch);
+
+			console.log('pouch list :', pouch_list);
+
+			pouch_list = [...pouch_list];
+		}
+		dragged_pouch = null;
+	}
 </script>
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
@@ -159,9 +220,18 @@
 			>Add list
 		</button>
 	</div>
+
 	<div class="flex-1 overflow-y-auto rounded-primary">
-		{#if pouch_list.length > 0}
-			{#each pouch_list as pouch}
+  	{#if pouch_list.length > 0}
+		{#each pouch_list as pouch}
+			<div
+				on:dragstart={(event) => handleDragStart(event, pouch)}
+				on:dragover={(event) => handleDragOver(event, pouch)}
+				on:dragleave={(event) => handleDragLeave(event, pouch)}
+				on:drop={(event) => handleDrop(event, pouch)}
+				aria-label="drag and drop zone of pouch"
+				role="region"
+			>
 				<Pouch
 					id={pouch.id}
 					name={pouch.name}
@@ -169,6 +239,7 @@
 					on:pouch_elements={refreshPouch}
 					on:delete-pouch={deletePouch}
 				/>
+    </div>
 			{/each}
 		{:else}
 			<div class="flex flex-col">
