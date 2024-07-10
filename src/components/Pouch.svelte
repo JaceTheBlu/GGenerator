@@ -17,17 +17,17 @@
 
 	let isEditable = false;
 	let isHidden = false;
-	
-	let inputElement = "";
+
+	let inputElement = '';
 	let new_pouch = '';
 
 	let element_id = 0;
 
 	$: elements_id = name.toLowerCase() + element_id;
 	const dispatch = createEventDispatcher();
-	
+
 	/* Functions */
-	
+
 	/**
 	 * This function handle the add of a elements in the pouch
 	 * @param event : the element to add, with and id and a name property
@@ -46,55 +46,52 @@
 		}
 
 		dispatch('pouch_elements', {
-					id: id, 
-					name :name, 
-					elements : elements 
+			id: id,
+			name: name,
+			elements: elements
 		});
 	}
-		
+
 	/**
 	 *  This function redirect the user that submit through the enter key to the addElements method
 	 * @param event the key pressed by the user
 	 */
 	function handleKeyboard(event, methodName) {
-		if(event.key === 'Enter'){
+		if (event.key === 'Enter') {
 			switch (methodName) {
 				case 'addElements':
 					addElements();
-				break;
-	
+					break;
+
 				case 'update':
 					changeEditableState();
-				break;
+					break;
 
 				default:
-				break;
+					break;
 			}
 		}
 	}
-
 
 	/**
 	 * This function send a pouch to the parent (PouchOfWords) when it is modified
 	 * @param event : a pouch element that has been modified
 	 */
-	function refreshElements(event){
-
+	function refreshElements(event) {
 		const pouch_elem = event.detail;
 		let found = false;
-		if(pouch_elem.name.trim()!== ''){
-
-			for (let i = 0; (i < elements.length) && (!found); i++) {
-				if(elements[i].id === pouch_elem.id){
+		if (pouch_elem.name.trim() !== '') {
+			for (let i = 0; i < elements.length && !found; i++) {
+				if (elements[i].id === pouch_elem.id) {
 					elements[i].name = pouch_elem.name;
 					found = true;
 				}
 			}
-			if(found){
+			if (found) {
 				dispatch('pouch_elements', {
-					id: id, 
-					name :name, 
-					elements : elements 
+					id: id,
+					name: name,
+					elements: elements
 				});
 			}
 		}
@@ -120,86 +117,80 @@
 		elements = [...elements];
 
 		dispatch('pouch_elements', {
-					id: id, 
-					name :name, 
-					elements : elements 
+			id: id,
+			name: name,
+			elements: elements
 		});
-
 	}
-
 
 	/**
 	 * This function create an event with the goal of deleting a pouch, it takes the name of the pouch to delete
 	 * @param pouchName : the name of the pouch to delete
 	 */
 	function dispatchDeletePouch() {
-		dispatch('delete-pouch',{id : id});
+		dispatch('delete-pouch', { id: id });
 	}
-
 
 	/**
 	 * This method is used for the update of a pouch element
 	 * Double clicking on a pouch element make it editable
 	 * When focus is lost new informations are sent to the parent component
 	 */
-	 function changeEditableState(){
+	function changeEditableState() {
 		isEditable = !isEditable;
 
-		if(isEditable){
+		if (isEditable) {
 			requestAnimationFrame(() => {
 				if (inputElement) {
 					inputElement.focus();
 					inputElement.select();
 				}
 			});
-		}else{
+		} else {
 			dispatch('pouch_elements', {
-					id: id, 
-					name :name.toLowerCase(), 
-					elements : elements 
-		})
+				id: id,
+				name: name.toLowerCase(),
+				elements: elements
+			});
 		}
 	}
 
-	function changeHiddenState(){
-		isHidden = !isHidden
+	function changeHiddenState() {
+		isHidden = !isHidden;
 	}
-	
 </script>
-
 
 <ul class="bg-slate-800/50 rounded-xl divide-y my-2">
 	<li class="flex justify-between text-xl h-full">
 		<button
-			class={`flex items-center px-2 hover:bg-blue-500 ${isHidden ? 'rounded-bl-xl' : 'rounded-none'} transition duration-300 hover:cursor-pointer rounded-tl-xl`}
+			class={`flex items-center px-2 hover:bg-blue-500 ${
+				isHidden ? 'rounded-bl-xl' : 'rounded-none'
+			} transition duration-300 hover:cursor-pointer rounded-tl-xl`}
 			on:click={changeHiddenState}
 		>
 			{isHidden ? '▷' : '▽'}
-				
 		</button>
-		
-		<div class="flex hover:cursor-move grow hover:text-secondary-color transition-colors duration-300 justify-center">
+
+		<div
+			draggable="true"
+			class="flex hover:cursor-move grow hover:text-secondary-color transition-colors duration-300 justify-center"
+		>
 			<span class="flex items-center text-white/50"> @ </span>
 
 			{#if isEditable}
-				<input 
-					type="text" 
+				<input
+					type="text"
 					bind:this={inputElement}
 					bind:value={name}
 					on:blur={changeEditableState}
 					on:keydown={(event) => handleKeyboard(event, 'update')}
 					class="bg-transparent flex w-full text-center font-bold rounded focus:outline-none focus:ring-2 focus:ring-secondary-color"
-					>
+				/>
 			{:else}
-		
-				<button 
-					class="flex font-bold items-center"
-					on:click={changeEditableState}
-				>
+				<button class="flex font-bold items-center" on:click={changeEditableState}>
 					{name}
 				</button>
 			{/if}
-
 		</div>
 
 		<button
@@ -237,11 +228,9 @@
 				<button
 					class="text-xl text-white border-l border-white hover:bg-validate-color rounded-br-xl transition-colors duration-300 px-2"
 					on:click={addElements}
-				>↵
+					>↵
 				</button>
-		
 			</li>
 		</div>
 	{/if}
-	
 </ul>
