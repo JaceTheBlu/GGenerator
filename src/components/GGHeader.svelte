@@ -70,8 +70,11 @@
 		<button
 			id="help_guide-version-button"
 			class=" hover:text-secondary-color text-primary !px-4 text-primary-color/75 self-center"
-			>v0.1.1</button
-		>
+			on:click={() => {
+				dispatch('changelog');
+			}}
+			>v1.0.0
+		</button>
 		<button
 			id="help_guide-help-button"
 			class="hover:scale-110 duration-300 transition-all"
