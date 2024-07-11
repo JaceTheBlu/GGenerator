@@ -181,13 +181,9 @@
 		const droppedIndex = pouch_list.indexOf(pouch);
 
 		if (draggedIndex >= 0) {
-			console.log('dragged Index : ', draggedIndex);
-			console.log('dropped Index : ', droppedIndex);
 			pouch_list.splice(draggedIndex, 1);
 
 			pouch_list.splice(droppedIndex, 0, dragged_pouch);
-
-			console.log('pouch list :', pouch_list);
 
 			pouch_list = [...pouch_list];
 		}

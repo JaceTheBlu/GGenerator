@@ -18,7 +18,8 @@
 
 	let rundown_elem;
 	let pouch_elem;
-	let result_div;
+	let resultinput;
+
 	let loaded = false;
 
 	let tour;
@@ -44,6 +45,15 @@
 		const saved_pouch_list = localStorage.getItem('pouch_list');
 		if (saved_pouch_list) {
 			pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
+		}
+
+		const saved_history = localStorage.getItem('history');
+		if (saved_history) {
+			pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
+		} else {
+			data['history'] = {
+				_length: 0
+			};
 		}
 
 		loaded = true;
@@ -112,7 +122,42 @@
 
 			return word;
 		});
-		result_div.innerText = words.join(' ');
+		let result = words.join(' ');
+		if (result === '') {
+			switch (data.history._length + 1) {
+				case 1:
+					result = "Before Clicking the 'GGenerate' Button have you tried adding words?";
+					break;
+				case 2:
+					result = 'The Rundown is still empty, make some effort!';
+					break;
+				case 5:
+					result = "Are you trying to find something here? Good Luck, I'm not funny...";
+					break;
+				case 10:
+					result = 'This is not a clicker game, try something else like Cookie Clicker!';
+					break;
+				case 15:
+					result = 'I understand that this is supposed to be a fun app, but not in this manner!';
+					break;
+				case 42:
+					result = "Good job you made it! Though I still don't have the answer to life...";
+					break;
+				case 69:
+					result = 'NICE! *kof kof* I mean Nasty you, all of this for the unholy number...';
+					break;
+				case 100:
+					result =
+						"Congrats you made NOTHING, but that was not the point isn't ? add me on @discord : #jacetheblu";
+					break;
+
+				default:
+					result = 'The Rundown is empty, try adding a word or two!';
+					break;
+			}
+		}
+		data.history[data.history._length] = result;
+		data.history._length += 1;
 	};
 
 	const getPouchElement = (pouch) => {
@@ -149,7 +194,7 @@
 
 	const loadSave = (obj) => {
 		rundown_list = pouch_list = [];
-		result_div.innerText = '';
+
 		requestAnimationFrame(() => {
 			obj?.rundown.map((word) => {
 				rundown_elem.addWordComponent({
@@ -194,6 +239,20 @@
 		const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
 		if (!pouch) pouch_elem.addPouch(pouchName);
 	};
+
+	const handleShowHistory = () => {
+		console.log(data.history);
+	};
+
+	const handleCopyOutput = () => {
+		resultinput.select();
+	};
+
+	const handleDeleteHistory = () => {
+		data.history = {
+			_length: 0
+		};
+	};
 </script>
 
 <div class="flex flex-col min-h-screen">
@@ -229,8 +288,47 @@
 		id="help_guide-step-output"
 		class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center"
 	>
-		<p class="pl-2 text-secondary mr-2 not-selectable">Output:</p>
-		<p bind:this={result_div} class="text-secondary-color" />
+		<div class="flex-1 flex items-center h-full">
+			<button
+				class="mr-4 text-secondary px-4 py-2 not-selectable border-r"
+				on:click={handleShowHistory}
+			>
+				{#if data && data.history && data.history._length}
+					{data.history._length}
+				{:else}
+					0
+				{/if}
+			</button>
+			<p class="place-content-center h-full w-full">
+				{#if data && data.history && data.history._length}
+					<input
+						bind:this={resultinput}
+						readonly
+						class="text-secondary-color h-full w-full bg-transparent focus:outline-none overflow-scroll"
+						value={data.history[data.history._length - 1]}
+						on:focus={(e) => e.target.select()}
+					/>
+				{:else}
+					<p class="place-content-center text-tertiary-color italic overflow-auto h-full w-full">
+						Waiting for GGeneration!
+					</p>
+				{/if}
+			</p>
+		</div>
+		<div
+			class="flex
+				items-end
+				space-x-2
+				mx-2
+				children:border-primary-width
+				children:rounded-secondary
+				children:p-2
+				"
+		>
+			<button class="hover:scale-110" on:click={handleCopyOutput}> 📋 </button>
+			<button class="hover:scale-110" on:click={handleShowHistory}> 🗃️ </button>
+			<button class="hover:scale-110" on:click={handleDeleteHistory}> 🗑️ </button>
+		</div>
 	</div>
 	<GGFooter />
 </div>

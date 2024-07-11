@@ -108,10 +108,7 @@
 		element.classList.remove('bg-secondary-color/50', 'rounded-primary');
 
 		if (event.dataTransfer.getData('pouch') !== '') {
-			console.log('here');
 			const pouch_name = event.dataTransfer.getData('pouch');
-
-			console.log('pouch :', pouch_name);
 
 			const new_item = {
 				id: newId,
@@ -120,9 +117,6 @@
 			};
 
 			rundown_list.push(new_item);
-
-			console.log('rundown : ', rundown_list);
-
 			rundown_list = [...rundown_list];
 		}
 	}
