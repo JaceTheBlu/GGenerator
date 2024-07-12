@@ -25,7 +25,7 @@
 	let data = {};
 
 	let tutorials_name = ['help_guide', 'onboarding', 'changelog'];
-	let examples_save = ['animals', 'hello_i_am'];
+	let examples_save = ['animals', 'hello_i_am', 'RPG'];
 
 	onMount(() => {
 		data['visited'] = localStorage.getItem('visited');
