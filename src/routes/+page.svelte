@@ -309,7 +309,9 @@
 						on:focus={(e) => e.target.select()}
 					/>
 				{:else}
-					<p class="place-content-center text-tertiary-color italic overflow-auto h-full w-full">
+					<p
+						class="place-content-center text-tertiary-color italic overflow-auto h-full w-full not-selectable"
+					>
 						Waiting for GGeneration!
 					</p>
 				{/if}
