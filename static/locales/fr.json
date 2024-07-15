@@ -1,13 +1,21 @@
 {
     "rundown": "Phrase",
     "pouches": "Sacs",
+    "ggenerate": "GGenerer",
     "save": "Sauvegarder",
     "load": "Charger",
     "settings": "Paramètres",
     "changelog": "Journal de Bord",
-    "clear": "Vider",
+    "clear": "Éffacer",
     "help": "Aide",
-    "footer_made_with": "Fais avec",
+    "footer_made_with": "Fait avec",
     "footer_in": "en",
-    "feedback": "Envoyer un Avis"
+    "feedback": "Envoyer un Avis",
+    "pouch_placeholder": "Écris un truc...",
+    "pouch_input": "Créer un Sac",
+    "placeholder_pouches_1": "Créez un Sac ici !",
+    "placeholder_pouches_2": "Vous pouvez aussi l'ajouter en écrivant dans la Phrase.",
+    "placeholder_rundown_1": "Commencez par ajouter un nouveau mot !",
+    "placeholder_rundown_2": "Cliquez sur le bouton + pour commencer.",
+    "placeholder_generate": "Ensuite, cliquez ici pour générer!"
 }

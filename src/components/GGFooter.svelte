@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { locales } from '../stores';
 
 	let emoji = '❤️';
 	onMount(() => {
@@ -55,11 +56,11 @@
 			<img src="github.png" alt="GitHub Logo" class="w-6" />
 		</a>
 		<div class="flex px-2">
-			Made with
+			{$locales.footer_made_with}
 			<button class="cursor-default text-l hover:scale-150 transition duration-300">
 				{emoji}
 			</button>
-			in 2024
+			{$locales.footer_in} 2024
 		</div>
 	</div>
 	<div>
@@ -80,7 +81,7 @@
 				hover:scale-110
 				items-center
 				"
-			>Send Feedback 🫰
+			>{$locales.feedback} 🫰
 		</a>
 	</div>
 	<div class="flex items-right py-2 divide-x divide-solid children:px-2">

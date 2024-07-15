@@ -7,6 +7,7 @@
 	 */
 
 	/* Imports*/
+	import { locales } from '../stores';
 	import { createEventDispatcher } from 'svelte';
 	import PouchElement from './PouchElement.svelte';
 
@@ -221,7 +222,7 @@
 					bind:value={new_pouch}
 					class="bg-transparent w-full h-full focus:outline-none focus:ring-2 focus:ring-secondary-color placeholder:italic rounded-bl-xl pl-4"
 					type="text"
-					placeholder="Enter a value..."
+					placeholder={$locales.pouch_placeholder}
 					on:keydown={(event) => handleKeyboard(event, 'addElements')}
 					on:blur={addElements}
 				/>

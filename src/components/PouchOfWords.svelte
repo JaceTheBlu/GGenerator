@@ -7,6 +7,7 @@
 	 */
 
 	/* Imports */
+	import { locales } from '../stores';
 	import Pouch from './Pouch.svelte';
 
 	/* Variables */
@@ -202,7 +203,7 @@
 			class="hover:text-cancel-color transition-colors text-tertiary"
 			on:click={clearPouchofWords}
 		>
-			clear
+			{$locales.clear}
 		</button>
 	</div>
 
@@ -217,7 +218,7 @@
 		<button
 			class="bg-validate-color flex-shrink-0 w-full md:w-auto text-white rounded-md px-4 py-2"
 			on:click={addPouch}
-			>Add list
+			>{$locales.pouch_input}
 		</button>
 	</div>
 
@@ -281,7 +282,8 @@
 					></svg
 				>
 				<p class="text-secondary text-primary-color/50 text-center not-selectable">
-					Create your first pouch here! <br /> You can also add it by writing in the rundown.
+					{$locales.placeholder_pouches_1} <br />
+					{$locales.placeholder_pouches_2}
 				</p>
 			</div>
 		{/if}
