@@ -64,14 +64,7 @@ Follow the onboarding tutorial with an example for a better understanding of the
 - [ ] Community database
 - [ ] Pouches of different types ( numbers, images, date ...)
 
-## $${\color{grey}\textsf{@}\color{orange}\textbf{\texttt{Test}}}$$
-
-<h2 style="color: grey; font-style: italic; display:flex">
-    @ <p style="color: orange; font-style : normal">
-    FAQ
-    </p>
-</h2>
-
+## $${\color{grey}\textit{@}\color{orange}\textbf{\texttt{FAQ}}}$$
 
 ### Is it available in \<Insert Language> ?
 
