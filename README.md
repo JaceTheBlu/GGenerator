@@ -9,11 +9,7 @@
 
 >This  application  aims to be a multi purpose generator for every cases where you need random things.
 
-<h2 style="color: grey; font-style: italic; display:flex">
-    @ <p style="color: orange; font-style : normal">
-    Use cases
-    </p>
-</h2>
+## *@*Use cases
 
 - ### GameMaster
 
@@ -31,22 +27,12 @@ Make a sentence and GGenerate !
 
 ![Shared flat example](./static/images/shared_flat_example.png)
 
-<h2 style="color: grey; font-style: italic; display:flex">
-    @ <p style="color: orange; font-style : normal">
-    How to access ?
-    </p>
-</h2>
-
+## *@*How to access ?
 
 > Go to : <https://ggenerator-beta.vercel.app/>.  
 Follow the onboarding tutorial with an example for a better understanding of the application.
 
-<h2 style="color: grey; font-style: italic; display:flex">
-    @ <p style="color: orange; font-style : normal">
-    Features
-    </p>
-</h2>
-
+## *@*Features
 
 - [x] Add random sentence generation ( based on pouches and the template sentence)
 - [x] Possibility to rename/delete pouches and pouches elements
@@ -64,7 +50,7 @@ Follow the onboarding tutorial with an example for a better understanding of the
 - [ ] Community database
 - [ ] Pouches of different types ( numbers, images, date ...)
 
-## $${\color{grey}\textit{@}\color{orange}\textbf{\texttt{FAQ}}}$$
+## *@*FAQ
 
 ### Is it available in \<Insert Language> ?
 
@@ -86,7 +72,7 @@ Follow the onboarding tutorial with an example for a better understanding of the
   
     > Here you can find the english version : [Google Form EN](https://forms.gle/2JKbUNFE4Dd8JMUL9).  
     Pour la version baguette c'est ici : [Google Form FR](https://forms.gle/6UpoQnbn84WBtZk1A)
-- #### Directly
+- #### Direct Message
   
     > [@JaceTheBlu](https://github.com/JaceTheBlu) 🧙‍♂️  
      [@aVadeleau](https://github.com/aVadeleau) 🎢
