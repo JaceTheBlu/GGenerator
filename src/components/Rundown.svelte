@@ -51,99 +51,92 @@
 		rundown_list = [];
 	};
 
-
-	function handleDragStart(event, component){
+	function handleDragStart(event, component) {
 		dragged_component = component;
 		event.dataTransfer.effectAllowed = 'move';
 	}
 
-	function handleDragOver(event){
+	function handleDragOver(event) {
 		event.preventDefault();
 		event.dataTransfer.dropEffect = 'move';
 
-		if(event.dataTransfer.getData('pouch') === ''){
-			const element = event.currentTarget;
-			element.classList.add('bg-secondary-color/50', 'rounded-primary');
-		
-		}
-		
-	}
-
-	function handleDragOverGeneral(event){
-		event.preventDefault();
-		event.dataTransfer.dropEffect = 'move';
-
-		if(event.dataTransfer.getData('pouch') !== ''){
+		if (event.dataTransfer.getData('pouch') === '') {
 			const element = event.currentTarget;
 			element.classList.add('bg-secondary-color/50', 'rounded-primary');
 		}
 	}
 
-	function handleDragLeave(event){
-		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color/50','rounded-primary');
+	function handleDragOverGeneral(event) {
+		event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+
+		if (event.dataTransfer.getData('pouch') !== '') {
+			const element = event.currentTarget;
+			element.classList.add('bg-secondary-color/50', 'rounded-primary');
+		}
 	}
 
-	function handleDrop(event, component){
+	function handleDragLeave(event) {
+		const element = event.currentTarget;
+		element.classList.remove('bg-secondary-color/50', 'rounded-primary');
+	}
+
+	function handleDrop(event, component) {
 		event.preventDefault();
 
 		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color/50','rounded-primary');
+		element.classList.remove('bg-secondary-color/50', 'rounded-primary');
 
-		if(event.dataTransfer.getData('pouch') === ''){
-
+		if (event.dataTransfer.getData('pouch') === '') {
 			const draggedIndex = rundown_list.indexOf(dragged_component);
-			const droppedIndex =  rundown_list.indexOf(component);
-	
+			const droppedIndex = rundown_list.indexOf(component);
+
 			rundown_list.splice(draggedIndex, 1);
 			rundown_list.splice(droppedIndex, 0, dragged_component);
-	
+
 			rundown_list = [...rundown_list];
-	
+
 			dragged_component = null;
 		}
 	}
 
-	function handleDropGeneral(event){
+	function handleDropGeneral(event) {
 		event.preventDefault();
 		event.dataTransfer.dropEffect = 'move';
 
 		const element = event.currentTarget;
-		element.classList.remove('bg-secondary-color/50','rounded-primary');
+		element.classList.remove('bg-secondary-color/50', 'rounded-primary');
 
-
-		if(event.dataTransfer.getData('pouch') !== ''){
-			console.log("here");
+		if (event.dataTransfer.getData('pouch') !== '') {
+			console.log('here');
 			const pouch_name = event.dataTransfer.getData('pouch');
 
-			console.log("pouch :",pouch_name);
+			console.log('pouch :', pouch_name);
 
 			const new_item = {
-				id : newId,
-				text : "@"+pouch_name,
-				type : 'pouch'
+				id: newId,
+				text: '@' + pouch_name,
+				type: 'pouch'
 			};
 
 			rundown_list.push(new_item);
 
-			console.log("rundown : ", rundown_list);
-			
+			console.log('rundown : ', rundown_list);
+
 			rundown_list = [...rundown_list];
 		}
 	}
-
 </script>
 
-<div 
+<div
 	class="relative w-full h-full flex flex-col"
 	on:dragleave={(event) => handleDragLeave(event)}
-	on:dragover={(event) =>handleDragOverGeneral(event)}
+	on:dragover={(event) => handleDragOverGeneral(event)}
 	on:drop={(event) => handleDropGeneral(event)}
 	aria-label="drag n drop pouch"
 	role="region"
-
 >
-	<div class="flex children:px-2 mb-2 justify-between">
+	<div class="flex children:px-2 mb-2 justify-between not-selectable">
 		<span class="text-secondary font-bold text-primary-color">Rundown</span>
 		<button
 			class="hover:text-cancel-color transition-colors text-tertiary text-primary-color"
@@ -160,25 +153,28 @@
 			class="flex flex-wrap w-full justify-center content-center place-items-center"
 			bind:this={rundownRootElement}
 		>
-     {#if rundown_list.length > 0}
-			{#each rundown_list as component}
-				<div
-					draggable="true"
-					on:dragstart={(event) => handleDragStart(event, component)}
-					on:dragleave={(event) => handleDragLeave(event)}
-					on:dragover={(event) =>handleDragOver(event)}
-					on:drop={(event) => handleDrop(event, component)}
-					aria-label="drag n drop rundown"
-					role="region"
-				>
-					<WordComponent id={component.id} text={component.text} on:update={updateWordComponent} />
-
-				</div>
-			{/each}
+			{#if rundown_list.length > 0}
+				{#each rundown_list as component}
+					<div
+						draggable="true"
+						on:dragstart={(event) => handleDragStart(event, component)}
+						on:dragleave={(event) => handleDragLeave(event)}
+						on:dragover={(event) => handleDragOver(event)}
+						on:drop={(event) => handleDrop(event, component)}
+						aria-label="drag n drop rundown"
+						role="region"
+					>
+						<WordComponent
+							id={component.id}
+							text={component.text}
+							on:update={updateWordComponent}
+						/>
+					</div>
+				{/each}
 			{:else}
 				<div class="flex flex-col justify-center align-middle items-center">
-					<p class="text-secondary text-primary-color/50 text-center">
-						Start by adding a new word! <br> Click the + button to get started.
+					<p class="text-secondary text-primary-color/50 text-center not-selectable">
+						Start by adding a new word! <br /> Click the + button to get started.
 					</p>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -228,10 +224,10 @@
 			+
 		</button>
 	</ul>
-  
+
 	<div class="flex justify-end align-text-bottom">
 		{#if rundown_list.length <= 0}
-			<p class="flex items-center text-secondary text-primary-color/50 text-end">
+			<p class="flex items-center text-secondary text-primary-color/50 text-end not-selectable">
 				Then click here to generate for the first time!
 			</p>
 			<svg
@@ -271,7 +267,7 @@
 		{/if}
 		<button
 			id="help_guide-step-ggenerate"
-			class="rounded-xl flex bg-slate-800 p-2 font-bold text-3xl h-fit w-fit transition duration-300 ease-out hover:ring hover:shadow-pink-100 place-self-end"
+			class="not-selectable rounded-xl flex bg-slate-800 p-2 font-bold text-3xl h-fit w-fit transition duration-300 ease-out hover:ring hover:shadow-pink-100 place-self-end"
 			on:click={generate}
 		>
 			GGenerate

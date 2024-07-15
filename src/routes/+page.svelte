@@ -229,7 +229,7 @@
 		id="help_guide-step-output"
 		class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center"
 	>
-		<p class="pl-2 text-secondary mr-2">Output:</p>
+		<p class="pl-2 text-secondary mr-2 not-selectable">Output:</p>
 		<p bind:this={result_div} class="text-secondary-color" />
 	</div>
 	<GGFooter />

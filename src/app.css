@@ -7,6 +7,15 @@
     @apply bg-primary-color rounded-secondary p-4 max-w-lg z-[9999];
 }
 
+.not-selectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .shepherd-arrow,
 .shepherd-arrow:before {
     @apply h-4 absolute w-4 z-[-1];

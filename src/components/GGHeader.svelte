@@ -15,7 +15,7 @@
 	on:import
 	on:export
 >
-	<div class="flex hover:scale-110 duration-300 transition-all">
+	<div class="flex hover:scale-110 duration-300 transition-all not-selectable">
 		<a href="https://ggenerator-beta.vercel.app/" class="flex px-2 items-center">
 			<img src="favicon.png" alt="GG Logo" class="w-7" />
 			<p class="mt-2">enerator</p>

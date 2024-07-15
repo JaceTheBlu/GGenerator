@@ -44,7 +44,7 @@
 	});
 </script>
 
-<div class="bg-primary-color flex justify-between text-tertiary">
+<div class="bg-primary-color flex justify-between text-tertiary not-selectable">
 	<div class="flex divide-x divide-solid py-2">
 		<a
 			class="flex items-center text-tertiary px-2 hover:scale-110 duration-300 transition-all"
@@ -61,6 +61,27 @@
 			</button>
 			in 2024
 		</div>
+	</div>
+	<div>
+		<a
+			href="https://forms.gle/2JKbUNFE4Dd8JMUL9"
+			target="_blank"
+			class="flex px-2
+				bg-gradient-to-r
+				text-primary
+				mt-1
+				from-background-secondary-color
+				to-background-primary-color
+				border-secondary-width
+				rounded-primary
+				transition duration-300 ease-out
+				hover:shadow-black
+				hover:shadow-md
+				hover:scale-110
+				items-center
+				"
+			>Send Feedback 🫰
+		</a>
 	</div>
 	<div class="flex items-right py-2 divide-x divide-solid children:px-2">
 		<a
