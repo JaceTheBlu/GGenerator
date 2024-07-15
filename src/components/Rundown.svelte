@@ -142,7 +142,9 @@
 		<button
 			class="hover:text-cancel-color transition-colors text-tertiary text-primary-color"
 			on:click={clearRundown}
-		/>
+		>
+			{$locales.clear}
+		</button>
 	</div>
 
 	<ul
