@@ -91,5 +91,7 @@
 			class="hover:scale-110 duration-300 transition-all"
 			title={$locales.settings}>⚙️</button
 		>
+		<button class="hover:scale-110 duration-300 transition-all" title={$locales.language}>⚙️</button
+		>
 	</div>
 </div>

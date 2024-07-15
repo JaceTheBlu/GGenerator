@@ -52,6 +52,7 @@
 			href="https://github.com/JaceTheBlu/GGenerator"
 			aria-label="Follow @JaceTheBlu on GitHub"
 			target="_blank"
+			title="GitHub"
 		>
 			<img src="github.png" alt="GitHub Logo" class="w-6" />
 		</a>
@@ -67,6 +68,7 @@
 		<a
 			href="https://forms.gle/2JKbUNFE4Dd8JMUL9"
 			target="_blank"
+			title={$locales.feedback}
 			class="flex px-2
 				bg-gradient-to-r
 				text-primary
@@ -88,6 +90,7 @@
 		<a
 			class="flex items-center"
 			href="https://github.com/JaceTheBlu"
+			title="GitHub JaceTheBlu"
 			aria-label="Follow @JaceTheBlu on GitHub"
 			target="_blank"
 		>
@@ -97,6 +100,7 @@
 		<a
 			class="flex items-center"
 			href="https://github.com/aVadeleau"
+			title="GitHub aVadeleau"
 			aria-label="Follow @aVadeleau on GitHub"
 			target="_blank"
 		>

@@ -198,7 +198,7 @@
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
 	<div class="flex children:px-2 mb-2 justify-between not-selectable">
-		<span class="text-secondary font-bold text-primary-color">Pouches</span>
+		<span class="text-secondary font-bold text-primary-color">{$locales.pouches}</span>
 		<button
 			class="hover:text-cancel-color transition-colors text-tertiary"
 			on:click={clearPouchofWords}
