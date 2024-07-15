@@ -34,6 +34,7 @@ Follow the onboarding tutorial with an example for a better understanding of the
 
 ## @Features
 
+- ### *Implemented*
 - [x] Add random sentence generation ( based on pouches and the template sentence)
 - [x] Possibility to rename/delete pouches and pouches elements
 - [x] Add tutorials ( onboarding, deep guide, empty tips)
@@ -41,14 +42,13 @@ Follow the onboarding tutorial with an example for a better understanding of the
 - [x] Save & Load Functions
 - [x] Persisent save with local storage
 
-- ### *To do*
-
+- ### *Planned*
 - [ ] History of generated sentences
-- [ ] Different kind of themes ( light, dark, colored ..)
+- [ ] Different kind of themes ( light, dark, colored...)
 - [ ] Probability on pouches elements
 - [ ] Random generation with or without replacement
 - [ ] Community database
-- [ ] Pouches of different types ( numbers, images, date ...)
+- [ ] Pouches of different types ( numbers, images, date...)
 
 ## @FAQ
 
@@ -65,15 +65,15 @@ Follow the onboarding tutorial with an example for a better understanding of the
 
 ### I have an idea ! How can I contact you ?
 
-- #### Bug report
-    
-    > Here is the link : [Issues](https://github.com/JaceTheBlu/GGenerator/issues/new), if possible share a screenshots and the steps to reproduce, thanks !
-- #### Feedback
-  
+- #### Bug report 👩‍💻
+    > Here is the link : [Issues](https://github.com/JaceTheBlu/GGenerator/issues/new),
+    if possible share a screenshots and the steps to reproduce, thanks !
+
+- #### Feedback 🗯️
     > Here you can find the english version : [Google Form EN](https://forms.gle/2JKbUNFE4Dd8JMUL9).  
     Pour la version baguette c'est ici : [Google Form FR](https://forms.gle/6UpoQnbn84WBtZk1A)
-- #### Direct Message
-  
+
+- #### Direct Message 💌
     > [@JaceTheBlu](https://github.com/JaceTheBlu) 🧙‍♂️  
      [@aVadeleau](https://github.com/aVadeleau) 🎢
 
