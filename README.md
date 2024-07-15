@@ -9,7 +9,7 @@
 
 >This  application  aims to be a multi purpose generator for every cases where you need random things.
 
-## *@*Use cases
+## @Use cases
 
 - ### GameMaster
 
@@ -27,12 +27,12 @@ Make a sentence and GGenerate !
 
 ![Shared flat example](./static/images/shared_flat_example.png)
 
-## *@*How to access ?
+## @How to access ?
 
 > Go to : <https://ggenerator-beta.vercel.app/>.  
 Follow the onboarding tutorial with an example for a better understanding of the application.
 
-## *@*Features
+## @Features
 
 - [x] Add random sentence generation ( based on pouches and the template sentence)
 - [x] Possibility to rename/delete pouches and pouches elements
@@ -50,7 +50,7 @@ Follow the onboarding tutorial with an example for a better understanding of the
 - [ ] Community database
 - [ ] Pouches of different types ( numbers, images, date ...)
 
-## *@*FAQ
+## @FAQ
 
 ### Is it available in \<Insert Language> ?
 
