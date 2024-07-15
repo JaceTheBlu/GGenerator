@@ -2,10 +2,10 @@
 
 ![Static Badge](https://img.shields.io/badge/version-1.0.0-red)
 
-![Static Badge](https://img.shields.io/badge/vercel-Deploy-white?logo=vercel&labelColor=black)
-![Static Badge](https://img.shields.io/badge/Svelte-Kit-orange?logo=Svelte&labelColor=white)
-![Static Badge](https://img.shields.io/badge/Tailwind-CSS-%2338bdf8?logo=tailwindcss&labelColor=white)
-![Static Badge](https://img.shields.io/badge/Notion-Board-black?logo=notion&logoColor=black&labelColor=white)
+[![Static Badge](https://img.shields.io/badge/vercel-Deploy-white?logo=vercel&labelColor=black)](https://vercel.com/)
+[![Static Badge](https://img.shields.io/badge/Svelte-Kit-orange?logo=Svelte&labelColor=white)](https://kit.svelte.dev/)
+[![Static Badge](https://img.shields.io/badge/Tailwind-CSS-%2338bdf8?logo=tailwindcss&labelColor=white)](https://tailwindcss.com/)
+[![Static Badge](https://img.shields.io/badge/Notion-Board-black?logo=notion&logoColor=black&labelColor=white)](https://www.notion.so/)
 
 >This  application  aims to be a multi purpose generator for every cases where you need random things.
 
