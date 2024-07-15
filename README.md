@@ -64,6 +64,7 @@ Follow the onboarding tutorial with an example for a better understanding of the
 - [ ] Community database
 - [ ] Pouches of different types ( numbers, images, date ...)
 
+## $${\color{grey}\textsf{@}\color{orange}\textbf{\texttt{Test}}}$$
 
 <h2 style="color: grey; font-style: italic; display:flex">
     @ <p style="color: orange; font-style : normal">
@@ -94,6 +95,6 @@ Follow the onboarding tutorial with an example for a better understanding of the
     Pour la version baguette c'est ici : [Google Form FR](https://forms.gle/6UpoQnbn84WBtZk1A)
 - #### Directly
   
-    > [@JaceTheBlu](https://github.com/JaceTheBlu) :man_mage:   
-     [@aVadeleau](https://github.com/aVadeleau) :roller_coaster:
+    > [@JaceTheBlu](https://github.com/JaceTheBlu) 🧙‍♂️  
+     [@aVadeleau](https://github.com/aVadeleau) 🎢
 
