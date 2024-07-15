@@ -1,13 +1,25 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { locales } from '../stores';
+	import { locales, preferredLanguage } from '../stores';
 
+	let lang_count = 0;
 	const dispatch = createEventDispatcher();
+
 	const importSave = (event) => {
 		dispatch('import');
 	};
+
 	const exportSave = (event) => {
 		dispatch('export');
+	};
+
+	const changeLanguage = () => {
+		lang_count++;
+		if (lang_count >= 27) {
+			preferredLanguage.set('spqr');
+		} else {
+			preferredLanguage.set($preferredLanguage === 'fr' ? 'en' : 'fr');
+		}
 	};
 </script>
 
@@ -91,7 +103,16 @@
 			class="hover:scale-110 duration-300 transition-all"
 			title={$locales.settings}>⚙️</button
 		>
-		<button class="hover:scale-110 duration-300 transition-all" title={$locales.language}>⚙️</button
+		<button
+			class="hover:scale-110 duration-300 transition-all"
+			title={$locales.language}
+			on:click={changeLanguage}
 		>
+			{#if $preferredLanguage === 'spqr'}
+				<img src="images/spqr.png" class="h-8" alt="spqr" />
+			{:else}
+				{$preferredLanguage === 'fr' ? '🇫🇷' : '🇬🇧'}
+			{/if}
+		</button>
 	</div>
 </div>
