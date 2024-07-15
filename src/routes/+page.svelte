@@ -1,8 +1,9 @@
 <script>
-	import { onMount } from 'svelte';
 	// Code for analytics
 	import { inject } from '@vercel/analytics';
 	inject();
+
+	import { onMount } from 'svelte';
 
 	import '../app.css';
 
@@ -11,7 +12,10 @@
 	import PouchOfWords from '../components/PouchOfWords.svelte';
 	import Rundown from '../components/Rundown.svelte';
 
-	import Berger from '$lib/berger.js';
+	import Berger from '$lib/berger';
+
+	import { preferredLanguage, loaded } from '../stores';
+	import { loadLanguage } from '$lib/localization';
 
 	let rundown_list;
 	let pouch_list;
@@ -19,41 +23,45 @@
 	let rundown_elem;
 	let pouch_elem;
 	let result_div;
-	let loaded = false;
 
 	let tour;
 	let data = {};
+	let fade_out_loader = false;
 
 	let tutorials_name = ['help_guide', 'onboarding', 'changelog'];
 	let examples_save = ['animals', 'hello_i_am'];
 
-	onMount(() => {
-		data['visited'] = localStorage.getItem('visited');
+	onMount(async () => {
+		await Promise.all([loadLanguage($preferredLanguage), initTutorials(tutorials_name)]).then(
+			() => {
+				data['visited'] = localStorage.getItem('visited');
 
-		if (!data.visited) {
-			localStorage.setItem('visited', true);
-		}
+				if (!data.visited) {
+					localStorage.setItem('visited', true);
+				}
 
-		initTutorials(tutorials_name);
+				const saved_rundown_list = localStorage.getItem('rundown_list');
+				if (saved_rundown_list) {
+					rundown_list = JSON.parse(saved_rundown_list)?.rundown;
+				}
 
-		const saved_rundown_list = localStorage.getItem('rundown_list');
-		if (saved_rundown_list) {
-			rundown_list = JSON.parse(saved_rundown_list)?.rundown;
-		}
-
-		const saved_pouch_list = localStorage.getItem('pouch_list');
-		if (saved_pouch_list) {
-			pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
-		}
-
-		loaded = true;
+				const saved_pouch_list = localStorage.getItem('pouch_list');
+				if (saved_pouch_list) {
+					pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
+				}
+				fade_out_loader = true;
+				setTimeout(() => {
+					loaded.set(true);
+				}, 1000); // 500ms matches the duration in the CSS animation
+			}
+		);
 	});
 
-	$: if (loaded) saveAsCookie(rundown_list, pouch_list);
+	$: if ($loaded) saveAsCookie(rundown_list, pouch_list);
 
 	const initTutorials = async (tutos_name) => {
 		await fillFromFile('tutorials', tutos_name);
-		if (!data.visited) {
+		if (!data.visited && $loaded) {
 			tour = new Berger(data.tutorials.onboarding);
 			const randomExample = examples_save[Math.floor(Math.random() * examples_save.length)];
 			await fillFromFile('examples', [randomExample]);
@@ -196,7 +204,31 @@
 	};
 </script>
 
-<div class="flex flex-col min-h-screen">
+{#if !$loaded}
+	<div
+		class="absolute z-50 h-screen w-screen text-3xl font-bold flex items-center justify-center
+		bg-gradient-to-r
+		from-background-primary-color
+		to-background-secondary-color {fade_out_loader ? 'animate-fade-out' : ''}"
+	>
+		<div
+			class="animate-fade-grow-in {fade_out_loader
+				? 'animate-fade-grow-out'
+				: ''} flex items-center justify-center"
+		>
+			<svg class="animate-spin h-24 w-24 mr-3 ..." viewBox="0 0 24 24">
+				<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+				<path
+					class="opacity-75"
+					fill="currentColor"
+					d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+				/>
+			</svg>
+			<p>Loading...</p>
+		</div>
+	</div>
+{/if}
+<div class="flex flex-col min-h-screen animate-fade-in" hidden={!$loaded}>
 	<GGHeader
 		on:import={importJSON}
 		on:export={exportJSON}

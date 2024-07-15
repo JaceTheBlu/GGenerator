@@ -1,5 +1,7 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+	import { locales } from '../stores';
+
 	const dispatch = createEventDispatcher();
 	const importSave = (event) => {
 		dispatch('import');
@@ -41,8 +43,7 @@
 			"
 			on:click={exportSave}
 		>
-			<p class="underline">S</p>
-			ave
+			<p class="underline">{$locales.save}</p>
 		</button>
 
 		<button
@@ -62,14 +63,14 @@
 				"
 			on:click={importSave}
 		>
-			<p class="underline">L</p>
-			<p>oad</p>
+			<p class="underline">{$locales.load}</p>
 		</button>
 	</div>
 	<div class="flex divide-x divide-solid children:px-2 my-2">
 		<button
 			id="help_guide-version-button"
 			class=" hover:text-secondary-color text-primary !px-4 text-primary-color/75 self-center"
+			title={$locales.changelog}
 			on:click={() => {
 				dispatch('changelog');
 			}}
@@ -78,7 +79,7 @@
 		<button
 			id="help_guide-help-button"
 			class="hover:scale-110 duration-300 transition-all"
-			title="Help"
+			title={$locales.help}
 			on:click={() => {
 				dispatch('tutorial');
 			}}
@@ -88,7 +89,7 @@
 		<button
 			id="help_guide-settings-button"
 			class="hover:scale-110 duration-300 transition-all"
-			title="Settings">⚙️</button
+			title={$locales.settings}>⚙️</button
 		>
 	</div>
 </div>

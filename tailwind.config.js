@@ -51,6 +51,55 @@ module.exports = {
 			borderWidth: {
 				'primary-width': '1px',
 				'secondary-width': '2px'
+			},
+			keyframes: {
+				growIn: {
+					'0%': { transform: 'scale(0.75)' },
+					'100%': { transform: 'scale(1)' }
+				},
+				growOut: {
+					'0%': { transform: 'scale(1)' },
+					'100%': { transform: 'scale(0.75)' }
+				},
+				fadeIn: {
+					'0%': { opacity: 0 },
+					'100%': { opacity: 1 }
+				},
+				fadeOut: {
+					'0%': { opacity: 1 },
+					'100%': { opacity: 0 }
+				},
+				spinRainbow: {
+					'0%, 100%': {
+						'border-color': 'red transparent transparent transparent'
+					},
+					'25%': {
+						'border-color': 'yellow transparent transparent transparent'
+					},
+					'50%': {
+						'border-color': 'green transparent transparent transparent'
+					},
+					'75%': {
+						'border-color': 'blue transparent transparent transparent'
+					}
+				},
+				spin: {
+					'0%': {
+						transform: 'rotate(0deg)'
+					},
+					'100%': {
+						transform: 'rotate(360deg)'
+					}
+				}
+			},
+			animation: {
+				'fade-in': 'fadeIn 0.5s ease-in-out forwards',
+				'fade-out': 'fadeOut 0.5s ease-in-out forwards',
+				'grow-in': 'growIn 0.5s ease-in-out forwards',
+				'grow-out': 'growOut 0.5s ease-in-out forwards',
+				'fade-grow-in': 'growIn 0.5s, fadeIn 0.5s ease-in-out forwards',
+				'fade-grow-out': 'growOut 0.5s, fadeOut 0.5s ease-in-out forwards',
+				'spin-rainbow': 'spinRainbow 1s linear infinite, spin 1s linear infinite'
 			}
 		}
 	},
