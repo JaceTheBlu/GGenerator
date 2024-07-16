@@ -1,41 +1,42 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { locales } from '../stores';
+	import { locales, rundown, loaded } from '../stores';
 	import WordComponent from './WordComponent.svelte';
 
 	const dispatch = createEventDispatcher();
 
-	export let rundown_list = [];
 	let rundownRootElement;
 
 	let dragged_component = null;
+	let newId = 0;
 
-	$: newId = rundown_list.length ? Math.max(...rundown_list.map((t) => t.id)) + 1 : 1;
+	$: if ($loaded && $rundown) {
+		newId = $rundown.length ? Math.max(...$rundown.map((t) => t.id)) + 1 : 1;
+	}
 
 	export const addWordComponent = (event) => {
-		rundown_list = [
-			...rundown_list,
+		rundown.update((currentList = []) => [
+			...currentList,
 			{
 				id: event?.detail.id || newId,
 				text: event?.detail.text || '',
 				type: event?.detail.type || 'static'
 			}
-		];
+		]);
 	};
 
-	const removeWordComponent = (event) => {
-		rundown_list = rundown_list.filter((c) => c.id !== event.detail.id);
+	export const removeWordComponent = (event) => {
+		rundown.update((currentList) => currentList.filter((c) => c.id !== event.detail.id));
 	};
 
-	const updateWordComponent = (event) => {
+	export const updateWordComponent = (event) => {
 		let word = event.detail;
 		if (word.text.length > 0) {
-			rundown_list = rundown_list.map((component) => {
-				if (component.id === word.id) {
-					return { ...component, text: word.text };
-				}
-				return component;
-			});
+			rundown.update((currentList) =>
+				currentList.map((component) =>
+					component.id === word.id ? { ...component, text: word.text } : component
+				)
+			);
 			if (word.type === 'pouch') {
 				dispatch('NewPouchWord', word);
 			}
@@ -49,7 +50,7 @@
 	};
 
 	const clearRundown = () => {
-		rundown_list = [];
+		rundown.set([]);
 	};
 
 	function handleDragStart(event, component) {
@@ -82,26 +83,30 @@
 		element.classList.remove('bg-secondary-color/50', 'rounded-primary');
 	}
 
-	function handleDrop(event, component) {
+	export function handleDrop(event, component) {
 		event.preventDefault();
 
 		const element = event.currentTarget;
 		element.classList.remove('bg-secondary-color/50', 'rounded-primary');
 
-		if (event.dataTransfer.getData('pouch') === '') {
-			const draggedIndex = rundown_list.indexOf(dragged_component);
-			const droppedIndex = rundown_list.indexOf(component);
+		rundown.update((currentList) => {
+			if (event.dataTransfer.getData('pouch') === '') {
+				const draggedIndex = currentList.indexOf(dragged_component);
+				const droppedIndex = currentList.indexOf(component);
 
-			rundown_list.splice(draggedIndex, 1);
-			rundown_list.splice(droppedIndex, 0, dragged_component);
+				currentList.splice(draggedIndex, 1);
+				currentList.splice(droppedIndex, 0, dragged_component);
 
-			rundown_list = [...rundown_list];
+				dragged_component = null;
 
-			dragged_component = null;
-		}
+				// Return a new array to trigger reactivity
+				return [...currentList];
+			}
+			return currentList;
+		});
 	}
 
-	function handleDropGeneral(event) {
+	export function handleDropGeneral(event) {
 		event.preventDefault();
 		event.dataTransfer.dropEffect = 'move';
 
@@ -115,16 +120,16 @@
 			console.log('pouch :', pouch_name);
 
 			const new_item = {
-				id: newId,
+				id: newId(),
 				text: '@' + pouch_name,
 				type: 'pouch'
 			};
 
-			rundown_list.push(new_item);
-
-			console.log('rundown : ', rundown_list);
-
-			rundown_list = [...rundown_list];
+			rundown_list.update((currentList) => {
+				currentList.push(new_item);
+				console.log('rundown : ', currentList);
+				return [...currentList];
+			});
 		}
 	}
 </script>
@@ -154,8 +159,8 @@
 			class="flex flex-wrap w-full justify-center content-center place-items-center"
 			bind:this={rundownRootElement}
 		>
-			{#if rundown_list.length > 0}
-				{#each rundown_list as component}
+			{#if $rundown && $rundown.length > 0}
+				{#each $rundown && $rundown as component}
 					<div
 						draggable="true"
 						on:dragstart={(event) => handleDragStart(event, component)}
@@ -228,7 +233,7 @@
 	</ul>
 
 	<div class="flex justify-end align-text-bottom">
-		{#if rundown_list.length <= 0}
+		{#if $rundown && $rundown.length <= 0}
 			<p class="flex items-center text-secondary text-primary-color/50 text-end not-selectable">
 				{$locales.placeholder_generate}
 			</p>

@@ -14,76 +14,111 @@
 
 	import Berger from '$lib/berger';
 
-	import { preferredLanguage, loaded } from '../stores';
-	import { loadLanguage } from '$lib/localization';
+	import {
+		preferredLanguage,
+		loaded,
+		visited,
+		rundown,
+		pouches,
+		history,
+		tutorials,
+		examples
+	} from '../stores';
 
-	let rundown_list;
-	let pouch_list;
+	import { loadLanguage } from '$lib/localization';
 
 	let rundown_elem;
 	let pouch_elem;
 	let result_div;
 
 	let tour;
-	let data = {};
 	let fade_out_loader = false;
-
-	let tutorials_name = ['help_guide', 'onboarding', 'changelog'];
-	let examples_save = ['animals', 'hello_i_am'];
 
 	preferredLanguage.subscribe((lang) => {
 		loadLanguage(lang);
 	});
 
 	onMount(async () => {
-		await Promise.all([loadLanguage($preferredLanguage), initTutorials(tutorials_name)]).then(
+		await Promise.all([loadLanguage($preferredLanguage), initTutorials(), initExamples()]).then(
 			() => {
-				data['visited'] = localStorage.getItem('visited');
+				visited.set(localStorage.getItem('visited'));
 
-				if (!data.visited) {
+				if (!$visited) {
 					localStorage.setItem('visited', true);
+					tour = new Berger($tutorials['onboarding.json']);
+					loadSave($examples[Math.floor(Math.random() * $examples._length)]);
 				}
 
-				const saved_rundown_list = localStorage.getItem('rundown_list');
-				if (saved_rundown_list) {
-					rundown_list = JSON.parse(saved_rundown_list)?.rundown;
+				const saved_rundown = localStorage.getItem('rundown');
+				if (saved_rundown) {
+					rundown.set(JSON.parse(saved_rundown));
 				}
 
-				const saved_pouch_list = localStorage.getItem('pouch_list');
-				if (saved_pouch_list) {
-					pouch_list = JSON.parse(saved_pouch_list)?.pouch_list;
+				const saved_pouches = localStorage.getItem('pouches');
+				if (saved_pouches) {
+					pouches.set(JSON.parse(saved_pouches)?.pouches);
 				}
+
 				fade_out_loader = true;
 				setTimeout(() => {
 					loaded.set(true);
-				}, 1000); // 500ms matches the duration in the CSS animation
+				}, 1000); // 1000ms matches the duration in the CSS animation
 			}
 		);
 	});
 
-	$: if ($loaded) saveAsCookie(rundown_list, pouch_list);
-
-	const initTutorials = async (tutos_name) => {
-		await fillFromFile('tutorials', tutos_name);
-		if (!data.visited && $loaded) {
-			tour = new Berger(data.tutorials.onboarding);
-			const randomExample = examples_save[Math.floor(Math.random() * examples_save.length)];
-			await fillFromFile('examples', [randomExample]);
-			loadSave(data.examples[randomExample]);
+	rundown.subscribe((current) => {
+		if ($loaded) {
+			localStorage.setItem('rundown', JSON.stringify(current));
 		}
+	});
+
+	history.subscribe((current) => {
+		if ($loaded) {
+			localStorage.setItem('history', JSON.stringify(current));
+		}
+	});
+
+	pouches.subscribe((current) => {
+		if ($loaded) {
+			localStorage.setItem('pouches', JSON.stringify(current));
+		}
+	});
+
+	const initTutorials = async () => {
+		const response = await fetch('/tutos');
+		if (!response.ok) {
+			throw new Error('Failed to fetch tutorial list');
+		}
+		const list = await response.json();
+		const promises = list.map(async (file_name) => {
+			const content = await readFile(`/tutorials/${file_name}`);
+			tutorials.update((current) => {
+				current[file_name] = content;
+				current._length += 1;
+				return current;
+			});
+		});
+
+		await Promise.all(promises);
 	};
 
-	const fillFromFile = async (data_name, files) => {
-		data[data_name] = {
-			_length: 0
-		};
-		const dataArray = await Promise.all(
-			files.map(async (file_name) => {
-				const content = await readFile(`/${data_name}/${file_name}.json`);
-				data[data_name][file_name] = content;
-				data[data_name]['_length'] += 1;
-			})
-		);
+	const initExamples = async () => {
+		const response = await fetch('/exams');
+		if (!response.ok) {
+			throw new Error('Failed to fetch examples list');
+		}
+		const list = await response.json();
+		const promises = list.map(async (file_name) => {
+			const content = await readFile(`/examples/${file_name}`);
+			examples.update((current) => {
+				current[file_name] = content;
+				current._length += 1;
+				return current;
+			});
+		});
+
+		await Promise.all(promises);
 	};
 
 	const readFile = async (path) => {
@@ -100,18 +135,19 @@
 		}
 	};
 
-	export const saveAsCookie = (rl, pl) => {
-		localStorage.setItem('rundown_list', JSON.stringify({ rundown: rl }));
-		localStorage.setItem('pouch_list', JSON.stringify({ pouch_list: pl }));
+	export const saveAsCookie = () => {
+		console.log($rundown, $pouches, $history);
+		localStorage.setItem('pouches', JSON.stringify($pouches));
+		localStorage.setItem('history', JSON.stringify($history));
 	};
 
 	const generateWords = () => {
-		const words = rundown_list.map((word) => {
+		const words = $rundown.map((word) => {
 			const text = word.text;
 
 			if (text.charAt(0) === '@' && text.length > 1) {
 				const pouchName = text.substring(1);
-				const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
+				const pouch = $pouches.find((pouch) => pouch.name === pouchName);
 
 				if (pouch && pouch.elements.length > 0) {
 					word = getPouchElement(pouch);
@@ -128,13 +164,8 @@
 	};
 
 	const getPouchElement = (pouch) => {
-		return pouch.elements[getRandomInt(0, pouch.elements.length - 1)].name;
-	};
-
-	const getRandomInt = (min, max) => {
-		min = Math.ceil(min);
-		max = Math.floor(max);
-		return Math.ceil(Math.random() * (max - min + 1)) + min - 1;
+		let randInt = Math.ceil(Math.random() * (pouch.elements.length - 1 + 1)) - 1;
+		return pouch.elements[randInt].name;
 	};
 
 	const importJSON = () => {
@@ -160,7 +191,9 @@
 	};
 
 	const loadSave = (obj) => {
-		rundown_list = pouch_list = [];
+		rundown.set([]);
+		pouches.set([]);
+
 		result_div.innerText = '';
 		requestAnimationFrame(() => {
 			obj?.rundown.map((word) => {
@@ -178,11 +211,11 @@
 	};
 
 	const startTutorial = () => {
-		tour = new Berger(data.tutorials.help_guide);
+		tour = new Berger($tutorials['help_guide.json']);
 	};
 
 	const showChangeLog = () => {
-		tour = new Berger(data.tutorials.changelog);
+		tour = new Berger($tutorials['changelog.json']);
 	};
 
 	const exportJSON = () => {
@@ -210,7 +243,7 @@
 
 {#if !$loaded}
 	<div
-		class="absolute z-50 h-screen w-screen text-3xl font-bold flex items-center justify-center
+		class="absolute z-[99999] h-screen w-screen text-3xl font-bold flex items-center justify-center
 		bg-gradient-to-r
 		from-background-primary-color
 		to-background-secondary-color {fade_out_loader ? 'animate-fade-out' : ''}"
@@ -245,7 +278,6 @@
 		>
 			<Rundown
 				bind:this={rundown_elem}
-				bind:rundown_list
 				on:generate={generateWords}
 				on:NewPouchWord={createPouchIfNE}
 			/>
@@ -255,7 +287,7 @@
 			id="help_guide-step-pouch-of-words"
 			class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto"
 		>
-			<PouchOfWords bind:this={pouch_elem} bind:pouch_list />
+			<PouchOfWords bind:this={pouch_elem} />
 		</div>
 	</div>
 
