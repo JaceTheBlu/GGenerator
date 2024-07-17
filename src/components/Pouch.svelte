@@ -17,9 +17,12 @@
 
 	let isEditable = false;
 	let isHidden = false;
+	let isHovered = false;
+	let locked = false;
 
 	let inputElement = '';
 	let new_pouch = '';
+
 
 	let element_id = 0;
 
@@ -133,7 +136,7 @@
 
 	/**
 	 * This method is used for the update of a pouch element
-	 * Double clicking on a pouch element make it editable
+	 *  clicking on a pouch element make it editable
 	 * When focus is lost new informations are sent to the parent component
 	 */
 	function changeEditableState() {
@@ -158,9 +161,40 @@
 	function changeHiddenState() {
 		isHidden = !isHidden;
 	}
+
+
+	function changeInputState( hovered){
+
+		switch (hovered) {
+			case true:
+				isHovered = true;	
+			
+				break;
+
+			case false:
+				if(!locked){
+					isHovered = false;
+					new_pouch = '';
+				}
+			break;
+		}
+	}
+
+	function changeLockState(){
+		locked = !locked
+	}
+
+
 </script>
 
-<ul class="bg-slate-800/50 rounded-xl divide-y my-2">
+
+<ul 
+	class="bg-slate-800/50 rounded-xl divide-y my-2"
+	on:mouseover={() =>changeInputState(true)}
+	on:mouseleave={() => changeInputState(false)}	
+	on:focus={() =>changeInputState(true)}
+	on:blur={() => changeInputState(false)}	
+>
 	<li class="flex justify-between text-xl h-full">
 		<button
 			class={`flex items-center px-2 hover:bg-blue-500 ${
@@ -203,35 +237,39 @@
 
 	{#if elements.length !== 0 && !isHidden}
 		<div class="divide-y divide-dashed">
-			{#each elements as pouch}
-				<PouchElement
-					id={pouch.id}
-					name={pouch.name}
-					on:update-pouch-element={refreshElements}
-					on:delete-pouch-element={deletePouchElement}
-				/>
+			{#each elements as pouch, index}
+				<div class={`${!locked && !isHovered && index == elements.length-1 ?'rounded-b-xl'  :'' } odd:bg-slate-800/10 even:bg-slate-800/50`}>
+					<PouchElement
+						id={pouch.id}
+						name={pouch.name}
+						on:update-pouch-element={refreshElements}
+						on:delete-pouch-element={deletePouchElement}
+					/>
+				</div>
 			{/each}
 		</div>
 	{/if}
 
-	{#if !isHidden}
-		<div>
-			<li class="flex">
-				<input
-					bind:value={new_pouch}
-					class="bg-transparent w-full h-full focus:outline-none focus:ring-2 focus:ring-secondary-color placeholder:italic rounded-bl-xl pl-4"
-					type="text"
-					placeholder="Enter a value..."
-					on:keydown={(event) => handleKeyboard(event, 'addElements')}
-					on:blur={addElements}
-				/>
+	{#if !isHidden && isHovered}
+		<li class="flex">
+			<button class="pl-1 border-r border-white"  on:click={changeLockState}>
+				{!locked ? '🔓' : '🔒'}
+			</button>
 
-				<button
-					class="text-xl text-white border-l border-white hover:bg-validate-color rounded-br-xl transition-colors duration-300 px-2"
-					on:click={addElements}
-					>↵
-				</button>
-			</li>
-		</div>
+			<input
+				bind:value={new_pouch}
+				class="bg-transparent w-full h-full focus:outline-none focus:ring-2 focus:ring-secondary-color placeholder:italic pl-2"
+				type="text"
+				placeholder="Enter a value..."
+				on:keydown={(event) => handleKeyboard(event, 'addElements')}
+				on:blur={addElements}
+			/>
+
+			<button
+				class="text-xl text-white border-l border-white hover:bg-validate-color rounded-br-xl transition-colors duration-300 px-2"
+				on:click={addElements}
+				>↵
+			</button>
+		</li>
 	{/if}
 </ul>
