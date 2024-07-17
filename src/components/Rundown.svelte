@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+	import { locales } from '../stores';
 	import WordComponent from './WordComponent.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -137,12 +138,12 @@
 	role="region"
 >
 	<div class="flex children:px-2 mb-2 justify-between not-selectable">
-		<span class="text-secondary font-bold text-primary-color">Rundown</span>
+		<span class="text-secondary font-bold text-primary-color">{$locales.rundown}</span>
 		<button
 			class="hover:text-cancel-color transition-colors text-tertiary text-primary-color"
 			on:click={clearRundown}
 		>
-			clear
+			{$locales.clear}
 		</button>
 	</div>
 
@@ -174,7 +175,8 @@
 			{:else}
 				<div class="flex flex-col justify-center align-middle items-center">
 					<p class="text-secondary text-primary-color/50 text-center not-selectable">
-						Start by adding a new word! <br /> Click the + button to get started.
+						{$locales.placeholder_rundown_1} <br />
+						{$locales.placeholder_rundown_2}
 					</p>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -228,7 +230,7 @@
 	<div class="flex justify-end align-text-bottom">
 		{#if rundown_list.length <= 0}
 			<p class="flex items-center text-secondary text-primary-color/50 text-end not-selectable">
-				Then click here to generate for the first time!
+				{$locales.placeholder_generate}
 			</p>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -267,10 +269,10 @@
 		{/if}
 		<button
 			id="help_guide-step-ggenerate"
-			class="not-selectable rounded-xl flex bg-slate-800 p-2 font-bold text-3xl h-fit w-fit transition duration-300 ease-out hover:ring hover:shadow-pink-100 place-self-end"
+			class="rainbow-border not-selectable rounded-xl flex bg-slate-800 p-2 font-bold text-3xl h-fit w-fit transition duration-300 ease-out hover:ring hover:shadow-pink-100 place-self-end"
 			on:click={generate}
 		>
-			GGenerate
+			{$locales.ggenerate}
 			<p class="italic">!</p>
 		</button>
 	</div>

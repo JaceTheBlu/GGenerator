@@ -1,0 +1,21 @@
+{
+    "rundown": "Rundown",
+    "pouches": "Pouches",
+    "ggenerate": "GGenerate",
+    "save": "Save",
+    "load": "Load",
+    "settings": "Settings",
+    "changelog": "Changelog",
+    "clear": "Clear",
+    "help": "Help",
+    "footer_made_with": "Made with",
+    "footer_in": "in",
+    "feedback": "Send Feedback",
+    "pouch_placeholder": "Enter a value...",
+    "pouch_input": "Add Pouch",
+    "placeholder_pouches_1": "Create a Pouch here!",
+    "placeholder_pouches_2": "You can also add it by writing in the Rundown.",
+    "placeholder_rundown_1": "Start by adding a new word!",
+    "placeholder_rundown_2": "Click the + button to get started.",
+    "placeholder_generate": "Then click here to generate!"
+}

@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { locales } from '../stores';
 
 	let emoji = '❤️';
 	onMount(() => {
@@ -51,21 +52,23 @@
 			href="https://github.com/JaceTheBlu/GGenerator"
 			aria-label="Follow @JaceTheBlu on GitHub"
 			target="_blank"
+			title="GitHub"
 		>
 			<img src="github.png" alt="GitHub Logo" class="w-6" />
 		</a>
 		<div class="flex px-2">
-			Made with
+			{$locales.footer_made_with}
 			<button class="cursor-default text-l hover:scale-150 transition duration-300">
 				{emoji}
 			</button>
-			in 2024
+			{$locales.footer_in} 2024
 		</div>
 	</div>
 	<div>
 		<a
 			href="https://forms.gle/2JKbUNFE4Dd8JMUL9"
 			target="_blank"
+			title={$locales.feedback}
 			class="flex px-2
 				bg-gradient-to-r
 				text-primary
@@ -80,13 +83,14 @@
 				hover:scale-110
 				items-center
 				"
-			>Send Feedback 🫰
+			>{$locales.feedback} 🫰
 		</a>
 	</div>
 	<div class="flex items-right py-2 divide-x divide-solid children:px-2">
 		<a
 			class="flex items-center"
 			href="https://github.com/JaceTheBlu"
+			title="GitHub JaceTheBlu"
 			aria-label="Follow @JaceTheBlu on GitHub"
 			target="_blank"
 		>
@@ -96,6 +100,7 @@
 		<a
 			class="flex items-center"
 			href="https://github.com/aVadeleau"
+			title="GitHub aVadeleau"
 			aria-label="Follow @aVadeleau on GitHub"
 			target="_blank"
 		>
