@@ -18,6 +18,7 @@
 	let isEditable = false;
 	let isHidden = false;
 	let isHovered = false;
+	let isFocus = false;
 	let locked = false;
 
 	let inputElement = '';
@@ -75,6 +76,7 @@
 			}
 		}
 	}
+
 
 	/**
 	 * This function send a pouch to the parent (PouchOfWords) when it is modified
@@ -158,49 +160,22 @@
 		}
 	}
 
-	function changeHiddenState() {
-		isHidden = !isHidden;
-	}
-
-
-	function changeInputState( hovered){
-
-		switch (hovered) {
-			case true:
-				isHovered = true;	
-			
-				break;
-
-			case false:
-				if(!locked){
-					isHovered = false;
-					new_pouch = '';
-				}
-			break;
-		}
-	}
-
-	function changeLockState(){
-		locked = !locked
-	}
-
-
 </script>
 
 
 <ul 
 	class="bg-slate-800/50 rounded-xl divide-y my-2"
-	on:mouseover={() =>changeInputState(true)}
-	on:mouseleave={() => changeInputState(false)}	
-	on:focus={() =>changeInputState(true)}
-	on:blur={() => changeInputState(false)}	
+	on:mouseover={() =>{isHovered = true}}
+	on:mouseleave={() =>{isHovered = false}}
+	on:focus={() =>{isHovered = false}}	
+	on:blur={() =>{isHovered = false}}	
 >
 	<li class="flex justify-between text-xl h-full">
 		<button
 			class={`flex items-center px-2 hover:bg-blue-500 ${
 				isHidden ? 'rounded-bl-xl' : 'rounded-none'
 			} transition duration-300 hover:cursor-pointer rounded-tl-xl`}
-			on:click={changeHiddenState}
+			on:click={() =>{isHidden = !isHidden}}
 		>
 			{isHidden ? '▷' : '▽'}
 		</button>
@@ -238,7 +213,7 @@
 	{#if elements.length !== 0 && !isHidden}
 		<div class="divide-y divide-dashed">
 			{#each elements as pouch, index}
-				<div class={`${!locked && !isHovered && index == elements.length-1 ?'rounded-b-xl'  :'' } odd:bg-slate-800/10 even:bg-slate-800/50`}>
+				<div class={`${!isHovered && index == elements.length-1 ?'rounded-b-xl'  :'' } odd:bg-slate-800/10 even:bg-slate-800/50`}>
 					<PouchElement
 						id={pouch.id}
 						name={pouch.name}
@@ -250,19 +225,18 @@
 		</div>
 	{/if}
 
-	{#if !isHidden && isHovered}
+	{#if !isHidden && (isHovered || isFocus)}
 		<li class="flex">
-			<button class="pl-1 border-r border-white"  on:click={changeLockState}>
-				{!locked ? '🔓' : '🔒'}
-			</button>
-
+			
 			<input
 				bind:value={new_pouch}
-				class="bg-transparent w-full h-full focus:outline-none focus:ring-2 focus:ring-secondary-color placeholder:italic pl-2"
+				class="bg-transparent w-full h-full rounded-bl-xl focus:outline-none focus:ring-2 focus:ring-secondary-color placeholder:italic pl-4"
 				type="text"
 				placeholder="Enter a value..."
 				on:keydown={(event) => handleKeyboard(event, 'addElements')}
-				on:blur={addElements}
+				on:focus={() =>{isFocus = true; console.log('focus', isFocus)}}
+				on:blur={() => {isFocus = false;addElements}}	
+
 			/>
 
 			<button
