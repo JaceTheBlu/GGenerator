@@ -36,6 +36,9 @@
 
 	preferredLanguage.subscribe((lang) => {
 		loadLanguage(lang);
+		if ($loaded) {
+			localStorage.setItem('preferredLanguage', lang);
+		}
 	});
 
 	onMount(async () => {
@@ -56,9 +59,10 @@
 
 				const saved_pouches = localStorage.getItem('pouches');
 				if (saved_pouches) {
-					pouches.set(JSON.parse(saved_pouches)?.pouches);
+					pouches.set(JSON.parse(saved_pouches));
 				}
 
+				preferredLanguage.set(localStorage.getItem('preferredLanguage'));
 				fade_out_loader = true;
 				setTimeout(() => {
 					loaded.set(true);

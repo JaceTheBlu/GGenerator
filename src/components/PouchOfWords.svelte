@@ -2,23 +2,21 @@
 	/**
 	 * A class that wraps the Pouch of Words functionality
 	 * It allows creating pouches and displays them
-	 * @param pouch_list: a list of string that contains the name of every pouch created, used to track the existing pouch and display them
 	 * @param max : a number that tells the maximum numbers of characters possible in the input
 	 */
 
 	/* Imports */
-	import { locales } from '../stores';
+	import { locales, pouches } from '../stores';
 	import Pouch from './Pouch.svelte';
 
 	/* Variables */
-	export let pouch_list = [];
 	let input_value = '';
 	let max = 20;
-
 	let pouch_id = 0;
 	let dragged_pouch = null;
 
 	$: input_value = String(input_value).toLowerCase();
+	$: pouch_list = $pouches;
 
 	/*Functions */
 
@@ -46,12 +44,14 @@
 				name: input_value,
 				elements: event?.detail?.elements || []
 			};
-			let i = 0;
-			let nameAlreadyExist = contains(pouch);
-			if (!nameAlreadyExist) {
-				pouch_id++;
-				pouch_list = [...pouch_list, pouch];
-			}
+			pouches.update((currentList) => {
+				let nameAlreadyExist = currentList.some((p) => p.name === pouch.name);
+				if (!nameAlreadyExist) {
+					pouch_id++;
+					return [...currentList, pouch];
+				}
+				return currentList;
+			});
 			input_value = '';
 		}
 	};
@@ -65,32 +65,14 @@
 			case 'Enter':
 				addPouch();
 				break;
-
 			default:
 				break;
 		}
 	}
 
 	const clearPouchofWords = () => {
-		pouch_list = [];
+		pouches.set([]);
 	};
-
-	/**
-	 * A function that verify if a pouch name is already present
-	 * @param pouch : the pouch to verify its name
-	 * @return found : true if the name is already in the list, false otherwise
-	 */
-	function contains(pouch) {
-		let found = false;
-
-		for (let i = 0; i < pouch_list.length && !found; i++) {
-			if (pouch_list[i].name === pouch.name && pouch.id !== pouch_list[i].id) {
-				found = true;
-			}
-		}
-
-		return found;
-	}
 
 	/**
 	 * This method is triggered when the event 'pouch_elements' is catched
@@ -98,24 +80,23 @@
 	 * @param event : the pouch to update
 	 */
 	function refreshPouch(event) {
-		const pouch = event.detail;
-
-		if (pouch.name.trim() !== '') {
-			let nameAlreadyExist = contains(pouch);
-
-			if (!nameAlreadyExist) {
-				let found = false;
-				for (let i = 0; i < pouch_list.length && !found; i++) {
-					if (pouch_list[i].id === pouch.id) {
-						pouch_list[i] = pouch;
-						found = true;
-					}
+		const updatedPouch = event.detail;
+		if (updatedPouch.name.trim() !== '') {
+			pouches.update((currentList) => {
+				let nameAlreadyExist = currentList.some(
+					(p) => p.name === updatedPouch.name && p.id !== updatedPouch.id
+				);
+				if (!nameAlreadyExist) {
+					return currentList.map((pouch) => (pouch.id === updatedPouch.id ? updatedPouch : pouch));
 				}
-			} else {
-				console.error('The name :', pouch.name, ' already exist ! \n Please enter a new one');
-			}
+				console.error(
+					'The name :',
+					updatedPouch.name,
+					' already exist ! \n Please enter a new one'
+				);
+				return currentList;
+			});
 		}
-		pouch_list = [...pouch_list];
 	}
 
 	/**
@@ -123,21 +104,12 @@
 	 * @param e : the id of the pouch to delete
 	 */
 	function deletePouch(e) {
-		const pouch = e.detail;
-		let i = 0;
-		let found = false;
-		while (i < pouch_list.length && !found) {
-			if (pouch_list[i].id === pouch.id) {
-				pouch_list.splice(i, 1);
-			}
-			i++;
-		}
-		pouch_list = [...pouch_list];
+		const pouchId = e.detail.id;
+		pouches.update((currentList) => currentList.filter((p) => p.id !== pouchId));
 	}
 
 	function handleDragStart(event, pouch) {
 		dragged_pouch = pouch;
-
 		event.dataTransfer.effectAllowed = 'move';
 		event.dataTransfer.setData('pouch', dragged_pouch.name);
 	}
@@ -178,20 +150,15 @@
 			'border-dashed'
 		);
 
-		const draggedIndex = pouch_list.indexOf(dragged_pouch);
-		const droppedIndex = pouch_list.indexOf(pouch);
-
-		if (draggedIndex >= 0) {
-			console.log('dragged Index : ', draggedIndex);
-			console.log('dropped Index : ', droppedIndex);
-			pouch_list.splice(draggedIndex, 1);
-
-			pouch_list.splice(droppedIndex, 0, dragged_pouch);
-
-			console.log('pouch list :', pouch_list);
-
-			pouch_list = [...pouch_list];
-		}
+		pouches.update((currentList) => {
+			const draggedIndex = currentList.indexOf(dragged_pouch);
+			const droppedIndex = currentList.indexOf(pouch);
+			if (draggedIndex >= 0) {
+				currentList.splice(draggedIndex, 1);
+				currentList.splice(droppedIndex, 0, dragged_pouch);
+			}
+			return [...currentList];
+		});
 		dragged_pouch = null;
 	}
 </script>
@@ -223,8 +190,8 @@
 	</div>
 
 	<div class="flex-1 overflow-y-auto rounded-primary">
-		{#if pouch_list.length > 0}
-			{#each pouch_list as pouch}
+		{#if $pouches}
+			{#each $pouches as pouch}
 				<div
 					on:dragstart={(event) => handleDragStart(event, pouch)}
 					on:dragover={(event) => handleDragOver(event, pouch)}
