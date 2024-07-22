@@ -1,0 +1,37 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "I am", "type": "static" },
+		{ "id": 2, "text": "the", "type": "static" },
+		{ "id": 3, "text": "@role", "type": "static" },
+		{ "id": 4, "text": "and I must", "type": "static" },
+		{ "id": 5, "text": "@action", "type": "static" },
+		{ "id": 6, "text": "the", "type": "static" },
+		{ "id": 7, "text": "@role", "type": "static" },
+		{ "id": 8, "text": "!", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 0,
+			"name": "role",
+			"elements": [
+				{ "id": "role0", "name": "Knight" },
+				{ "id": "role1", "name": "Princess" },
+				{ "id": "role2", "name": "Maid" },
+				{ "id": "role3", "name": "King" },
+				{ "id": "role4", "name": "Queen" },
+				{ "id": "role5", "name": "Royal Guard" }
+			]
+		},
+		{
+			"id": 1,
+			"name": "action",
+			"elements": [
+				{ "id": "action0", "name": "save" },
+				{ "id": "action1", "name": "cook for" },
+				{ "id": "action2", "name": "command" },
+				{ "id": "action3", "name": "watch over" },
+				{ "id": "action4", "name": "kidnapped" }
+			]
+		}
+	]
+}

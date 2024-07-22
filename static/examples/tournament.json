@@ -1,0 +1,45 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "For the", "type": "static" },
+		{ "id": 2, "text": "@tournament", "type": "static" },
+		{ "id": 3, "text": "I will fight", "type": "static" },
+		{ "id": 4, "text": "@opponent", "type": "static" },
+		{ "id": 5, "text": "with my trusty", "type": "static" },
+		{ "id": 6, "text": "@weapon", "type": "static" },
+		{ "id": 7, "text": ".", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 2,
+			"name": "opponent",
+			"elements": [
+				{ "id": "opponent0", "name": "Albert" },
+				{ "id": "opponent1", "name": "Sarah" },
+				{ "id": "opponent2", "name": "Diego" },
+				{ "id": "opponent3", "name": "Johan" },
+				{ "id": "opponent4", "name": "Lucie" },
+				{ "id": "opponent5", "name": "Natasha" }
+			]
+		},
+		{
+			"id": 3,
+			"name": "weapon",
+			"elements": [
+				{ "id": "weapon0", "name": "Sword" },
+				{ "id": "weapon1", "name": "Plastic duck" },
+				{ "id": "weapon2", "name": "Gun" },
+				{ "id": "weapon3", "name": "Wrecking ball" },
+				{ "id": "weapon4", "name": "Rapier" }
+			]
+		},
+		{
+			"id": 4,
+			"name": "tournament",
+			"elements": [
+				{ "id": "tournament0", "name": "final" },
+				{ "id": "tournament1", "name": "semi-final" },
+				{ "id": "tournament2", "name": "quarter-final" }
+			]
+		}
+	]
+}

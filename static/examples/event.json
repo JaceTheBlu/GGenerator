@@ -1,0 +1,56 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "For the", "type": "static" },
+		{ "id": 2, "text": "@event", "type": "static" },
+		{ "id": 3, "text": ", I will collaborate with", "type": "static" },
+		{ "id": 4, "text": "@colleague", "type": "static" },
+		{ "id": 5, "text": "to", "type": "static" },
+		{ "id": 6, "text": "@action", "type": "static" },
+		{ "id": 7, "text": "using our", "type": "static" },
+		{ "id": 8, "text": "@tool", "type": "static" },
+		{ "id": 9, "text": ".", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 2,
+			"name": "event",
+			"elements": [
+				{ "id": "event0", "name": "annual meeting" },
+				{ "id": "event1", "name": "quarterly review" },
+				{ "id": "event2", "name": "project kickoff" },
+				{ "id": "event3", "name": "team-building retreat" }
+			]
+		},
+		{
+			"id": 3,
+			"name": "colleague",
+			"elements": [
+				{ "id": "colleague0", "name": "Alice" },
+				{ "id": "colleague1", "name": "Bob" },
+				{ "id": "colleague2", "name": "Charlie" },
+				{ "id": "colleague3", "name": "Dana" }
+			]
+		},
+		{
+			"id": 4,
+			"name": "action",
+			"elements": [
+				{ "id": "action0", "name": "finalize the budget" },
+				{ "id": "action1", "name": "develop the marketing strategy" },
+				{ "id": "action2", "name": "streamline the workflow" },
+				{ "id": "action3", "name": "present the quarterly results" }
+			]
+		},
+		{
+			"id": 5,
+			"name": "tool",
+			"elements": [
+				{ "id": "tool0", "name": "new CRM software" },
+				{ "id": "tool1", "name": "project management app" },
+				{ "id": "tool2", "name": "data analytics tool" },
+				{ "id": "tool3", "name": "virtual whiteboard" }
+			]
+		}
+	]
+}
+ 

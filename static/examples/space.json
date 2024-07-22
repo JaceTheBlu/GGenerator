@@ -1,0 +1,54 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "The", "type": "static" },
+		{ "id": 2, "text": "@role", "type": "static" },
+		{ "id": 3, "text": "will use the", "type": "static" },
+		{ "id": 4, "text": "@tool", "type": "static" },
+		{ "id": 5, "text": "to", "type": "static" },
+		{ "id": 6, "text": "@action", "type": "static" },
+		{ "id": 7, "text": "on the", "type": "static" },
+		{ "id": 8, "text": "@place", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 0,
+			"name": "role",
+			"elements": [
+				{ "id": "role0", "name": "astronaut" },
+				{ "id": "role1", "name": "engineer" },
+				{ "id": "role2", "name": "scientist" },
+				{ "id": "role3", "name": "pilot" }
+			]
+		},
+		{
+			"id": 1,
+			"name": "tool",
+			"elements": [
+				{ "id": "tool0", "name": "rover" },
+				{ "id": "tool1", "name": "spacesuit" },
+				{ "id": "tool2", "name": "satellite" },
+				{ "id": "tool3", "name": "space station" }
+			]
+		},
+		{
+			"id": 2,
+			"name": "action",
+			"elements": [
+				{ "id": "action0", "name": "explore" },
+				{ "id": "action1", "name": "repair" },
+				{ "id": "action2", "name": "research" },
+				{ "id": "action3", "name": "navigate" }
+			]
+		},
+		{
+			"id": 3,
+			"name": "place",
+			"elements": [
+				{ "id": "place0", "name": "moon" },
+				{ "id": "place1", "name": "Mars" },
+				{ "id": "place2", "name": "space station" },
+				{ "id": "place3", "name": "asteroid belt" }
+			]
+		}
+	]
+}
