@@ -122,7 +122,16 @@
 
 			return word;
 		});
-		result_div.innerText = words.join(' ');
+
+		let sentence = words.join(' ');
+		// Remove any spaces before punctuation
+		sentence = sentence.replace(/ \./g, '.');
+		sentence = sentence.replace(/ ,/g, ',');
+
+		// Handle special cases: ensure no space before punctuation or excessive spaces
+		sentence = sentence.replace(/\s+([.,!?])/g, '$1');
+
+		result_div.innerText = sentence;
 	};
 
 	const getPouchElement = (pouch) => {
@@ -163,7 +172,7 @@
 					detail: { id: word.id, text: word.text, type: word.type }
 				});
 			});
-			obj?.pouch_list.map((pouch) => {
+			obj?.pouches.map((pouch) => {
 				pouch_elem.addPouch({
 					type: 'import',
 					detail: { name: pouch.name, elements: pouch.elements }

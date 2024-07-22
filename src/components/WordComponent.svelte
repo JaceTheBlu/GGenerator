@@ -1,5 +1,6 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
+	import { scale } from 'svelte/transition';
 
 	const dispatch = createEventDispatcher();
 
@@ -60,7 +61,7 @@
 	};
 </script>
 
-<div id="word-{id}">
+<div id="word-{id}" transition:scale>
 	{#if isEditing}
 		<input
 			bind:this={inputElement}
