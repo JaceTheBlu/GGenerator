@@ -274,7 +274,7 @@
 		{/if}
 		<button
 			id="help_guide-step-ggenerate"
-			class="rainbow-border not-selectable rounded-xl flex bg-slate-800 p-2 font-bold text-3xl h-fit w-fit transition duration-300 ease-out hover:ring hover:shadow-pink-100 place-self-end"
+			class="rainbow-border not-selectable rounded-xl flex bg-slate-800 p-2 font-bold text-3xl h-fit w-fit transition duration-100 ease-out hover:scale-105 place-self-end"
 			on:click={generate}
 		>
 			{$locales.ggenerate}

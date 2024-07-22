@@ -10,6 +10,7 @@
 	import { locales } from '../stores';
 	import { createEventDispatcher } from 'svelte';
 	import PouchElement from './PouchElement.svelte';
+	import { slide, scale } from 'svelte/transition';
 
 	/* Variables*/
 	export let id = 0;
@@ -161,7 +162,7 @@
 	}
 </script>
 
-<ul class="bg-slate-800/50 rounded-xl divide-y my-2">
+<ul class="bg-slate-800/50 rounded-xl divide-y my-2" transition:scale={{ duration: 100 }}>
 	<li class="flex justify-between text-xl h-full">
 		<button
 			class={`flex items-center px-2 hover:bg-blue-500 ${
@@ -216,7 +217,7 @@
 	{/if}
 
 	{#if !isHidden}
-		<div>
+		<div transition:slide>
 			<li class="flex">
 				<input
 					bind:value={new_pouch}
