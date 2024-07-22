@@ -46,7 +46,7 @@
 			if (!$visited) {
 				localStorage.setItem('visited', true);
 				tour = new Berger($tutorials[$preferredLanguage]['onboarding']);
-				loadSave($examples[Math.floor(Math.random() * $examples._length)]);
+				loadRandom();
 			}
 
 			const saved_rundown = localStorage.getItem('rundown');
@@ -140,21 +140,21 @@
 	};
 
 	const importJSON = () => {
-		var input = document.createElement('input');
+		const input = document.createElement('input');
 		input.type = 'file';
 
 		input.onchange = (e) => {
-			var file = e.target.files[0];
+			const file = e.target.files[0];
 
-			var reader = new FileReader();
+			const reader = new FileReader();
 			reader.readAsText(file, 'UTF-8');
 
 			reader.onload = (readerEvent) => {
 				try {
-					var content = JSON.parse(readerEvent.target.result);
+					const content = JSON.parse(readerEvent.target.result);
 					loadSave(content);
 				} catch (e) {
-					console.error(e);
+					console.error('Error parsing JSON:', e);
 				}
 			};
 		};
@@ -162,27 +162,36 @@
 	};
 
 	const loadSave = (obj) => {
+		// Reset the stores
 		rundown.set([]);
 		pouches.set([]);
 
 		result_div.innerText = '';
+
 		requestAnimationFrame(() => {
-			obj?.rundown.map((word) => {
-				rundown_elem.addWordComponent({
-					detail: { id: word.id, text: word.text, type: word.type }
+			// Load rundown
+			if (obj?.rundown) {
+				obj.rundown.forEach((word) => {
+					rundown.update((currentRundown) => [
+						...currentRundown,
+						{ id: word.id, text: word.text, type: word.type }
+					]);
 				});
-			});
-			obj?.pouches.map((pouch) => {
-				pouch_elem.addPouch({
-					type: 'import',
-					detail: { name: pouch.name, elements: pouch.elements }
+			}
+
+			// Load pouches
+			if (obj?.pouch_list) {
+				obj.pouch_list.forEach((pouch) => {
+					pouches.update((currentPouches) => [
+						...currentPouches,
+						{ name: pouch.name, elements: pouch.elements }
+					]);
 				});
-			});
+			}
 		});
 	};
 
 	const startTutorial = () => {
-		console.log($tutorials);
 		tour = new Berger($tutorials[$preferredLanguage]['help_guide']);
 	};
 
@@ -192,7 +201,7 @@
 
 	const exportJSON = () => {
 		const filename = 'data.json';
-		const jsonStr = JSON.stringify({ rundown: $rundown, pouches: $pouches });
+		const jsonStr = JSON.stringify({ rundown: $rundown, pouch_list: $pouches });
 
 		let element = document.createElement('a');
 		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
@@ -221,6 +230,18 @@
 			]);
 		}
 	};
+
+	const loadRandom = () => {
+		// Get the list of categories from the preferred language examples
+		const examplesList = Object.keys($examples[$preferredLanguage]);
+
+		// Get the list of examples for the selected category
+		const randomExample =
+			$examples[$preferredLanguage][examplesList[Math.floor(Math.random() * examplesList.length)]];
+
+		// Load the selected random example
+		loadSave(randomExample);
+	};
 </script>
 
 {#if !$loaded}
@@ -246,6 +267,7 @@
 	<GGHeader
 		on:import={importJSON}
 		on:export={exportJSON}
+		on:loadRandom={loadRandom}
 		on:tutorial={startTutorial}
 		on:changelog={showChangeLog}
 	/>

@@ -13,6 +13,10 @@
 		dispatch('export');
 	};
 
+	const loadRandom = (event) => {
+		dispatch('loadRandom');
+	};
+
 	const changeLanguage = () => {
 		lang_count++;
 		if (lang_count >= 27) {
@@ -77,6 +81,26 @@
 			on:click={importSave}
 		>
 			<p class="underline">{$locales.load}</p>
+		</button>
+
+		<button
+			id="help_guide-load-button"
+			class="flex px-2 my-2
+				bg-gradient-to-r
+				text-tertiary
+				from-background-primary-color
+				to-background-secondary-color
+				border-secondary-width
+				rounded-primary
+				transition duration-300 ease-out
+				hover:shadow-black
+				hover:shadow-md
+				hover:scale-110
+				items-center
+				"
+			on:click={loadRandom}
+		>
+			<p class="underline">{$locales.load_random}!</p>
 		</button>
 	</div>
 	<div class="flex divide-x divide-solid children:px-2 my-2">

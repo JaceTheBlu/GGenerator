@@ -4,6 +4,7 @@
     "ggenerate": "GGenerate",
     "save": "Save",
     "load": "Load",
+    "load_random": "Random Example",
     "settings": "Settings",
     "changelog": "Changelog",
     "clear": "Clear",
