@@ -1,6 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { locales, rundown, loaded } from '../stores';
+	import { locales, rundown, loaded, pouches } from '../stores';
 	import WordComponent from './WordComponent.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -14,15 +14,8 @@
 		newId = $rundown.length ? Math.max(...$rundown.map((t) => t.id)) + 1 : 1;
 	}
 
-	export const addWordComponent = (event) => {
-		rundown.update((currentList = []) => [
-			...currentList,
-			{
-				id: event?.detail.id || newId,
-				text: event?.detail.text || '',
-				type: event?.detail.type || 'static'
-			}
-		]);
+	export const addWordComponent = () => {
+		rundown.add(' ');
 	};
 
 	export const removeWordComponent = (event) => {
@@ -38,7 +31,7 @@
 				)
 			);
 			if (word.type === 'pouch') {
-				dispatch('NewPouchWord', word);
+				pouches.add(word.text.substring(1));
 			}
 		} else {
 			removeWordComponent(event);
@@ -47,10 +40,6 @@
 
 	const generate = () => {
 		dispatch('generate');
-	};
-
-	const clearRundown = () => {
-		rundown.set([]);
 	};
 
 	function handleDragStart(event, component) {
@@ -114,10 +103,7 @@
 		element.classList.remove('bg-secondary-color/50', 'rounded-primary');
 
 		if (event.dataTransfer.getData('pouch') !== '') {
-			console.log('here');
 			const pouch_name = event.dataTransfer.getData('pouch');
-
-			console.log('pouch :', pouch_name);
 
 			const new_item = {
 				id: newId,
@@ -127,7 +113,6 @@
 
 			rundown.update((currentList) => {
 				currentList.push(new_item);
-				console.log('rundown : ', currentList);
 				return [...currentList];
 			});
 		}
@@ -146,7 +131,7 @@
 		<span class="text-secondary font-bold text-primary-color">{$locales.rundown}</span>
 		<button
 			class="hover:text-cancel-color transition-colors text-tertiary text-primary-color"
-			on:click={clearRundown}
+			on:click={rundown.clear}
 		>
 			{$locales.clear}
 		</button>
@@ -162,7 +147,6 @@
 			{#if $rundown && $rundown.length > 0}
 				{#each $rundown && $rundown as component}
 					<div
-						draggable="true"
 						on:dragstart={(event) => handleDragStart(event, component)}
 						on:dragleave={(event) => handleDragLeave(event)}
 						on:dragover={(event) => handleDragOver(event)}

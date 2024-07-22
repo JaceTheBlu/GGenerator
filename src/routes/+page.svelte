@@ -28,21 +28,18 @@
 
 	import { loadLanguage } from '$lib/localization';
 
-	let rundown_elem;
-	let pouch_elem;
 	let result_div;
 
 	let tour;
-	let fade_out_loader = false;
 
 	preferredLanguage.subscribe((lang) => {
-		loadLanguage(lang);
+		if (lang != null) loadLanguage(lang);
 	});
 
 	onMount(async () => {
 		await Promise.all([initTutorials(), initExamples()]).then(() => {
-			loadLanguage(localStorage.getItem('preferredLanguage'));
 			visited.set(localStorage.getItem('visited'));
+
 			if (!$visited) {
 				localStorage.setItem('visited', true);
 				tour = new Berger($tutorials[$preferredLanguage]['onboarding']);
@@ -59,11 +56,8 @@
 				pouches.set(JSON.parse(saved_pouches));
 			}
 
+			loaded.set(true);
 			preferredLanguage.set(localStorage.getItem('preferredLanguage'));
-			fade_out_loader = true;
-			setTimeout(() => {
-				loaded.set(true);
-			}, 1000); // 1000ms matches the duration in the CSS animation
 		});
 	});
 
@@ -163,8 +157,8 @@
 
 	const loadSave = (obj) => {
 		// Reset the stores
-		rundown.set([]);
-		pouches.set([]);
+		rundown.clear();
+		pouches.clear();
 
 		result_div.innerText = '';
 
@@ -172,20 +166,14 @@
 			// Load rundown
 			if (obj?.rundown) {
 				obj.rundown.forEach((word) => {
-					rundown.update((currentRundown) => [
-						...currentRundown,
-						{ id: word.id, text: word.text, type: word.type }
-					]);
+					rundown.add(word.text);
 				});
 			}
 
 			// Load pouches
 			if (obj?.pouch_list) {
 				obj.pouch_list.forEach((pouch) => {
-					pouches.update((currentPouches) => [
-						...currentPouches,
-						{ name: pouch.name, elements: pouch.elements }
-					]);
+					pouches.add(pouch.name, pouch.elements);
 				});
 			}
 		});
@@ -213,22 +201,6 @@
 		element.click();
 
 		document.body.removeChild(element);
-	};
-
-	const createPouchIfNE = (event) => {
-		let pouchName = event.detail.text.substring(1);
-		const currentPouches = $pouches;
-
-		if (!currentPouches.find((pouch) => pouch.name === pouchName)) {
-			pouches.update((current) => [
-				...current,
-				{
-					id: Date.now(), // Example ID generation
-					name: pouchName,
-					elements: [] // Initialize as needed
-				}
-			]);
-		}
 	};
 
 	const loadRandom = () => {
@@ -277,18 +249,14 @@
 			class="bg-primary-color/50 p-2 rounded-primary br-5 m-4 mb-0 w-3/4"
 			id="help_guide-step-rundown"
 		>
-			<Rundown
-				bind:this={rundown_elem}
-				on:generate={generateWords}
-				on:NewPouchWord={createPouchIfNE}
-			/>
+			<Rundown on:generate={generateWords} />
 		</div>
 
 		<div
 			id="help_guide-step-pouch-of-words"
 			class="bg-primary-color/50 p-2 rounded-primary mt-4 mr-4 w-1/4 min-h-full overflow-auto"
 		>
-			<PouchOfWords bind:this={pouch_elem} />
+			<PouchOfWords />
 		</div>
 	</div>
 

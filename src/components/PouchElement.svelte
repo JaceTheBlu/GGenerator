@@ -1,4 +1,6 @@
 <script>
+	import { pouches } from '../stores';
+
 	/**
 	 * This component represent a pouch element
 	 * A pouch element is represented by :
@@ -6,26 +8,12 @@
 	 * @param name : the name of the pouch element
 	 */
 
-	/* Imports  */
-	import { createEventDispatcher } from 'svelte';
-
 	/* Variables */
 	export let id = 0;
 	export let name = '';
 
 	let isEditable = false;
 	let inputElement = '';
-
-	const dispatch = createEventDispatcher();
-
-	/* Functions */
-	/**
-	 * This function create an event with the goal of deleting an element from a pouch, it take the id of the element to delete
-	 * @param elementId : the id of the element to delete
-	 */
-	function dispatchDelete(elementId) {
-		dispatch('delete-pouch-element', elementId);
-	}
 
 	/**
 	 * This method is used for the update of a pouch element
@@ -42,8 +30,6 @@
 					inputElement.select();
 				}
 			});
-		} else {
-			dispatch('update-pouch-element', { id, name });
 		}
 	}
 
@@ -66,6 +52,7 @@
 <li class="flex justify-between items-center pl-4 odd:bg-slate-800/10 even:bg-slate-800/50">
 	{#if isEditable}
 		<input
+			draggable="false"
 			type="text"
 			bind:this={inputElement}
 			bind:value={name}
@@ -81,7 +68,7 @@
 
 	<button
 		class="text-xl text-white border-l border-white hover:bg-cancel-color transition-colors duration-300 px-2"
-		on:click={dispatchDelete(id)}
+		on:click={pouches.removeElementFromPouch(id)}
 		>X
 	</button>
 </li>

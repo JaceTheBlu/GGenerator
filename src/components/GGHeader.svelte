@@ -24,7 +24,6 @@
 		} else {
 			preferredLanguage.set($preferredLanguage === 'fr' ? 'en' : 'fr');
 		}
-		localStorage.setItem('preferredLanguage', lang);
 	};
 </script>
 

@@ -1,6 +1,7 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { scale } from 'svelte/transition';
+	import { rundown } from '../stores';
 
 	const dispatch = createEventDispatcher();
 
@@ -38,7 +39,8 @@
 	const disableEditing = () => {
 		isEditing = false;
 		text = text.trim();
-		dispatch('update', { id, text, type });
+		if (text === '') rundown.remove(id);
+		else rundown.updateWord({ id, text });
 	};
 
 	const handleBlur = () => {
@@ -74,6 +76,7 @@
 		/>
 	{:else}
 		<button
+			draggable="true"
 			class="p-2
 			transition
 			ease-in-out
