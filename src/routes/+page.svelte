@@ -36,14 +36,11 @@
 
 	preferredLanguage.subscribe((lang) => {
 		loadLanguage(lang);
-		if ($loaded) {
-			localStorage.setItem('preferredLanguage', lang);
-		}
 	});
 
 	onMount(async () => {
 		await Promise.all([initTutorials(), initExamples()]).then(() => {
-			loadLanguage(localStorage.getItem('preferredLanguage') || 'fr');
+			loadLanguage(localStorage.getItem('preferredLanguage'));
 			visited.set(localStorage.getItem('visited'));
 			if (!$visited) {
 				localStorage.setItem('visited', true);
