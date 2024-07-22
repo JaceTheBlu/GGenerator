@@ -1,0 +1,44 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "Dr.", "type": "static" },
+		{ "id": 2, "text": "@doctor", "type": "static" },
+		{ "id": 3, "text": "will", "type": "static" },
+		{ "id": 4, "text": "@action", "type": "static" },
+		{ "id": 5, "text": "the", "type": "static" },
+		{ "id": 6, "text": "@doctor", "type": "static" },
+		{ "id": 7, "text": "during the", "type": "static" },
+		{ "id": 8, "text": "@event", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 0,
+			"name": "doctor",
+			"elements": [
+				{ "id": "doctor0", "name": "Smith" },
+				{ "id": "doctor1", "name": "Johnson" },
+				{ "id": "doctor2", "name": "Brown" },
+				{ "id": "doctor3", "name": "Davis" }
+			]
+		},
+		{
+			"id": 1,
+			"name": "action",
+			"elements": [
+				{ "id": "action0", "name": "assist" },
+				{ "id": "action1", "name": "consult" },
+				{ "id": "action2", "name": "operate on" },
+				{ "id": "action3", "name": "diagnose" }
+			]
+		},
+		{
+			"id": 2,
+			"name": "event",
+			"elements": [
+				{ "id": "event0", "name": "surgery" },
+				{ "id": "event1", "name": "check-up" },
+				{ "id": "event2", "name": "consultation" },
+				{ "id": "event3", "name": "emergency" }
+			]
+		}
+	]
+}

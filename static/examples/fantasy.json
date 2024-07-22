@@ -1,0 +1,33 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "The", "type": "static" },
+		{ "id": 2, "text": "@role", "type": "static" },
+		{ "id": 3, "text": "must", "type": "static" },
+		{ "id": 4, "text": "@action", "type": "static" },
+		{ "id": 5, "text": "the", "type": "static" },
+		{ "id": 6, "text": "@role", "type": "static" },
+		{ "id": 7, "text": "to save the kingdom.", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 0,
+			"name": "role",
+			"elements": [
+				{ "id": "role0", "name": "knight" },
+				{ "id": "role1", "name": "wizard" },
+				{ "id": "role2", "name": "elf" },
+				{ "id": "role3", "name": "dragon" }
+			]
+		},
+		{
+			"id": 1,
+			"name": "action",
+			"elements": [
+				{ "id": "action0", "name": "defeat" },
+				{ "id": "action1", "name": "ally with" },
+				{ "id": "action2", "name": "rescue" },
+				{ "id": "action3", "name": "outsmart" }
+			]
+		}
+	]
+}

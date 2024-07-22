@@ -1,0 +1,54 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "The", "type": "static" },
+		{ "id": 2, "text": "@hero", "type": "static" },
+		{ "id": 3, "text": "must", "type": "static" },
+		{ "id": 4, "text": "@action", "type": "static" },
+		{ "id": 5, "text": "the", "type": "static" },
+		{ "id": 6, "text": "@villain", "type": "static" },
+		{ "id": 7, "text": "using", "type": "static" },
+		{ "id": 8, "text": "@tool", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 0,
+			"name": "hero",
+			"elements": [
+				{ "id": "hero0", "name": "superhero" },
+				{ "id": "hero1", "name": "vigilante" },
+				{ "id": "hero2", "name": "mutant" },
+				{ "id": "hero3", "name": "alien" }
+			]
+		},
+		{
+			"id": 1,
+			"name": "action",
+			"elements": [
+				{ "id": "action0", "name": "defeat" },
+				{ "id": "action1", "name": "outsmart" },
+				{ "id": "action2", "name": "capture" },
+				{ "id": "action3", "name": "neutralize" }
+			]
+		},
+		{
+			"id": 2,
+			"name": "villain",
+			"elements": [
+				{ "id": "villain0", "name": "archenemy" },
+				{ "id": "villain1", "name": "criminal mastermind" },
+				{ "id": "villain2", "name": "rogue AI" },
+				{ "id": "villain3", "name": "alien invader" }
+			]
+		},
+		{
+			"id": 3,
+			"name": "tool",
+			"elements": [
+				{ "id": "tool0", "name": "utility belt" },
+				{ "id": "tool1", "name": "super suit" },
+				{ "id": "tool2", "name": "gadget" },
+				{ "id": "tool3", "name": "vehicle" }
+			]
+		}
+	]
+}

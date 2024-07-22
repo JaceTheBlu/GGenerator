@@ -1,0 +1,34 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "The magic ball says :", "type": "static" },
+		{ "id": 2, "text": "@magic ball", "type": "pouch" }
+	],
+	"pouch_list": [
+		{
+			"id": 1,
+			"name": "magic ball",
+			"elements": [
+				{ "id": "answers0", "name": "It is certain" },
+				{ "id": "answers1", "name": "It is decidely so" },
+				{ "id": "answers2", "name": "Without a doubt" },
+				{ "id": "answers3", "name": "Yes definitely" },
+				{ "id": "answers4", "name": "You may rely on it" },
+				{ "id": "answers5", "name": "As I see it, yes" },
+				{ "id": "answers6", "name": "Most likely" },
+				{ "id": "answers7", "name": "Outlook good" },
+				{ "id": "answers8", "name": "Yes" },
+				{ "id": "answers9", "name": "Signs point to yes" },
+				{ "id": "answers10", "name": "Reply hazy, try again" },
+				{ "id": "answers11", "name": "Ask Again later" },
+				{ "id": "answers12", "name": "Better not tell you now" },
+				{ "id": "answers13", "name": "Cannot predict now" },
+				{ "id": "answers14", "name": "Concentrate and ask again" },
+				{ "id": "answers15", "name": "Don't count on it" },
+				{ "id": "answers16", "name": "My reply is NO" },
+				{ "id": "answers17", "name": "My sources say no" },
+				{ "id": "answers18", "name": "Outlook not so good" },
+				{ "id": "answers19", "name": "Very doubtful" }
+			]
+		}
+	]
+}

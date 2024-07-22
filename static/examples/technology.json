@@ -1,0 +1,54 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "During the", "type": "static" },
+		{ "id": 2, "text": "@event", "type": "static" },
+		{ "id": 3, "text": ", I will collaborate with", "type": "static" },
+		{ "id": 4, "text": "@partner", "type": "static" },
+		{ "id": 5, "text": "to", "type": "static" },
+		{ "id": 6, "text": "@action", "type": "static" },
+		{ "id": 7, "text": "using the new", "type": "static" },
+		{ "id": 8, "text": "@gadget", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 0,
+			"name": "event",
+			"elements": [
+				{ "id": "event0", "name": "tech conference" },
+				{ "id": "event1", "name": "product launch" },
+				{ "id": "event2", "name": "hackathon" },
+				{ "id": "event3", "name": "developer summit" }
+			]
+		},
+		{
+			"id": 1,
+			"name": "partner",
+			"elements": [
+				{ "id": "partner0", "name": "Alex" },
+				{ "id": "partner1", "name": "Jordan" },
+				{ "id": "partner2", "name": "Taylor" },
+				{ "id": "partner3", "name": "Casey" }
+			]
+		},
+		{
+			"id": 2,
+			"name": "action",
+			"elements": [
+				{ "id": "action0", "name": "present the new features" },
+				{ "id": "action1", "name": "demo the software" },
+				{ "id": "action2", "name": "build a prototype" },
+				{ "id": "action3", "name": "network with peers" }
+			]
+		},
+		{
+			"id": 3,
+			"name": "gadget",
+			"elements": [
+				{ "id": "gadget0", "name": "smartphone" },
+				{ "id": "gadget1", "name": "laptop" },
+				{ "id": "gadget2", "name": "AR glasses" },
+				{ "id": "gadget3", "name": "smartwatch" }
+			]
+		}
+	]
+}

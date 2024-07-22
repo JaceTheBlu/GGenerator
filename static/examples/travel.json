@@ -1,0 +1,54 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "On our trip to", "type": "static" },
+		{ "id": 2, "text": "@destination", "type": "static" },
+		{ "id": 3, "text": ",", "type": "static" },
+		{ "id": 4, "text": "@person", "type": "static" },
+		{ "id": 5, "text": "and I will", "type": "static" },
+		{ "id": 6, "text": "@activity", "type": "static" },
+		{ "id": 7, "text": "at the", "type": "static" },
+		{ "id": 8, "text": "@place", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 0,
+			"name": "destination",
+			"elements": [
+				{ "id": "destination0", "name": "Paris" },
+				{ "id": "destination1", "name": "Tokyo" },
+				{ "id": "destination2", "name": "New York" },
+				{ "id": "destination3", "name": "Sydney" }
+			]
+		},
+		{
+			"id": 1,
+			"name": "person",
+			"elements": [
+				{ "id": "person0", "name": "my friend" },
+				{ "id": "person1", "name": "my partner" },
+				{ "id": "person2", "name": "my sibling" },
+				{ "id": "person3", "name": "my colleague" }
+			]
+		},
+		{
+			"id": 2,
+			"name": "activity",
+			"elements": [
+				{ "id": "activity0", "name": "explore the city" },
+				{ "id": "activity1", "name": "try local food" },
+				{ "id": "activity2", "name": "visit museums" },
+				{ "id": "activity3", "name": "shop for souvenirs" }
+			]
+		},
+		{
+			"id": 3,
+			"name": "place",
+			"elements": [
+				{ "id": "place0", "name": "Eiffel Tower" },
+				{ "id": "place1", "name": "Shibuya Crossing" },
+				{ "id": "place2", "name": "Times Square" },
+				{ "id": "place3", "name": "Sydney Opera House" }
+			]
+		}
+	]
+}
