@@ -42,33 +42,31 @@
 	});
 
 	onMount(async () => {
-		await Promise.all([loadLanguage($preferredLanguage), initTutorials(), initExamples()]).then(
-			() => {
-				visited.set(localStorage.getItem('visited'));
-
-				if (!$visited) {
-					localStorage.setItem('visited', true);
-					tour = new Berger($tutorials['onboarding.json']);
-					loadSave($examples[Math.floor(Math.random() * $examples._length)]);
-				}
-
-				const saved_rundown = localStorage.getItem('rundown');
-				if (saved_rundown) {
-					rundown.set(JSON.parse(saved_rundown));
-				}
-
-				const saved_pouches = localStorage.getItem('pouches');
-				if (saved_pouches) {
-					pouches.set(JSON.parse(saved_pouches));
-				}
-
-				preferredLanguage.set(localStorage.getItem('preferredLanguage'));
-				fade_out_loader = true;
-				setTimeout(() => {
-					loaded.set(true);
-				}, 1000); // 1000ms matches the duration in the CSS animation
+		await Promise.all([initTutorials(), initExamples()]).then(() => {
+			loadLanguage(localStorage.getItem('preferredLanguage') || 'fr');
+			visited.set(localStorage.getItem('visited'));
+			if (!$visited) {
+				localStorage.setItem('visited', true);
+				tour = new Berger($tutorials[$preferredLanguage]['onboarding']);
+				loadSave($examples[Math.floor(Math.random() * $examples._length)]);
 			}
-		);
+
+			const saved_rundown = localStorage.getItem('rundown');
+			if (saved_rundown) {
+				rundown.set(JSON.parse(saved_rundown));
+			}
+
+			const saved_pouches = localStorage.getItem('pouches');
+			if (saved_pouches) {
+				pouches.set(JSON.parse(saved_pouches));
+			}
+
+			preferredLanguage.set(localStorage.getItem('preferredLanguage'));
+			fade_out_loader = true;
+			setTimeout(() => {
+				loaded.set(true);
+			}, 1000); // 1000ms matches the duration in the CSS animation
+		});
 	});
 
 	rundown.subscribe((current) => {
@@ -90,59 +88,21 @@
 	});
 
 	const initTutorials = async () => {
-		const response = await fetch('/tutos');
+		const response = await fetch(`/tutos`);
 		if (!response.ok) {
 			throw new Error('Failed to fetch tutorial list');
 		}
 		const list = await response.json();
-		const promises = list.map(async (file_name) => {
-			const content = await readFile(`/tutorials/${file_name}`);
-			tutorials.update((current) => {
-				current[file_name] = content;
-				current._length += 1;
-				return current;
-			});
-		});
-
-		await Promise.all(promises);
+		tutorials.set(list);
 	};
 
 	const initExamples = async () => {
-		const response = await fetch('/exams');
+		const response = await fetch(`/exams`);
 		if (!response.ok) {
 			throw new Error('Failed to fetch examples list');
 		}
 		const list = await response.json();
-		const promises = list.map(async (file_name) => {
-			const content = await readFile(`/examples/${file_name}`);
-			examples.update((current) => {
-				current[file_name] = content;
-				current._length += 1;
-				return current;
-			});
-		});
-
-		await Promise.all(promises);
-	};
-
-	const readFile = async (path) => {
-		try {
-			const response = await fetch(path);
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			const jsonData = await response.json();
-			return jsonData;
-		} catch (error) {
-			console.error('There was a problem with the fetch operation:', error);
-			return null;
-		}
-	};
-
-	export const saveAsCookie = () => {
-		console.log($rundown, $pouches, $history);
-		localStorage.setItem('pouches', JSON.stringify($pouches));
-		localStorage.setItem('history', JSON.stringify($history));
+		examples.set(list);
 	};
 
 	const generateWords = () => {
@@ -215,11 +175,12 @@
 	};
 
 	const startTutorial = () => {
-		tour = new Berger($tutorials['help_guide.json']);
+		console.log($tutorials);
+		tour = new Berger($tutorials[$preferredLanguage]['help_guide']);
 	};
 
 	const showChangeLog = () => {
-		tour = new Berger($tutorials['changelog.json']);
+		tour = new Berger($tutorials[$preferredLanguage]['changelog']);
 	};
 
 	const exportJSON = () => {

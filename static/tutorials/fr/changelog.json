@@ -1,0 +1,32 @@
+{
+    "steps": [
+        {
+            "title": "🎲 Version 1.0.0 - @Aléatoire Stable",
+            "text": [
+                "#10/07/2024",
+                "-Refonte de l'interface utilisateur",
+                "-Ajout du tutoriel de démarrage",
+                "-Ajout du guide approfondi (suivre le ❓)",
+                "-Ajout du glisser-déposer pour réorganiser les éléments dans Phrase/Sacs",
+                "-Ajout du glisser-déposer entre Phrase/Sacs",
+                "-Ajout de la fonction de repliement pour les Sacs",
+                "-Ajout du renommage des Sacs",
+                "-Ajout du renommage des éléments des Sacs",
+                "-Ajout des fonctions d'importation et d'exportation",
+                "-Ajout de la sauvegarde persistante",
+                "-Ajout des boutons de nettoyage pour Phrase/Sacs",
+                "-Ajout du journal des modifications bien sûr 👀"
+            ]
+        },
+        {
+            "title": "👣 Version 0.1.1 - Premiers @Pas",
+            "text": [
+                "#05/06/2024",
+                "-Prototype",
+                "-Ajout des Sacs",
+                "-Ajout de Phrase",
+                "-Ajout de la génération de phrases aléatoires basées sur les Sacs et les mots statiques"
+            ]
+        }
+    ]
+}
