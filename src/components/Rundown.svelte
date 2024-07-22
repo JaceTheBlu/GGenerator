@@ -120,12 +120,12 @@
 			console.log('pouch :', pouch_name);
 
 			const new_item = {
-				id: newId(),
+				id: newId,
 				text: '@' + pouch_name,
 				type: 'pouch'
 			};
 
-			rundown_list.update((currentList) => {
+			rundown.update((currentList) => {
 				currentList.push(new_item);
 				console.log('rundown : ', currentList);
 				return [...currentList];

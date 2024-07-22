@@ -185,7 +185,7 @@
 
 	const exportJSON = () => {
 		const filename = 'data.json';
-		const jsonStr = JSON.stringify({ rundown: rundown_list, pouch_list: pouch_list });
+		const jsonStr = JSON.stringify({ rundown: $rundown, pouches: $pouches });
 
 		let element = document.createElement('a');
 		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
@@ -201,8 +201,18 @@
 
 	const createPouchIfNE = (event) => {
 		let pouchName = event.detail.text.substring(1);
-		const pouch = pouch_list.find((pouch) => pouch.name === pouchName);
-		if (!pouch) pouch_elem.addPouch(pouchName);
+		const currentPouches = $pouches;
+
+		if (!currentPouches.find((pouch) => pouch.name === pouchName)) {
+			pouches.update((current) => [
+				...current,
+				{
+					id: Date.now(), // Example ID generation
+					name: pouchName,
+					elements: [] // Initialize as needed
+				}
+			]);
+		}
 	};
 </script>
 

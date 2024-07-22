@@ -16,7 +16,6 @@
 	let dragged_pouch = null;
 
 	$: input_value = String(input_value).toLowerCase();
-	$: pouch_list = $pouches;
 
 	/*Functions */
 
