@@ -63,10 +63,22 @@ export const createPouches = () => {
 				if (pouchExists) {
 					return pouches;
 				}
-				const newPouch = { id: PouchID++, name, elements: elements || [] };
+				const newPouch = { id: "p"+PouchID++, name, elements: elements || [] };
 				return [...pouches, newPouch];
 			}),
-		remove: (event) => update((items) => items.filter((item) => item.id !== event.detail.id)),
+		updatePouch: (pouchId, pouchName ) =>
+			update((pouches) =>{
+				return pouches.map((pouch) => {
+					if (pouch.id === pouchId) {
+						return {
+							...pouch,
+							name: pouchName,
+						};
+					}
+					return pouch;
+				});
+			}),
+		remove: (pouchId) => update((items) => items.filter((item) => item.id !== pouchId)),
 
 		addElementToPouch: (pouchId, elementText) =>
 			update((pouches) => {
@@ -76,16 +88,40 @@ export const createPouches = () => {
 							...pouch,
 							elements: [
 								...pouch.elements,
-								{ id: `${pouch.name.trim()}${pouch.elements.length}`, name: elementText }
+								{ 
+									id: `${pouch.id}${"e"+pouch.elements.length}`, 
+									name: elementText 
+								}
 							]
 						};
 					}
 					return pouch;
 				});
 			}),
-		removeElementFromPouch: (pouchId, elementId) =>
+		updateElement: (elementId, elementName ) =>
+				update((pouches) =>{
+					return pouches.map((pouch) => {
+
+					const pouchId = elementId.split("e")[0];
+						if (pouch.id === pouchId) {
+							pouch.elements.map((elem)=>{
+								if(elem.id === elementId){
+									elem.name = elementName;
+									return{
+										...pouch
+									}
+									
+								}
+							});
+						}
+						return pouch;
+					});
+				}),
+		removeElementFromPouch: (elementId) =>
 			update((pouches) => {
 				return pouches.map((pouch) => {
+
+					const pouchId = elementId.split("e")[0];
 					if (pouch.id === pouchId) {
 						return {
 							...pouch,
@@ -95,7 +131,28 @@ export const createPouches = () => {
 					return pouch;
 				});
 			}),
-		clear: () => set([])
+		clear: () => set([]),
+		swapPouch: (pouch1, pouch2  ) => 
+			update((currentList) => {
+				const draggedIndex = currentList.indexOf(pouch1);
+				const droppedIndex = currentList.indexOf(pouch2);
+	
+				if (draggedIndex >= 0) {
+					currentList.splice(draggedIndex, 1);
+					currentList.splice(droppedIndex, 0, pouch1);
+				}
+				return [...currentList];
+			}),
+			copy: (pouch_writable) => {
+				const { name, elements } = pouch_writable;
+				pouches.add(name)
+
+				elements.forEach(elem => {
+					const pouchID = PouchID -1 ; 
+					pouches.addElementToPouch("p"+pouchID,elem.name);
+				});
+				return pouches
+			}
 	};
 };
 export const rundown = createRundown();
