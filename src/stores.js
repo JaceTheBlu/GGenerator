@@ -30,20 +30,32 @@ export const createRundown = () => {
 		add: (text) =>
 			update((items) => {
 				const newItem = {
-					id: rundownID++,
+					id: "w"+rundownID++,
 					text,
 					type: String(text).charAt(0) === '@' ? 'pouch' : 'static'
 				};
 				return [...items, newItem];
 			}),
 		updateWord: (word) =>
-			update((items) =>
-				items.map((item) => (item.id === word.id ? { ...item, text: word.text } : item))
-			),
+			update((items) =>{
+				if(word.type === 'pouch'){
+					pouches.add(word.text.substring(1));
+				}
+
+				return items.map((item) => (item.id === word.id ? { 
+					...item, 
+					text: word.text, 
+					type: word.type 
+				} : item))
+			}),
 		remove: (rundownID) => update((items) => items.filter((item) => item.id !== rundownID)),
 		clear: () => {
 			set([]);
 			rundownID = 0;
+		},
+		copy: (rundown_writable) =>{
+			rundown.add(rundown_writable.text);
+			return rundown
 		}
 	};
 };
@@ -59,6 +71,7 @@ export const createPouches = () => {
 		update,
 		add: (name, elements) =>
 			update((pouches) => {
+				console.log("name :",name);
 				const pouchExists = pouches.some((pouch) => pouch.name === name);
 				if (pouchExists) {
 					return pouches;

@@ -48,10 +48,14 @@
 
 			const saved_rundown = localStorage.getItem('rundown');
 			if (saved_rundown) {
-				rundown.set(JSON.parse(saved_rundown));
+				const parsed_rundown = JSON.parse(saved_rundown);
+				parsed_rundown.forEach( word =>{
+					rundown.copy(word);
+				});
 			}
 
 			const saved_pouches = localStorage.getItem('pouches');
+			
 			if (saved_pouches) {
 				const parsed_pouches = JSON.parse(saved_pouches);
 
