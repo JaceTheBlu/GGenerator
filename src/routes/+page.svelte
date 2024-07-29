@@ -268,6 +268,7 @@
 
 	const handleCopyOutput = () => {
 		resultinput.select();
+		document.execCommand('copy');
 	};
 
 	const handleDeleteHistory = () => {
