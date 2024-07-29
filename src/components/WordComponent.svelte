@@ -1,14 +1,14 @@
 <script>
-	import { onMount, createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher();
+	import { onMount } from 'svelte';
+	import { scale } from 'svelte/transition';
+	import { rundown } from '../stores';
 
 	export let id;
 	export let text = '';
 	export let type = '';
 
 	let isEditing = false;
-
+	let hovered = false;
 	let inputElement;
 
 	onMount(() => {
@@ -37,7 +37,8 @@
 	const disableEditing = () => {
 		isEditing = false;
 		text = text.trim();
-		dispatch('update', { id, text, type });
+		if (text === '') rundown.remove(id);
+		else rundown.updateWord({ id, text, type });
 	};
 
 	const handleBlur = () => {
@@ -60,7 +61,18 @@
 	};
 </script>
 
-<div id="word-{id}">
+<div
+	role="none"
+	class="relative"
+	id="word-{id}"
+	transition:scale
+	on:mouseenter={() => {
+		hovered = true;
+	}}
+	on:mouseleave={() => {
+		hovered = false;
+	}}
+>
 	{#if isEditing}
 		<input
 			bind:this={inputElement}
@@ -73,18 +85,26 @@
 		/>
 	{:else}
 		<button
+			draggable="true"
 			class="p-2
 			transition
 			ease-in-out
 			duration-300
 			bg-primary-color/50
-			hover:scale-110
-			hover:cursor-pointer
 			rounded-primary mr-2 mb-2
+			{hovered ? 'scale-110 cursor-pointer' : ''}
 			{type === 'pouch' ? 'text-secondary-color underline' : ''}"
 			on:mouseup={enableEditing}
 		>
 			{text}
+		</button>
+	{/if}
+	{#if hovered}
+		<button
+			class="rounded-full px-1 bg-primary-color absolute -right-1 -top-2 text-sm"
+			on:click={rundown.remove(id)}
+		>
+			x
 		</button>
 	{/if}
 </div>

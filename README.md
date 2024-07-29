@@ -1,38 +1,79 @@
-# create-svelte
+# Welcome to [GGenerator](https://ggenerator-beta.vercel.app/) *!*
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+![Static Badge](https://img.shields.io/badge/version-1.0.0-red)
 
-## Creating a project
+[![Static Badge](https://img.shields.io/badge/vercel-Deploy-white?logo=vercel&labelColor=black)](https://vercel.com/)
+[![Static Badge](https://img.shields.io/badge/Svelte-Kit-orange?logo=Svelte&labelColor=white)](https://kit.svelte.dev/)
+[![Static Badge](https://img.shields.io/badge/Tailwind-CSS-%2338bdf8?logo=tailwindcss&labelColor=white)](https://tailwindcss.com/)
+[![Static Badge](https://img.shields.io/badge/Notion-Board-black?logo=notion&logoColor=black&labelColor=white)](https://www.notion.so/)
 
-If you're seeing this, you've probably already done this step. Congrats!
+>This  application  aims to be a multi purpose generator for every cases where you need random things.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## @Use cases
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- ### GameMaster
 
-## Developing
+- ### Movies selector
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- ### Shared Flat
 
-```bash
-npm run dev
+- A shared flat wants to plans chores everyday, it is possible just add 3 lists (called pouches) :
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+  - One for the peoples in the flat
+  - A second for the household chores
+  - A third for the days
 
-## Building
+Make a sentence and GGenerate !
 
-To create a production version of your app:
+![Shared flat example](./static/images/shared_flat_example.png)
 
-```bash
-npm run build
-```
+## @How to access ?
 
-You can preview the production build with `npm run preview`.
+> Go to : <https://ggenerator-beta.vercel.app/>.  
+Follow the onboarding tutorial with an example for a better understanding of the application.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## @Features
+
+- ### *Implemented*
+- [x] Add random sentence generation ( based on pouches and the template sentence)
+- [x] Possibility to rename/delete pouches and pouches elements
+- [x] Add tutorials ( onboarding, deep guide, empty tips)
+- [x] Add Drag & Drop functionality
+- [x] Save & Load Functions
+- [x] Persisent save with local storage
+
+- ### *Planned*
+- [ ] History of generated sentences
+- [ ] Different kind of themes ( light, dark, colored...)
+- [ ] Probability on pouches elements
+- [ ] Random generation with or without replacement
+- [ ] Community database
+- [ ] Pouches of different types ( numbers, images, date...)
+
+## @FAQ
+
+### Is it available in \<Insert Language> ?
+
+> The app is currently available in french and english only.  
+> Other languages can be added on demand. :grinning:
+
+### Are you selling my data !?
+
+> Nope, first the app is **open-source** so you can check yourself in the code.  
+> Everything is stored on your navigator, we don't receive any data. *We don't have money to store them anyway*   
+> So be creative !
+
+### I have an idea ! How can I contact you ?
+
+- #### Bug report 👩‍💻
+    > Here is the link : [Issues](https://github.com/JaceTheBlu/GGenerator/issues/new),
+    if possible share a screenshots and the steps to reproduce, thanks !
+
+- #### Feedback 🗯️
+    > Here you can find the english version : [Google Form EN](https://forms.gle/2JKbUNFE4Dd8JMUL9).  
+    Pour la version baguette c'est ici : [Google Form FR](https://forms.gle/6UpoQnbn84WBtZk1A)
+
+- #### Direct Message 💌
+    > [@JaceTheBlu](https://github.com/JaceTheBlu) 🧙‍♂️  
+     [@aVadeleau](https://github.com/aVadeleau) 🎢
+

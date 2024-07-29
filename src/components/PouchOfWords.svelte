@@ -2,19 +2,15 @@
 	/**
 	 * A class that wraps the Pouch of Words functionality
 	 * It allows creating pouches and displays them
-	 * @param pouch_list: a list of string that contains the name of every pouch created, used to track the existing pouch and display them
 	 * @param max : a number that tells the maximum numbers of characters possible in the input
 	 */
 
 	/* Imports */
+	import { loaded, locales, pouches } from '../stores';
 	import Pouch from './Pouch.svelte';
 
 	/* Variables */
-	export let pouch_list = [];
 	let input_value = '';
-	let max = 20;
-
-	let pouch_id = 0;
 	let dragged_pouch = null;
 
 	$: input_value = String(input_value).toLowerCase();
@@ -25,34 +21,9 @@
 	 * This function handle the add of a new pouch
 	 * It is not possible to create a pouch with an empty name or an name which already exist
 	 */
-	export const addPouch = (event) => {
-		if (event?.type === 'click') {
-			input_value = input_value.trim();
-		} else if (event?.type === 'import') {
-			input_value = event.detail.name;
-		} else {
-			input_value = event || input_value.trim();
-		}
-		if (
-			input_value !== null &&
-			input_value !== undefined &&
-			input_value !== '' &&
-			input_value.length > 0 &&
-			input_value.length < max
-		) {
-			let pouch = {
-				id: pouch_id,
-				name: input_value,
-				elements: event?.detail?.elements || []
-			};
-			let i = 0;
-			let nameAlreadyExist = contains(pouch);
-			if (!nameAlreadyExist) {
-				pouch_id++;
-				pouch_list = [...pouch_list, pouch];
-			}
-			input_value = '';
-		}
+	export const addPouch = () => {
+		pouches.add(input_value.trim());
+		input_value = '';
 	};
 
 	/**
@@ -64,88 +35,32 @@
 			case 'Enter':
 				addPouch();
 				break;
-
 			default:
 				break;
 		}
 	}
 
-	const clearPouchofWords = () => {
-		pouch_list = [];
-	};
-
 	/**
-	 * A function that verify if a pouch name is already present
-	 * @param pouch : the pouch to verify its name
-	 * @return found : true if the name is already in the list, false otherwise
+	 * A function used when the user start dragging a pouch
+	 * It register the dragged pouch
+	 * @param event : the event containing the pouch
+	 * @param pouch : the dragged pouch with it's name and elements
 	 */
-	function contains(pouch) {
-		let found = false;
-
-		for (let i = 0; i < pouch_list.length && !found; i++) {
-			if (pouch_list[i].name === pouch.name && pouch.id !== pouch_list[i].id) {
-				found = true;
-			}
-		}
-
-		return found;
-	}
-
-	/**
-	 * This method is triggered when the event 'pouch_elements' is catched
-	 * Its goal is to update the pouch_list with the last modification done in the child components (Pouch and PouchElements)
-	 * @param event : the pouch to update
-	 */
-	function refreshPouch(event) {
-		const pouch = event.detail;
-
-		if (pouch.name.trim() !== '') {
-			let nameAlreadyExist = contains(pouch);
-
-			if (!nameAlreadyExist) {
-				let found = false;
-				for (let i = 0; i < pouch_list.length && !found; i++) {
-					if (pouch_list[i].id === pouch.id) {
-						pouch_list[i] = pouch;
-						found = true;
-					}
-				}
-			} else {
-				console.error('The name :', pouch.name, ' already exist ! \n Please enter a new one');
-			}
-		}
-		pouch_list = [...pouch_list];
-	}
-
-	/**
-	 * This function handle the deletion of a pouch, it catches the event created from "Pouch.svelte"
-	 * @param e : the id of the pouch to delete
-	 */
-	function deletePouch(e) {
-		const pouch = e.detail;
-		let i = 0;
-		let found = false;
-		while (i < pouch_list.length && !found) {
-			if (pouch_list[i].id === pouch.id) {
-				pouch_list.splice(i, 1);
-			}
-			i++;
-		}
-		pouch_list = [...pouch_list];
-	}
-
 	function handleDragStart(event, pouch) {
 		dragged_pouch = pouch;
-
 		event.dataTransfer.effectAllowed = 'move';
 		event.dataTransfer.setData('pouch', dragged_pouch.name);
+
 	}
 
-	function handleDragOver(event, pouch) {
+	/**
+	 * A function used when the user dragged a element over another
+	 * It colored the hovered element
+	 * @param event :
+	 */
+	function handleDragOver(event) {
 		event.preventDefault();
-		event.dataTransfer.dropEffect = 'move';
 
-		//New features
 		const element = event.currentTarget;
 		element.classList.add(
 			'bg-secondary-color/50',
@@ -155,7 +70,12 @@
 		);
 	}
 
-	function handleDragLeave(event, pouch) {
+	/**
+	 * A function used when the user stop hovering an element
+	 * When an element isn't hovered anymore, it removed the color
+	 * @param event : the element with the color to be removed
+	 */
+	function handleDragLeave(event) {
 		const element = event.currentTarget;
 		element.classList.remove(
 			'bg-secondary-color/50',
@@ -165,10 +85,15 @@
 		);
 	}
 
+	/**
+	 * A function used when an element is dropped over another
+	 * It place the dropped element bellow the other
+	 * @param event : the element with the color to be removed
+	 * @param pouch : the element that received the dragged element
+	 */
 	function handleDrop(event, pouch) {
 		event.preventDefault();
 
-		// New features
 		const element = event.currentTarget;
 		element.classList.remove(
 			'bg-secondary-color/50',
@@ -177,32 +102,20 @@
 			'border-dashed'
 		);
 
-		const draggedIndex = pouch_list.indexOf(dragged_pouch);
-		const droppedIndex = pouch_list.indexOf(pouch);
+		pouches.swapPouch(dragged_pouch, pouch);
 
-		if (draggedIndex >= 0) {
-			console.log('dragged Index : ', draggedIndex);
-			console.log('dropped Index : ', droppedIndex);
-			pouch_list.splice(draggedIndex, 1);
-
-			pouch_list.splice(droppedIndex, 0, dragged_pouch);
-
-			console.log('pouch list :', pouch_list);
-
-			pouch_list = [...pouch_list];
-		}
 		dragged_pouch = null;
 	}
 </script>
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
 	<div class="flex children:px-2 mb-2 justify-between not-selectable">
-		<span class="text-secondary font-bold text-primary-color">Pouches</span>
+		<span class="text-secondary font-bold text-primary-color">{$locales.pouches}</span>
 		<button
 			class="hover:text-cancel-color transition-colors text-tertiary"
-			on:click={clearPouchofWords}
+			on:click={pouches.clear}
 		>
-			clear
+			{$locales.clear}
 		</button>
 	</div>
 
@@ -217,73 +130,71 @@
 		<button
 			class="bg-validate-color flex-shrink-0 w-full md:w-auto text-white rounded-md px-4 py-2"
 			on:click={addPouch}
-			>Add list
+			>{$locales.pouch_input}
 		</button>
 	</div>
 
 	<div class="flex-1 overflow-y-auto rounded-primary">
-		{#if pouch_list.length > 0}
-			{#each pouch_list as pouch}
-				<div
-					on:dragstart={(event) => handleDragStart(event, pouch)}
-					on:dragover={(event) => handleDragOver(event, pouch)}
-					on:dragleave={(event) => handleDragLeave(event, pouch)}
-					on:drop={(event) => handleDrop(event, pouch)}
-					aria-label="drag and drop zone of pouch"
-					role="region"
-				>
-					<Pouch
-						id={pouch.id}
-						name={pouch.name}
-						elements={pouch.elements}
-						on:pouch_elements={refreshPouch}
-						on:delete-pouch={deletePouch}
-					/>
+		{#if $loaded}
+			{#if $pouches.length > 0}
+				{#each $pouches as pouch}
+					<div
+						on:dragstart={(event) => handleDragStart(event, pouch)}
+						on:dragover={(event) => handleDragOver(event, pouch)}
+						on:dragleave={(event) => handleDragLeave(event, pouch)}
+						on:drop={(event) => handleDrop(event, pouch)}
+						aria-label="drag and drop zone of pouch"
+						role="region"
+					>
+						<Pouch id={pouch.id} name={pouch.name} elements={pouch.elements} />
+						<!-- on:delete-pouch={pouches.remove} -->
+					</div>
+				{/each}
+			{:else}
+				<div class="flex flex-col">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						version="1.1"
+						xmlns:xlink="http://www.w3.org/1999/xlink"
+						xmlns:svgjs="http://svgjs.dev/svgjs"
+						viewBox="0 0 800 800"
+						class="w-1/2 self-end"
+						><g
+							stroke-width="15"
+							stroke="hsl(0, 0%, 100%)"
+							stroke-opacity="0.5"
+							fill="none"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-dasharray="21 39"
+							transform="matrix(-0.10452846326765336,-0.9945218953682734,0.9945218953682734,-0.10452846326765336,30.002627159752024,859.6201434543707)"
+							><path
+								d="M112.85421752929688 106Q393.8542175292969 839 406.8542175292969 400Q-331.1457824707031 588 700.8542175292969 694 "
+								marker-end="url(#SvgjsMarker6867)"
+							/></g
+						><defs
+							><marker
+								markerWidth="7"
+								markerHeight="7"
+								refX="3.5"
+								refY="3.5"
+								viewBox="0 0 7 7"
+								orient="auto"
+								id="SvgjsMarker6867"
+								><polygon
+									points="0,7 2.3333333333333335,3.5 0,0 7,3.5"
+									fill="hsl(0, 0%, 100%)"
+									fill-opacity="0.5"
+								/></marker
+							></defs
+						></svg
+					>
+					<p class="text-secondary text-primary-color/50 text-center not-selectable">
+						{$locales.placeholder_pouches_1} <br />
+						{$locales.placeholder_pouches_2}
+					</p>
 				</div>
-			{/each}
-		{:else}
-			<div class="flex flex-col">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					version="1.1"
-					xmlns:xlink="http://www.w3.org/1999/xlink"
-					xmlns:svgjs="http://svgjs.dev/svgjs"
-					viewBox="0 0 800 800"
-					class="w-1/2 self-end"
-					><g
-						stroke-width="15"
-						stroke="hsl(0, 0%, 100%)"
-						stroke-opacity="0.5"
-						fill="none"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-dasharray="21 39"
-						transform="matrix(-0.10452846326765336,-0.9945218953682734,0.9945218953682734,-0.10452846326765336,30.002627159752024,859.6201434543707)"
-						><path
-							d="M112.85421752929688 106Q393.8542175292969 839 406.8542175292969 400Q-331.1457824707031 588 700.8542175292969 694 "
-							marker-end="url(#SvgjsMarker6867)"
-						/></g
-					><defs
-						><marker
-							markerWidth="7"
-							markerHeight="7"
-							refX="3.5"
-							refY="3.5"
-							viewBox="0 0 7 7"
-							orient="auto"
-							id="SvgjsMarker6867"
-							><polygon
-								points="0,7 2.3333333333333335,3.5 0,0 7,3.5"
-								fill="hsl(0, 0%, 100%)"
-								fill-opacity="0.5"
-							/></marker
-						></defs
-					></svg
-				>
-				<p class="text-secondary text-primary-color/50 text-center not-selectable">
-					Create your first pouch here! <br /> You can also add it by writing in the rundown.
-				</p>
-			</div>
+			{/if}
 		{/if}
 	</div>
 </div>

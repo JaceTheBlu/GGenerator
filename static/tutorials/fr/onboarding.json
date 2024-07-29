@@ -1,0 +1,40 @@
+{
+    "steps": [
+        {
+            "title": "👋 Bienvenue",
+            "text": [
+                "Bienvenue dans l'application ! Commençons par une visite rapide.",
+                "Cette application a été conçue pour générer des phrases avec les entrées aléatoires que vous fournissez.",
+                "Nous avons importé un exemple pour que vous puissiez expérimenter, n'hésitez pas à cliquer partout 😀"
+            ]
+        },
+        {
+            "title": "📌 Conseils Rapides",
+            "text": [
+                "-Dans la section de gauche, vous avez des mots et des @sacs qui sont utilisés pour générer des phrases.",
+                "-Pour ajouter un mot, cliquez sur le bouton + dans la section Phrase.",
+                "-Les Sacs sont créées en tapant des mots commençant par '@'."
+            ]
+        },
+        {
+            "title": "🤿 Guide Approfondi",
+            "text": [
+                "Cliquez ici, sur le bouton d'aide en haut à droite à tout moment pour un tutoriel détaillé sur toutes les fonctionnalités."
+            ],
+            "attachTo": {
+                "element": "#help_guide-help-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "🎲 GGénérer",
+            "text": [
+                "Lorsque vous êtes prêt, cliquez sur GGénérer ! Pour obtenir votre premier résultat."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-ggenerate",
+                "on": "top"
+            }
+        }
+    ]
+}

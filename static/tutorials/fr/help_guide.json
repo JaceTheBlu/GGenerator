@@ -1,0 +1,150 @@
+{
+    "steps": [
+        {
+            "title": "📚 Introduction",
+            "text": [
+                "Bienvenue dans le guide approfondi. Ici, nous expliquerons toutes les fonctionnalités de l'application.",
+                "N'oubliez pas que vous pouvez quitter ce guide à tout moment en appuyant sur 'Échap'."
+            ]
+        },
+        {
+            "title": "🔝 Aperçu de la Barre Supérieure",
+            "text": [
+                "La barre supérieure contient divers outils pour interagir avec l'application",
+                "certaines des fonctions sont des boutons pour enregistrer, charger, afficher le changelog, accéder à l'aide et ouvrir les paramètres."
+            ],
+            "attachTo": {
+                "element": "#help_guide-top-bar",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "💾 Bouton Enregistrer",
+            "text": [
+                "Cliquez sur le bouton Enregistrer pour sauvegarder votre travail actuel.",
+                "-L'enregistrement peut être utilisé pour partager votre générateur avec des amis!",
+                "-Ou il peut être utilisé si vous avez une utilisation courante de cette application"
+            ],
+            "attachTo": {
+                "element": "#help_guide-save-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "📂 Bouton Charger",
+            "text": [
+                "Cliquez sur le bouton Charger pour charger un travail précédemment sauvegardé.",
+                "Vous pouvez également charger le travail partagé par vos amis à tout moment!"
+            ],
+            "attachTo": {
+                "element": "#help_guide-load-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "📝 Section Phrase",
+            "text": [
+                "La section Phrase est l'endroit où vous pouvez écrire des mots.",
+                "Les mots peuvent être des mots 'statiques' ou des mots de 'Sac'",
+                "Tous ces mots seront compilés ensemble pour former la phrase."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-rundown",
+                "on": "right"
+            }
+        },
+        {
+            "title": "✏️ Ajout de Mots",
+            "text": [
+                "Dans la section Phrase, cliquez sur le bouton + pour ajouter un nouveau mot."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-rundown-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "🔤 Mots Statiques et de Sac",
+            "text": [
+                "Vous pouvez ajouter des mots 'statiques' ou des mots de 'Sac'.",
+                "Les mots de Sac commencent par '@' et créent une Sac correspondante dans la liste des Sacs.",
+                "Par exemple, taper '@nom' crée une Sac appelée 'nom' dans la liste des Sacs."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-rundown",
+                "on": "right"
+            }
+        },
+        {
+            "title": "🗂 Liste des Sacs",
+            "text": [
+                "La liste des Sacs à droite est l'endroit où toutes vos Sacs sont gérées.",
+                "Cliquez sur une Sac pour ajouter, modifier ou supprimer ses éléments."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-pouch-of-words",
+                "on": "left"
+            }
+        },
+        {
+            "title": "✨ Création de Sacs",
+            "text": [
+                "Lorsque vous ajoutez un mot de Sac dans le Phrase, une Sac correspondante est automatiquement créée dans la liste des Sacs."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-pouch",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "🗂 Gestion des Sacs",
+            "text": [
+                "Cliquez sur une Sac pour ajouter des éléments. Vous pouvez également modifier ou supprimer des éléments."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-pouch-of-words",
+                "on": "left"
+            }
+        },
+        {
+            "title": "⚡ Génération de Phrases",
+            "text": [
+                "Cliquez sur le bouton Générer pour compiler votre Phrase en une phrase complète.",
+                "-Les mots statiques restent intacts",
+                "-Les mots de Sac sont remplacés par des éléments aléatoires de leurs Sacs."
+            ],
+            "attachTo": {
+                "element": "#help_guide-step-ggenerate",
+                "on": "top"
+            }
+        },
+        {
+            "title": "❓ Accéder à l'Aide",
+            "text": [
+                "Si vous avez besoin d'aide à tout moment, cliquez sur le bouton d'aide dans la barre supérieure pour accéder à ce tutoriel détaillé."
+            ],
+            "attachTo": {
+                "element": "#help_guide-help-button",
+                "on": "bottom"
+            }
+        },
+        {
+            "title": "🚀 Conseils Avancés",
+            "text": [
+                "Conseil avancé : Vous pouvez gérer plusieurs Sacs et les utiliser de manière créative pour générer des phrases complexes."
+            ]
+        },
+        {
+            "title": "💾 Fonction de Persistance des Données",
+            "text": [
+                "La fonctionnalité de persistance de l'application garantit que vos données sont sauvegardées automatiquement, afin que vous ne perdiez pas vos progrès."
+            ]
+        },
+        {
+            "title": "🔍 C'est tout!",
+            "text": [
+                "N'hésitez pas à explorer et à expérimenter avec différents mots et Sacs pour voir comment ils interagissent et génèrent des phrases."
+            ]
+        }
+    ]
+}

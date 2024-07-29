@@ -1,0 +1,136 @@
+{
+  "rundown": [
+    {
+      "id": 1,
+      "text": "@alien",
+      "type": "dynamic"
+    },
+    {
+      "id": 2,
+      "text": "@action",
+      "type": "dynamic"
+    },
+    {
+      "id": 3,
+      "text": "@alien",
+      "type": "dynamic"
+    },
+    {
+      "id": 4,
+      "text": "@planet",
+      "type": "dynamic"
+    },
+    {
+      "id": 5,
+      "text": "with the",
+      "type": "static"
+    },
+    {
+      "id": 6,
+      "text": "@item",
+      "type": "dynamic"
+    }
+  ],
+  "pouch_list": [
+    {
+      "id": 0,
+      "name": "alien",
+      "elements": [
+        {
+          "id": "alien0",
+          "name": "Martian"
+        },
+        {
+          "id": "alien1",
+          "name": "Venusian"
+        },
+        {
+          "id": "alien2",
+          "name": "Andromedan"
+        },
+        {
+          "id": "alien3",
+          "name": "Cygnian"
+        },
+        {
+          "id": "alien4",
+          "name": "Nebulan"
+        },
+        {
+          "id": "alien5",
+          "name": "Orion"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "action",
+      "elements": [
+        {
+          "id": "action0",
+          "name": "negotiates"
+        },
+        {
+          "id": "action1",
+          "name": "trades"
+        },
+        {
+          "id": "action2",
+          "name": "allies with"
+        },
+        {
+          "id": "action3",
+          "name": "competes with"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "planet",
+      "elements": [
+        {
+          "id": "planet0",
+          "name": "Mars"
+        },
+        {
+          "id": "planet1",
+          "name": "Venus"
+        },
+        {
+          "id": "planet2",
+          "name": "Alpha Centauri"
+        },
+        {
+          "id": "planet3",
+          "name": "Jupiter"
+        },
+        {
+          "id": "planet4",
+          "name": "Saturn"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "item",
+      "elements": [
+        {
+          "id": "item0",
+          "name": "Stardust Crystals"
+        },
+        {
+          "id": "item1",
+          "name": "Galactic Map"
+        },
+        {
+          "id": "item2",
+          "name": "Energy Source"
+        },
+        {
+          "id": "item3",
+          "name": "Cosmic Artifact"
+        }
+      ]
+    }
+  ]
+}

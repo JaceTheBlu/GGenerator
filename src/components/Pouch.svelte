@@ -2,12 +2,13 @@
 	/**
 	 * This page represents a pouch, it is possible to add/delete an element from this pouch
 	 * @param name : the name that represents the pouch and the elements in it
-	 * @param pouch_elements : a list that contains every elements a pouch contains, an elements have an id and a name, used to keep on track the existing elements and the display
+	 * @param elements : a list that contains every elements a pouch contains, an element have an id and a name, used to keep on track the existing elements and the display
 	 *
 	 */
 
 	/* Imports*/
-	import { createEventDispatcher } from 'svelte';
+	import { scale, slide } from 'svelte/transition';
+	import { locales, pouches } from '../stores';
 	import PouchElement from './PouchElement.svelte';
 
 	/* Variables*/
@@ -17,14 +18,12 @@
 
 	let isEditable = false;
 	let isHidden = false;
+	let isHovered = false;
+	let isFocus = false;
+	let locked = false;
 
 	let inputElement = '';
-	let new_pouch = '';
-
-	let element_id = 0;
-
-	$: elements_id = name.toLowerCase() + element_id;
-	const dispatch = createEventDispatcher();
+	let new_element = '';
 
 	/* Functions */
 
@@ -33,23 +32,10 @@
 	 * @param event : the element to add, with and id and a name property
 	 */
 	function addElements() {
-		if (new_pouch.trim() !== '') {
-			element_id++;
-			elements = [
-				...elements,
-				{
-					id: elements_id,
-					name: new_pouch
-				}
-			];
-			new_pouch = '';
+		if (new_element.trim() !== '') {
+			pouches.addElementToPouch(id, new_element);
+			new_element = '';
 		}
-
-		dispatch('pouch_elements', {
-			id: id,
-			name: name,
-			elements: elements
-		});
 	}
 
 	/**
@@ -74,67 +60,9 @@
 	}
 
 	/**
-	 * This function send a pouch to the parent (PouchOfWords) when it is modified
-	 * @param event : a pouch element that has been modified
-	 */
-	function refreshElements(event) {
-		const pouch_elem = event.detail;
-		let found = false;
-		if (pouch_elem.name.trim() !== '') {
-			for (let i = 0; i < elements.length && !found; i++) {
-				if (elements[i].id === pouch_elem.id) {
-					elements[i].name = pouch_elem.name;
-					found = true;
-				}
-			}
-			if (found) {
-				dispatch('pouch_elements', {
-					id: id,
-					name: name,
-					elements: elements
-				});
-			}
-		}
-		elements = [...elements];
-	}
-
-	/**
-	 * This function delete an element from a pouch, it catches the event created from "PouchElement.svelte"
-	 * @param e : the id of the pouch to delete
-	 */
-	function deletePouchElement(e) {
-		const deletionId = e.detail;
-		let found = false;
-		let i = 0;
-
-		while (i < elements.length && !found) {
-			if (deletionId === elements[i].id) {
-				elements.splice(i, 1);
-				found = true;
-			}
-			i++;
-		}
-		elements = [...elements];
-
-		dispatch('pouch_elements', {
-			id: id,
-			name: name,
-			elements: elements
-		});
-	}
-
-	/**
-	 * This function create an event with the goal of deleting a pouch, it takes the name of the pouch to delete
-	 * @param pouchName : the name of the pouch to delete
-	 */
-	function dispatchDeletePouch() {
-		dispatch('delete-pouch', { id: id });
-	}
-
-	/**
-	 * This method is used for the update of a pouch element
-	 * Double clicking on a pouch element make it editable
-	 * When focus is lost new informations are sent to the parent component
+	 * This method is used for the update of a pouch
+	 * Double clicking on a pouch make it editable
+	 * When focus is lost the new name is updated
 	 */
 	function changeEditableState() {
 		isEditable = !isEditable;
@@ -147,26 +75,35 @@
 				}
 			});
 		} else {
-			dispatch('pouch_elements', {
-				id: id,
-				name: name.toLowerCase(),
-				elements: elements
-			});
+			pouches.updatePouch(id, name.toLowerCase());
 		}
-	}
-
-	function changeHiddenState() {
-		isHidden = !isHidden;
 	}
 </script>
 
-<ul class="bg-slate-800/50 rounded-xl divide-y my-2">
+<ul
+	class="bg-slate-800/50 rounded-xl divide-y my-2"
+	transition:scale={{ duration: 100 }}
+	on:mouseover={() => {
+		isHovered = true;
+	}}
+	on:mouseleave={() => {
+		isHovered = false;
+	}}
+	on:focus={() => {
+		isHovered = false;
+	}}
+	on:blur={() => {
+		isHovered = false;
+	}}
+>
 	<li class="flex justify-between text-xl h-full">
 		<button
 			class={`flex items-center px-2 hover:bg-blue-500 ${
 				isHidden ? 'rounded-bl-xl' : 'rounded-none'
 			} transition duration-300 hover:cursor-pointer rounded-tl-xl`}
-			on:click={changeHiddenState}
+			on:click={() => {
+				isHidden = !isHidden;
+			}}
 		>
 			{isHidden ? '▷' : '▽'}
 		</button>
@@ -195,7 +132,7 @@
 
 		<button
 			class="flex justify-end items-center text-white h-full rounded-tr-xl hover:bg-cancel-color transition-colors duration-300 px-2"
-			on:click={dispatchDeletePouch}
+			on:click={pouches.remove(id)}
 		>
 			X
 		</button>
@@ -203,27 +140,34 @@
 
 	{#if elements.length !== 0 && !isHidden}
 		<div class="divide-y divide-dashed">
-			{#each elements as pouch}
-				<PouchElement
-					id={pouch.id}
-					name={pouch.name}
-					on:update-pouch-element={refreshElements}
-					on:delete-pouch-element={deletePouchElement}
-				/>
+			{#each elements as pouch, index}
+				<div
+					class={`${
+						!isHovered && index == elements.length - 1 ? 'rounded-b-xl' : ''
+					} odd:bg-slate-800/10 even:bg-slate-800/50`}
+				>
+					<PouchElement id={pouch.id} name={pouch.name} />
+				</div>
 			{/each}
 		</div>
 	{/if}
 
-	{#if !isHidden}
-		<div>
+	{#if !isHidden && (isHovered || isFocus)}
+		<div transition:slide>
 			<li class="flex">
 				<input
-					bind:value={new_pouch}
+					bind:value={new_element}
 					class="bg-transparent w-full h-full focus:outline-none focus:ring-2 focus:ring-secondary-color placeholder:italic rounded-bl-xl pl-4"
 					type="text"
-					placeholder="Enter a value..."
+					placeholder={$locales.pouch_placeholder}
 					on:keydown={(event) => handleKeyboard(event, 'addElements')}
-					on:blur={addElements}
+					on:focus={() => {
+						isFocus = true;
+					}}
+					on:blur={() => {
+						addElements();
+						isFocus = false;
+					}}
 				/>
 
 				<button

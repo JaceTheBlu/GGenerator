@@ -1,6 +1,22 @@
 {
     "steps": [
         {
+            "title": "✨ Version 1.0.1 - Refac'@all",
+            "text": [
+                "#29/07/2024",
+                "-Complete overhaul of the backend",
+                "-Overhaul of the GitHub (check it out, it's cool)",
+                "-Overhaul of the GGénération section",
+                "-Added 'Copy' button to copy the GGénération",
+                "-Added 'Delete' button to delete the history",
+                "-Added 'Show' button IN DEVELOPMENT",
+                "-Added 'Delete' button on the words",
+                "-Added 'Random Examples' button for inspiration (with lots of new examples!)",
+                "-Added Hover on Bags to hide the text input",
+                "-Added translation"
+            ]
+        },
+        {
             "title": "🎲 Version 1.0.0 - Stable @random",
             "text": [
                 "#10/07/2024",

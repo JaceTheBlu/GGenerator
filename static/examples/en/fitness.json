@@ -1,0 +1,54 @@
+{
+	"rundown": [
+		{ "id": 1, "text": "During the", "type": "static" },
+		{ "id": 2, "text": "@time", "type": "static" },
+		{ "id": 3, "text": "workout,", "type": "static" },
+		{ "id": 4, "text": "@instructor", "type": "static" },
+		{ "id": 5, "text": "will use", "type": "static" },
+		{ "id": 6, "text": "@equipment", "type": "static" },
+		{ "id": 7, "text": "to help us", "type": "static" },
+		{ "id": 8, "text": "@goal", "type": "static" }
+	],
+	"pouch_list": [
+		{
+			"id": 0,
+			"name": "time",
+			"elements": [
+				{ "id": "time0", "name": "morning" },
+				{ "id": "time1", "name": "afternoon" },
+				{ "id": "time2", "name": "evening" },
+				{ "id": "time3", "name": "weekend" }
+			]
+		},
+		{
+			"id": 1,
+			"name": "instructor",
+			"elements": [
+				{ "id": "instructor0", "name": "Coach Lee" },
+				{ "id": "instructor1", "name": "Trainer Kim" },
+				{ "id": "instructor2", "name": "Instructor Pat" },
+				{ "id": "instructor3", "name": "Coach Sam" }
+			]
+		},
+		{
+			"id": 2,
+			"name": "equipment",
+			"elements": [
+				{ "id": "equipment0", "name": "dumbbells" },
+				{ "id": "equipment1", "name": "yoga mats" },
+				{ "id": "equipment2", "name": "resistance bands" },
+				{ "id": "equipment3", "name": "treadmills" }
+			]
+		},
+		{
+			"id": 3,
+			"name": "goal",
+			"elements": [
+				{ "id": "goal0", "name": "build strength" },
+				{ "id": "goal1", "name": "improve flexibility" },
+				{ "id": "goal2", "name": "increase endurance" },
+				{ "id": "goal3", "name": "burn calories" }
+			]
+		}
+	]
+}
