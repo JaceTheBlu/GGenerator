@@ -1,6 +1,22 @@
 {
     "steps": [
         {
+            "title": "✨ Version 1.0.1 - Refac'@tout",
+            "text": [
+                "#29/07/2024",
+                "-Refonte de l'entièreté du backend",
+                "-Refonte du GitHub (allez le voir, c'est cool)",
+                "-Refonte de la partie GGénération",
+                "-Ajout du boutton 'Copier' pour copier la GGénération",
+                "-Ajout du boutton 'Éffacer' pour supprimer l'historique",
+                "-Ajout du boutton 'Afficher' EN COURS DE DEV",
+                "-Ajout du boutton 'supprimer' sur les mots",
+                "-Ajout du boutton 'Examples Aléatoire pour s'inspirer (avec plein de nouveaux exemples!)",
+                "-Ajout du Hover sur les Sacs pour cacher l'entrée texte",
+                "-Ajout de la traduction"
+            ]
+        },
+        {
             "title": "🎲 Version 1.0.0 - @Aléatoire Stable",
             "text": [
                 "#10/07/2024",

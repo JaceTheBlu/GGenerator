@@ -110,7 +110,7 @@
 			on:click={() => {
 				dispatch('changelog');
 			}}
-			>v1.0.0
+			>v1.0.1
 		</button>
 		<button
 			id="help_guide-help-button"
