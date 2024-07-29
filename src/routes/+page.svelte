@@ -33,14 +33,13 @@
 
 	let tour;
 
-	preferredLanguage.subscribe((lang) => {
-		if (lang != null) loadLanguage(lang);
-	});
-
 	onMount(async () => {
 		await Promise.all([initTutorials(), initExamples()]).then(() => {
 			visited.set(localStorage.getItem('visited'));
 
+			preferredLanguage.subscribe((lang) => {
+				if (lang != null) loadLanguage(lang);
+			});
 			if (!$visited) {
 				localStorage.setItem('visited', true);
 				tour = new Berger($tutorials[$preferredLanguage]['onboarding']);
