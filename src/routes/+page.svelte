@@ -373,11 +373,7 @@
 			<button title={$locales.show_history} class="hover:scale-110" on:click={handleShowHistory}>
 				🗃️
 			</button>
-			<button
-				title={$locales.clear - history}
-				class="hover:scale-110"
-				on:click={handleDeleteHistory}
-			>
+			<button title={$locales.clear} class="hover:scale-110" on:click={handleDeleteHistory}>
 				🗑️
 			</button>
 		</div>
