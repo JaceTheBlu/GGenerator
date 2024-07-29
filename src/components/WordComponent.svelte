@@ -8,7 +8,7 @@
 	export let type = '';
 
 	let isEditing = false;
-
+	let hovered = false;
 	let inputElement;
 
 	onMount(() => {
@@ -61,7 +61,18 @@
 	};
 </script>
 
-<div id="word-{id}" transition:scale>
+<div
+	role="none"
+	class="relative"
+	id="word-{id}"
+	transition:scale
+	on:mouseenter={() => {
+		hovered = true;
+	}}
+	on:mouseleave={() => {
+		hovered = false;
+	}}
+>
 	{#if isEditing}
 		<input
 			bind:this={inputElement}
@@ -80,13 +91,20 @@
 			ease-in-out
 			duration-300
 			bg-primary-color/50
-			hover:scale-110
-			hover:cursor-pointer
 			rounded-primary mr-2 mb-2
+			{hovered ? 'scale-110 cursor-pointer' : ''}
 			{type === 'pouch' ? 'text-secondary-color underline' : ''}"
 			on:mouseup={enableEditing}
 		>
 			{text}
+		</button>
+	{/if}
+	{#if hovered}
+		<button
+			class="rounded-full px-1 bg-primary-color absolute -right-1 -top-2 text-sm"
+			on:click={rundown.remove(id)}
+		>
+			x
 		</button>
 	{/if}
 </div>
