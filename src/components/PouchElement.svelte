@@ -30,8 +30,7 @@
 					inputElement.select();
 				}
 			});
-		}
-		else{
+		} else {
 			pouches.updateElement(id, name);
 		}
 	}
@@ -47,7 +46,6 @@
 				break;
 		}
 	}
-	
 </script>
 
 <li class="flex justify-between items-center pl-4 odd:bg-slate-800/10 even:bg-slate-800/50">

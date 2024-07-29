@@ -18,10 +18,12 @@
 
 	let isEditable = false;
 	let isHidden = false;
+	let isHovered = false;
+	let isFocus = false;
+	let locked = false;
 
 	let inputElement = '';
 	let new_element = '';
-	
 
 	/* Functions */
 
@@ -31,7 +33,7 @@
 	 */
 	function addElements() {
 		if (new_element.trim() !== '') {
-			pouches.addElementToPouch(id,new_element);
+			pouches.addElementToPouch(id, new_element);
 			new_element = '';
 		}
 	}
@@ -78,13 +80,30 @@
 	}
 </script>
 
-<ul class="bg-slate-800/50 rounded-xl divide-y my-2" transition:scale={{ duration: 100 }}>
+<ul
+	class="bg-slate-800/50 rounded-xl divide-y my-2"
+	transition:scale={{ duration: 100 }}
+	on:mouseover={() => {
+		isHovered = true;
+	}}
+	on:mouseleave={() => {
+		isHovered = false;
+	}}
+	on:focus={() => {
+		isHovered = false;
+	}}
+	on:blur={() => {
+		isHovered = false;
+	}}
+>
 	<li class="flex justify-between text-xl h-full">
 		<button
 			class={`flex items-center px-2 hover:bg-blue-500 ${
 				isHidden ? 'rounded-bl-xl' : 'rounded-none'
 			} transition duration-300 hover:cursor-pointer rounded-tl-xl`}
-			on:click={() =>{ isHidden = !isHidden}}
+			on:click={() => {
+				isHidden = !isHidden;
+			}}
 		>
 			{isHidden ? '▷' : '▽'}
 		</button>
@@ -106,7 +125,7 @@
 				/>
 			{:else}
 				<button class="flex font-bold items-center" on:click={changeEditableState}>
-				{name}
+					{name}
 				</button>
 			{/if}
 		</div>
@@ -121,16 +140,19 @@
 
 	{#if elements.length !== 0 && !isHidden}
 		<div class="divide-y divide-dashed">
-			{#each elements as pouch}
-				<PouchElement
-					id={pouch.id}
-					name={pouch.name}
-				/>
+			{#each elements as pouch, index}
+				<div
+					class={`${
+						!isHovered && index == elements.length - 1 ? 'rounded-b-xl' : ''
+					} odd:bg-slate-800/10 even:bg-slate-800/50`}
+				>
+					<PouchElement id={pouch.id} name={pouch.name} />
+				</div>
 			{/each}
 		</div>
 	{/if}
 
-	{#if !isHidden}
+	{#if !isHidden && (isHovered || isFocus)}
 		<div transition:slide>
 			<li class="flex">
 				<input
@@ -139,7 +161,13 @@
 					type="text"
 					placeholder={$locales.pouch_placeholder}
 					on:keydown={(event) => handleKeyboard(event, 'addElements')}
-					on:blur={addElements}
+					on:focus={() => {
+						isFocus = true;
+					}}
+					on:blur={() => {
+						addElements();
+						isFocus = false;
+					}}
 				/>
 
 				<button

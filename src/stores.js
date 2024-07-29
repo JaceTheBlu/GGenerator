@@ -75,7 +75,6 @@ export const createPouches = () => {
 		update,
 		add: (name, elements) =>
 			update((pouches) => {
-				console.log('name :', name);
 				const pouchExists = pouches.some((pouch) => pouch.name === name);
 				if (pouchExists) {
 					return pouches;
