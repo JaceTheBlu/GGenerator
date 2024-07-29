@@ -266,9 +266,12 @@
 		console.log($history);
 	};
 
-	const handleCopyOutput = () => {
+	const handleCopyOutput = async () => {
 		resultinput.select();
-		document.execCommand('copy');
+		const type = 'text/plain';
+		const blob = new Blob([resultinput.value], { type });
+		const data = [new ClipboardItem({ [type]: blob })];
+		await navigator.clipboard.write(data);
 	};
 
 	const handleDeleteHistory = () => {
