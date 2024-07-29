@@ -14,14 +14,6 @@
 		newId = $rundown.length ? Math.max(...$rundown.map((t) => t.id)) + 1 : 1;
 	}
 
-	export const addWordComponent = () => {
-		rundown.add(' ');
-	};
-
-	export const removeWordComponent = (event) => {
-		rundown.update((currentList) => currentList.filter((c) => c.id !== event.detail.id));
-	};
-
 	export const updateWordComponent = (event) => {
 		let word = event.detail;
 		if (word.text.length > 0) {
@@ -34,7 +26,7 @@
 				pouches.add(word.text.substring(1));
 			}
 		} else {
-			removeWordComponent(event);
+			rundown.remove(event.detail.id);
 		}
 	};
 
@@ -104,17 +96,7 @@
 
 		if (event.dataTransfer.getData('pouch') !== '') {
 			const pouch_name = event.dataTransfer.getData('pouch');
-
-			const new_item = {
-				id: newId,
-				text: '@' + pouch_name,
-				type: 'pouch'
-			};
-
-			rundown.update((currentList) => {
-				currentList.push(new_item);
-				return [...currentList];
-			});
+			rundown.add('@' + pouch_name);
 		}
 	}
 </script>
@@ -210,7 +192,7 @@
 		<button
 			id="help_guide-step-rundown-button"
 			class="mx-auto my-2 h-fit w-fit px-2 transition ease-in-out duration-300 bg-transparent hover:scale-110 hover:cursor-pointer rounded-lg border-4 border-white border-dotted"
-			on:focus={addWordComponent}
+			on:focus={rundown.add}
 		>
 			+
 		</button>

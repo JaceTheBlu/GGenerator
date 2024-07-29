@@ -1,9 +1,7 @@
 <script>
-	import { onMount, createEventDispatcher } from 'svelte';
+	import { onMount } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import { rundown } from '../stores';
-
-	const dispatch = createEventDispatcher();
 
 	export let id;
 	export let text = '';

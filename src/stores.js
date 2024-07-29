@@ -31,7 +31,7 @@ export const createRundown = () => {
 			update((items) => {
 				const newItem = {
 					id: rundownID++,
-					text,
+					text: text || ' ',
 					type: String(text).charAt(0) === '@' ? 'pouch' : 'static'
 				};
 				return [...items, newItem];
