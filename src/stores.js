@@ -21,6 +21,10 @@ export const createRundown = () => {
 		update,
 		add: (text) =>
 			update((items) => {
+
+				if(text instanceof Object){
+					text ='';
+				}
 				const newItem = {
 					id: 'w' + rundownID++,
 					text: text || ' ',
@@ -52,7 +56,18 @@ export const createRundown = () => {
 		copy: (rundown_writable) => {
 			rundown.add(rundown_writable.text);
 			return rundown;
-		}
+		},
+		swapWords: (word1, word2) =>
+			update((currentList) => {
+				const draggedIndex = currentList.indexOf(word1);
+				const droppedIndex = currentList.indexOf(word2);
+
+				if (draggedIndex >= 0) {
+					currentList.splice(draggedIndex, 1);
+					currentList.splice(droppedIndex, 0, word1);
+				}
+				return [...currentList];
+			})
 	};
 };
 

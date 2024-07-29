@@ -1,6 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { locales, rundown, loaded, pouches } from '../stores';
+	import { loaded, locales, pouches, rundown } from '../stores';
 	import WordComponent from './WordComponent.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -70,21 +70,10 @@
 		const element = event.currentTarget;
 		element.classList.remove('bg-secondary-color/50', 'rounded-primary');
 
-		rundown.update((currentList) => {
-			if (event.dataTransfer.getData('pouch') === '') {
-				const draggedIndex = currentList.indexOf(dragged_component);
-				const droppedIndex = currentList.indexOf(component);
-
-				currentList.splice(draggedIndex, 1);
-				currentList.splice(droppedIndex, 0, dragged_component);
-
-				dragged_component = null;
-
-				// Return a new array to trigger reactivity
-				return [...currentList];
-			}
-			return currentList;
-		});
+		if (event.dataTransfer.getData('pouch') === '') {
+			rundown.swapWords(dragged_component, component);
+			dragged_component = null;
+		}
 	}
 
 	export function handleDropGeneral(event) {
