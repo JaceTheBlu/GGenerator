@@ -49,6 +49,8 @@
 	function handleDragStart(event, pouch) {
 		dragged_pouch = pouch;
 		event.dataTransfer.effectAllowed = 'move';
+		event.dataTransfer.setData('pouch', dragged_pouch.name);
+
 	}
 
 	/**
