@@ -54,7 +54,7 @@
 	/**
 	 * A function used when the user dragged a element over another
 	 * It colored the hovered element
-	 * @param event : 
+	 * @param event :
 	 */
 	function handleDragOver(event) {
 		event.preventDefault();
@@ -104,7 +104,6 @@
 
 		dragged_pouch = null;
 	}
-
 </script>
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
@@ -145,12 +144,8 @@
 						aria-label="drag and drop zone of pouch"
 						role="region"
 					>
-						<Pouch
-							id={pouch.id}
-							name={pouch.name}
-							elements={pouch.elements}
-							/>
-							<!-- on:delete-pouch={pouches.remove} -->
+						<Pouch id={pouch.id} name={pouch.name} elements={pouch.elements} />
+						<!-- on:delete-pouch={pouches.remove} -->
 					</div>
 				{/each}
 			{:else}

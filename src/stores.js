@@ -3,17 +3,9 @@ import { writable } from 'svelte/store';
 export const loaded = writable(false);
 export const visited = writable(false);
 
-export const history = writable({
-	_length: 0
-});
+export const examples = writable({});
 
-export const examples = writable({
-	_length: 0
-});
-
-export const tutorials = writable({
-	_length: 0
-});
+export const tutorials = writable({});
 
 export const locales = writable({});
 export const preferredLanguage = writable('fr');
@@ -168,5 +160,37 @@ export const createPouches = () => {
 		}
 	};
 };
+
+export const createHistory = () => {
+	const { subscribe, set, update } = writable([]);
+
+	var historyID = 0;
+
+	return {
+		subscribe,
+		set,
+		update,
+		add: (text) =>
+			update((items) => {
+				const newItem = {
+					id: 'h' + historyID++,
+					text: text || ' '
+				};
+				return [...items, newItem];
+			}),
+		remove: (historyID) => update((items) => items.filter((item) => item.id !== historyID)),
+		clear: () => {
+			set([]);
+			historyID = 0;
+		},
+		copy: (history_writable) => {
+			history.add(history_writable.text);
+
+			return history;
+		}
+	};
+};
+
 export const rundown = createRundown();
 export const pouches = createPouches();
+export const history = createHistory();
