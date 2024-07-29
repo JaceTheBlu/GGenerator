@@ -18,5 +18,8 @@
     "placeholder_pouches_2": "Potes etiam addere scribendo in Conspectu.",
     "placeholder_rundown_1": "Incipe addendo novum verbum!",
     "placeholder_rundown_2": "Preme puga pyga + ad incipiendum.",
-    "placeholder_generate": "Tunc preme hic ut generes!"
+    "placeholder_generate": "Tunc preme hic ut generes!",
+    "show_history": "Monstra Historiam",
+    "copy": "Copia",
+    "placeholder_output": "Exspectans mirabilem GGenerationem!"
 }

@@ -18,6 +18,7 @@
 	import {
 		examples,
 		history,
+		locales,
 		loaded,
 		pouches,
 		preferredLanguage,
@@ -27,8 +28,8 @@
 	} from '../stores';
 
 	import { loadLanguage } from '$lib/localization';
-	
-	let result_div;
+
+	let resultinput;
 
 	let tour;
 
@@ -49,18 +50,26 @@
 			const saved_rundown = localStorage.getItem('rundown');
 			if (saved_rundown) {
 				const parsed_rundown = JSON.parse(saved_rundown);
-				parsed_rundown.forEach( word =>{
+				parsed_rundown.forEach((word) => {
 					rundown.copy(word);
 				});
 			}
 
 			const saved_pouches = localStorage.getItem('pouches');
-			
 			if (saved_pouches) {
 				const parsed_pouches = JSON.parse(saved_pouches);
 
-				parsed_pouches.forEach(pouch => {
+				parsed_pouches.forEach((pouch) => {
 					pouches.copy(pouch);
+				});
+			}
+
+			const saved_history = localStorage.getItem('history');
+			if (saved_history) {
+				const parsed_history = JSON.parse(saved_history);
+
+				parsed_history.forEach((output) => {
+					history.copy(output);
 				});
 			}
 
@@ -133,7 +142,40 @@
 		// Handle special cases: ensure no space before punctuation or excessive spaces
 		sentence = sentence.replace(/\s+([.,!?])/g, '$1');
 
-		result_div.innerText = sentence;
+		if (sentence === '') {
+			switch ($history.length + 1) {
+				case 1:
+					sentence = "Before Clicking the 'GGenerate' Button have you tried adding words?";
+					break;
+				case 2:
+					sentence = 'The Rundown is still empty, make some effort!';
+					break;
+				case 5:
+					sentence = "Are you trying to find something here? Good Luck, I'm not funny...";
+					break;
+				case 10:
+					sentence = 'This is not a clicker game, try something else like Cookie Clicker!';
+					break;
+				case 15:
+					sentence = 'I understand that this is supposed to be a fun app, but not in this manner!';
+					break;
+				case 42:
+					sentence = "Good job you made it! Though I still don't have the answer to life...";
+					break;
+				case 69:
+					sentence = 'NICE! *kof kof* I mean Nasty you, all of this for the unholy number...';
+					break;
+				case 100:
+					sentence =
+						"Congrats you made NOTHING, but that was not the point isn't ? add me on @discord : #jacetheblu";
+					break;
+
+				default:
+					sentence = 'The Rundown is empty, try adding a word or two!';
+					break;
+			}
+		}
+		history.add(sentence);
 	};
 
 	const getPouchElement = (pouch) => {
@@ -167,8 +209,6 @@
 		// Reset the stores
 		rundown.clear();
 		pouches.clear();
-
-		result_div.innerText = '';
 
 		requestAnimationFrame(() => {
 			// Load rundown
@@ -222,6 +262,22 @@
 		// Load the selected random example
 		loadSave(randomExample);
 	};
+
+	const handleShowHistory = () => {
+		console.log($history);
+	};
+
+	const handleCopyOutput = async () => {
+		resultinput.select();
+		const type = 'text/plain';
+		const blob = new Blob([resultinput.value], { type });
+		const data = [new ClipboardItem({ [type]: blob })];
+		await navigator.clipboard.write(data);
+	};
+
+	const handleDeleteHistory = () => {
+		history.clear();
+	};
 </script>
 
 {#if !$loaded}
@@ -272,8 +328,59 @@
 		id="help_guide-step-output"
 		class="w-auto flex bg-primary-color/50 h-16 m-4 rounded-primary items-center"
 	>
-		<p class="pl-2 text-secondary mr-2 not-selectable">Output:</p>
-		<p bind:this={result_div} class="text-secondary-color" />
+		<div class="flex-1 flex items-center h-full">
+			<button
+				class="mr-4 text-secondary px-4 py-2 not-selectable border-r"
+				on:click={handleShowHistory}
+			>
+				{#if history}
+					{$history.length}
+				{:else}
+					0
+				{/if}
+			</button>
+			<p class="place-content-center h-full w-full">
+				{#if history && $history.length > 0}
+					<input
+						bind:this={resultinput}
+						readonly
+						class="text-secondary-color h-full w-full bg-transparent focus:outline-none overflow-scroll"
+						value={$history[$history.length - 1].text}
+						on:focus={(e) => e.target.select()}
+					/>
+				{:else}
+					<p
+						class="place-content-center text-tertiary-color italic overflow-auto h-full w-full not-selectable"
+					>
+						{$locales.placeholder_output}
+					</p>
+				{/if}
+			</p>
+		</div>
+		<div
+			class="flex
+				items-end
+				space-x-2
+				mx-2
+				children:border-primary-width
+				children:rounded-secondary
+				children:p-2
+				"
+		>
+			<button title={$locales.copy} class="hover:scale-110" on:click={handleCopyOutput}>
+				📋
+			</button>
+			<button title={$locales.show_history} class="hover:scale-110" on:click={handleShowHistory}>
+				🗃️
+			</button>
+			<button
+				title={$locales.clear - history}
+				class="hover:scale-110"
+				on:click={handleDeleteHistory}
+			>
+				🗑️
+			</button>
+		</div>
 	</div>
 	<GGFooter />
 </div>

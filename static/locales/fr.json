@@ -18,5 +18,8 @@
     "placeholder_pouches_2": "Vous pouvez aussi l'ajouter en écrivant dans la Phrase.",
     "placeholder_rundown_1": "Commencez par ajouter un nouveau mot !",
     "placeholder_rundown_2": "Cliquez sur le bouton + pour commencer.",
-    "placeholder_generate": "Ensuite, cliquez ici pour générer !"
+    "placeholder_generate": "Ensuite, cliquez ici pour générer !",
+    "show_history": "Afficher Historique",
+    "copy": "Copier",
+    "placeholder_output": "En attente d'une GGénération!"
 }
