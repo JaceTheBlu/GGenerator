@@ -6,12 +6,11 @@
 	 */
 
 	/* Imports */
-	import { locales, pouches, loaded } from '../stores';
+	import { loaded, locales, pouches } from '../stores';
 	import Pouch from './Pouch.svelte';
 
 	/* Variables */
 	let input_value = '';
-	let max = 20;
 	let dragged_pouch = null;
 
 	$: input_value = String(input_value).toLowerCase();
@@ -41,17 +40,25 @@
 		}
 	}
 
+	/**
+	 * A function used when the user start dragging a pouch
+	 * It register the dragged pouch
+	 * @param event : the event containing the pouch
+	 * @param pouch : the dragged pouch with it's name and elements
+	 */
 	function handleDragStart(event, pouch) {
 		dragged_pouch = pouch;
 		event.dataTransfer.effectAllowed = 'move';
-		event.dataTransfer.setData('pouch', dragged_pouch.name);
 	}
 
-	function handleDragOver(event, pouch) {
+	/**
+	 * A function used when the user dragged a element over another
+	 * It colored the hovered element
+	 * @param event : 
+	 */
+	function handleDragOver(event) {
 		event.preventDefault();
-		event.dataTransfer.dropEffect = 'move';
 
-		//New features
 		const element = event.currentTarget;
 		element.classList.add(
 			'bg-secondary-color/50',
@@ -61,7 +68,12 @@
 		);
 	}
 
-	function handleDragLeave(event, pouch) {
+	/**
+	 * A function used when the user stop hovering an element
+	 * When an element isn't hovered anymore, it removed the color
+	 * @param event : the element with the color to be removed
+	 */
+	function handleDragLeave(event) {
 		const element = event.currentTarget;
 		element.classList.remove(
 			'bg-secondary-color/50',
@@ -71,10 +83,15 @@
 		);
 	}
 
+	/**
+	 * A function used when an element is dropped over another
+	 * It place the dropped element bellow the other
+	 * @param event : the element with the color to be removed
+	 * @param pouch : the element that received the dragged element
+	 */
 	function handleDrop(event, pouch) {
 		event.preventDefault();
 
-		// New features
 		const element = event.currentTarget;
 		element.classList.remove(
 			'bg-secondary-color/50',
@@ -83,17 +100,11 @@
 			'border-dashed'
 		);
 
-		pouches.update((currentList) => {
-			const draggedIndex = currentList.indexOf(dragged_pouch);
-			const droppedIndex = currentList.indexOf(pouch);
-			if (draggedIndex >= 0) {
-				currentList.splice(draggedIndex, 1);
-				currentList.splice(droppedIndex, 0, dragged_pouch);
-			}
-			return [...currentList];
-		});
+		pouches.swapPouch(dragged_pouch, pouch);
+
 		dragged_pouch = null;
 	}
+
 </script>
 
 <div class="flex flex-1 h-[calc(100vh-13.5rem)] flex-col">
@@ -138,8 +149,8 @@
 							id={pouch.id}
 							name={pouch.name}
 							elements={pouch.elements}
-							on:delete-pouch={pouches.remove}
-						/>
+							/>
+							<!-- on:delete-pouch={pouches.remove} -->
 					</div>
 				{/each}
 			{:else}

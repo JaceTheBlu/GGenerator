@@ -38,7 +38,7 @@
 		isEditing = false;
 		text = text.trim();
 		if (text === '') rundown.remove(id);
-		else rundown.updateWord({ id, text });
+		else rundown.updateWord({ id, text, type });
 	};
 
 	const handleBlur = () => {

@@ -16,18 +16,18 @@
 	import Berger from '$lib/berger';
 
 	import {
-		preferredLanguage,
-		loaded,
-		visited,
-		rundown,
-		pouches,
+		examples,
 		history,
+		loaded,
+		pouches,
+		preferredLanguage,
+		rundown,
 		tutorials,
-		examples
+		visited
 	} from '../stores';
 
 	import { loadLanguage } from '$lib/localization';
-
+	
 	let result_div;
 
 	let tour;
@@ -48,12 +48,20 @@
 
 			const saved_rundown = localStorage.getItem('rundown');
 			if (saved_rundown) {
-				rundown.set(JSON.parse(saved_rundown));
+				const parsed_rundown = JSON.parse(saved_rundown);
+				parsed_rundown.forEach( word =>{
+					rundown.copy(word);
+				});
 			}
 
 			const saved_pouches = localStorage.getItem('pouches');
+			
 			if (saved_pouches) {
-				pouches.set(JSON.parse(saved_pouches));
+				const parsed_pouches = JSON.parse(saved_pouches);
+
+				parsed_pouches.forEach(pouch => {
+					pouches.copy(pouch);
+				});
 			}
 
 			loaded.set(true);

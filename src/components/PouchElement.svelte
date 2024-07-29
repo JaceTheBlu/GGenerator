@@ -17,8 +17,8 @@
 
 	/**
 	 * This method is used for the update of a pouch element
-	 * Double clicking on a pouch element make it editable
-	 * When focus is lost new information are sent to the parent component
+	 * Clicking on a pouch element make it editable
+	 * When focus is lost the new name is updated
 	 */
 	function changeEditableState() {
 		isEditable = !isEditable;
@@ -31,6 +31,9 @@
 				}
 			});
 		}
+		else{
+			pouches.updateElement(id, name);
+		}
 	}
 
 	/**
@@ -42,11 +45,9 @@
 			case 'Enter':
 				changeEditableState();
 				break;
-
-			default:
-				break;
 		}
 	}
+	
 </script>
 
 <li class="flex justify-between items-center pl-4 odd:bg-slate-800/10 even:bg-slate-800/50">
