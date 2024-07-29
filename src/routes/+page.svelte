@@ -18,6 +18,7 @@
 	import {
 		examples,
 		history,
+		locales,
 		loaded,
 		pouches,
 		preferredLanguage,
@@ -351,7 +352,7 @@
 					<p
 						class="place-content-center text-tertiary-color italic overflow-auto h-full w-full not-selectable"
 					>
-						Waiting for GGeneration!
+						{$locales.placeholder_output}
 					</p>
 				{/if}
 			</p>
@@ -366,9 +367,19 @@
 				children:p-2
 				"
 		>
-			<button class="hover:scale-110" on:click={handleCopyOutput}> 📋 </button>
-			<button class="hover:scale-110" on:click={handleShowHistory}> 🗃️ </button>
-			<button class="hover:scale-110" on:click={handleDeleteHistory}> 🗑️ </button>
+			<button title={$locales.copy} class="hover:scale-110" on:click={handleCopyOutput}>
+				📋
+			</button>
+			<button title={$locales.show_history} class="hover:scale-110" on:click={handleShowHistory}>
+				🗃️
+			</button>
+			<button
+				title={$locales.clear - history}
+				class="hover:scale-110"
+				on:click={handleDeleteHistory}
+			>
+				🗑️
+			</button>
 		</div>
 	</div>
 	<GGFooter />

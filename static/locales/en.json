@@ -18,5 +18,8 @@
     "placeholder_pouches_2": "You can also add it by writing in the Rundown.",
     "placeholder_rundown_1": "Start by adding a new word!",
     "placeholder_rundown_2": "Click the + button to get started.",
-    "placeholder_generate": "Then click here to generate!"
+    "placeholder_generate": "Then click here to generate!",
+    "show_history": "Show History",
+    "copy": "Copy",
+    "placeholder_output": "Waiting for awesome GGeneration!"
 }
