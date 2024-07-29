@@ -151,7 +151,19 @@
 					sentence = 'The Rundown is still empty, make some effort!';
 					break;
 				case 5:
+					sentence = "Are you trying to find something here? Good Luck, I'm not funny.";
+					break;
+				case 6:
+					sentence = "Are you trying to find something here? Good Luck, I'm not funny..";
+					break;
+				case 7:
 					sentence = "Are you trying to find something here? Good Luck, I'm not funny...";
+					break;
+				case 8:
+					sentence = "Are you trying to find something here? Good Luck, I'm not funny....";
+					break;
+				case 9:
+					sentence = "Are you trying to find something here? Good Luck, I'm not funny.....";
 					break;
 				case 10:
 					sentence = 'This is not a clicker game, try something else like Cookie Clicker!';
